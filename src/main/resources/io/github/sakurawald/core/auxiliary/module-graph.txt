@@ -6,6 +6,7 @@ chat
 chat.display
 chat.history
 chat.mention
+chat.replace
 chat.rewrite
 chat.spy
 chat.stripe
