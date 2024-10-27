@@ -12,7 +12,7 @@
   "cancel": "<red>Anulare",
   "chat.current_pos": "Poziție-Curentă",
   "chat.format.reset": "<gold>Formatul conversației a fost resetat</gold>",
-  "chat.format.set": "<gold>Formatul chat-ului a fost modificat, stilul curent:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click pentru resetarea '><click:run_command:/chat format reset>   [Reset]</click></hover></red>",
+  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat style reset>   [Reset]</click></hover></red>",
   "chat.format.show": "Mesajul tau",
   "chat.xaero_waypoint_add": "Clic pentru a adăuga punctul minim de trecere Xaero.",
   "chat.xaero_waypoint_add.command": "/xaero_waypoint_add:Waypoint:·:%d:%s:%d:0:false:0:Internal_%s_waypoints",

@@ -12,7 +12,7 @@
   "cancel": "<red>取消",
   "chat.current_pos": "目前位置",
   "chat.format.reset": "<gold>已重設聊天樣式</gold>",
-  "chat.format.set": "<gold>已修改聊天樣式，目前樣式：</gold><newline>%s<reset><newline><red><hover:show_text:'<red>點擊重設'><click:run_command:/chat format reset>   [重設]</click></hover></red>",
+  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat style reset>   [Reset]</click></hover></red>",
   "chat.format.show": "您的訊息",
   "chat.xaero_waypoint_add": "點選新增 Xaero 小地圖定位點",
   "chat.xaero_waypoint_add.command": "/xaero_waypoint_add:定位點:·:%d:%s:%d:0:false:0:Internal_%s_waypoints",
