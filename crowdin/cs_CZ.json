@@ -12,7 +12,7 @@
   "cancel": "<red>Zrušit",
   "chat.current_pos": "Aktuální pozice",
   "chat.format.reset": "<gold>formát chatu byl resetován</gold>",
-  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat format reset>   [Reset]</click></hover></red>",
+  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat style reset>   [Reset]</click></hover></red>",
   "chat.format.show": "Zpráva",
   "chat.xaero_waypoint_add": "Kliknutím přidáte minimální trasový bod Xaerou",
   "chat.xaero_waypoint_add.command": "/xaero_waypoint_add:Waypoint:·:%d:%s:%d:0:false:0:Internal_%s_waypoints",

@@ -12,7 +12,7 @@
   "cancel": "<red>Annuller",
   "chat.current_pos": "Nuværende Position",
   "chat.format.reset": "<gold>Chat format er blevet nulstillet</gold>",
-  "chat.format.set": "<gold>Chat format er blevet ændret, nuværende stil:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Klik for at nulstille '><click:run_command:/chat format reset>   [Reset]</click></hover></red>",
+  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat style reset>   [Reset]</click></hover></red>",
   "chat.format.show": "Din Besked",
   "chat.xaero_waypoint_add": "Klik for at tilføje et Xaero's minimap waypoint",
   "chat.xaero_waypoint_add.command": "/xaero_waypoint_add:Waypoint:·:%d:%s:%d:0:false:0:Internal_%s_waypoints",

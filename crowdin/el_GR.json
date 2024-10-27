@@ -12,7 +12,7 @@
   "cancel": "<red>Cancel",
   "chat.current_pos": "Τρέχων Θέση",
   "chat.format.reset": "<gold>Chat format has been reset</gold>",
-  "chat.format.set": "Η μορφή <gold>Chat έχει τροποποιηθεί, τρέχον στυλ:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Κάντε κλικ για επαναφορά '><click:run_command:/chat format reset>   [Reset]</click></hover></red>",
+  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat style reset>   [Reset]</click></hover></red>",
   "chat.format.show": "Μήνυμα Σας",
   "chat.xaero_waypoint_add": "Κάντε κλικ για να προσθέσετε ένα ελάχιστο σημείο διαδρομής του Xaero",
   "chat.xaero_waypoint_add.command": "/xaero_waypoint_add:Waypoint:·:%d:%s:%d:0:false:0:Internal_%s_waypoints",

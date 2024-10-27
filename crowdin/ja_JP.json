@@ -12,7 +12,7 @@
   "cancel": "<red>キャンセル",
   "chat.current_pos": "現在の位置",
   "chat.format.reset": "<gold>Chat format has been reset</gold>",
-  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat format reset>   [Reset]</click></hover></red>",
+  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat style reset>   [Reset]</click></hover></red>",
   "chat.format.show": "あなたのメッセージ",
   "chat.xaero_waypoint_add": "クリックしてXaeroのミニマップウェイポイントを追加",
   "chat.xaero_waypoint_add.command": "/xaero_waypoint_add:Waypoint:·:%d:%s:%d:0:false:0:Internal_%s_waypoints",

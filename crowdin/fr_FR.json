@@ -12,7 +12,7 @@
   "cancel": "<red>Annuler",
   "chat.current_pos": "Position actuelle",
   "chat.format.reset": "<gold>Le format du chat a été réinitialisé</gold>",
-  "chat.format.set": "<gold>Le format du chat a été modifié, style actuel :</gold><newline>%s<reset><newline><newline><red><hover:show_text:'<red>Cliquez pour réinitialiser'><click:run_command:/chat format reset>   [Reset]</click></hover></red>",
+  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat style reset>   [Reset]</click></hover></red>",
   "chat.format.show": "Votre message",
   "chat.xaero_waypoint_add": "Cliquez pour ajouter un waypoint de la mini-carte de Xaero.",
   "chat.xaero_waypoint_add.command": "/xaero_waypoint_add:Waypoint:·:%d:%s:%d:0:false:0:Internal_%s_waypoints",
