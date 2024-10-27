@@ -1,0 +1,19 @@
+\LevelThree{replace}\label{ch:chat_replace}
+\LevelFour{Purpose}
+Allow you to define \ttt{regex} to replace \ttt{chat text} with a given text before it's sent to the player.
+
+\begin{note}{The difference with chat rewrite module}
+    The \ttt{chat rewrite} module operates on \ttt{string level}, while \ttt{chat replace} module operates on \ttt{text level}.
+    The chat rewrite module rewrites the chat string received from the client, and pass this string to the chat string processor, the chat string processor will yield the final chat text, which is ready to sent to the receiver player.
+    This module will replace the final chat text using the defined rules.
+\end{note}
+
+\LevelFour{Example}
+\begin{example}{Define a shortcut to evaluate a placeholder}
+    \begin{json}
+    {
+        "regex": "(?<=^|\\s)uuid(?=\\s|$)",
+        "replacement": "<green>my uuid is %player:uuid%</green>"
+    }
+    \end{json}
+\end{example}
