@@ -279,6 +279,10 @@ public class TextHelper {
         return getTextList(audience, false, value);
     }
 
+    public static void sendMessageByFlag(@NotNull Object audience, boolean flag) {
+        sendMessageByKey(audience, flag ? "on" : "off");
+    }
+
     public static void sendMessageByKey(@NotNull Object audience, String key, Object... args) {
         Text text = getTextByKey(audience, key, args);
 
