@@ -2,7 +2,6 @@ package io.github.sakurawald.core.auxiliary;
 
 import io.github.sakurawald.Fuji;
 import io.github.sakurawald.core.config.Configs;
-import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
@@ -20,39 +19,9 @@ import java.util.stream.Collectors;
 @UtilityClass
 public class LogUtil {
 
-    @Getter
-    private static final @NotNull Logger LOGGER = createLogger(StringUtils.capitalize(Fuji.MOD_ID));
+    private static final @NotNull Logger MOD_LOGGER = makeLogger(StringUtils.capitalize(Fuji.MOD_ID));
 
-    private static final boolean isConsoleSupportAnsiColor = isConsoleSupportAnsiColor();
-
-    private static boolean isConsoleSupportAnsiColor() {
-        return FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER;
-    }
-
-    public static void debug(String message, Object... args) {
-        if (FabricLoader.getInstance().isDevelopmentEnvironment()
-            || Configs.configHandler.model().core.debug.log_debug_messages) {
-            String prefix = isConsoleSupportAnsiColor ? "\u001B[37m" : ""; // escape for the ansi color code
-            String format = prefix + message;
-            LOGGER.info(format, args);
-        } else {
-            LOGGER.debug(message, args);
-        }
-    }
-
-    public static void info(String message, Object... args) {
-        LOGGER.info(message, args);
-    }
-
-    public static void warn(String message, Object... args) {
-        LOGGER.warn(message, args);
-    }
-
-    public static void error(String message, Object... args) {
-        LOGGER.error(message, args);
-    }
-
-    public static @NotNull Logger createLogger(String name) {
+    private static @NotNull Logger makeLogger(String name) {
         Logger logger = LogManager.getLogger(name);
         try {
             // You can see the `debug` logs in `logs/debug.txt` file
@@ -62,6 +31,35 @@ public class LogUtil {
             return logger;
         }
         return logger;
+    }
+
+    private static final boolean isConsoleSupportAnsiColor = isConsoleSupportAnsiColor();
+
+    private static boolean isConsoleSupportAnsiColor() {
+        return FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER;
+    }
+
+    public static void debug(String message, Object... args) {
+        if (Configs.configHandler.model().core.debug.log_debug_messages
+            || FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            String prefix = isConsoleSupportAnsiColor ? "\u001B[37m" : ""; // escape for the ansi color code
+            String format = prefix + message;
+            MOD_LOGGER.info(format, args);
+        } else {
+            MOD_LOGGER.debug(message, args);
+        }
+    }
+
+    public static void info(String message, Object... args) {
+        MOD_LOGGER.info(message, args);
+    }
+
+    public static void warn(String message, Object... args) {
+        MOD_LOGGER.warn(message, args);
+    }
+
+    public static void error(String message, Object... args) {
+        MOD_LOGGER.error(message, args);
     }
 
     public static List<String> getStackTraceAsList(Throwable throwable) {

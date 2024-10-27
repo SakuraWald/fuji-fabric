@@ -10,7 +10,7 @@ public class CommandAliasConfigModel {
         {
             this.add(new CommandPathMappingNode(List.of("r"), List.of("reply")));
             this.add(new CommandPathMappingNode(List.of("sudo"), List.of("run", "as", "fake-op")));
-            this.add(new CommandPathMappingNode(List.of("i", "want", "to", "modify", "chat"), List.of("chat", "format")));
+            this.add(new CommandPathMappingNode(List.of("i", "want", "to", "modify", "chat"), List.of("chat", "style")));
         }
     };
 }
