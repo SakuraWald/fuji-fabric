@@ -4,6 +4,7 @@ import io.github.sakurawald.Fuji;
 import io.github.sakurawald.core.config.Configs;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
@@ -22,10 +23,17 @@ public class LogUtil {
     @Getter
     private static final @NotNull Logger LOGGER = createLogger(StringUtils.capitalize(Fuji.MOD_ID));
 
+    private static final boolean isConsoleSupportAnsiColor = isConsoleSupportAnsiColor();
+
+    private static boolean isConsoleSupportAnsiColor() {
+        return FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER;
+    }
+
     public static void debug(String message, Object... args) {
         if (FabricLoader.getInstance().isDevelopmentEnvironment()
             || Configs.configHandler.model().core.debug.log_debug_messages) {
-            String format = "\u001B[35m[DEV] " + message; // escape the color code
+            String prefix = isConsoleSupportAnsiColor ? "\u001B[37m" : ""; // escape for the ansi color code
+            String format = prefix + message;
             LOGGER.info(format, args);
         } else {
             LOGGER.debug(message, args);
