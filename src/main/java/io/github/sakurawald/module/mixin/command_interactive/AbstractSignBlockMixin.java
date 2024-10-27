@@ -46,7 +46,7 @@ public class AbstractSignBlockMixin {
 
                     List<String> commands = splitCommands(text)
                         .stream()
-                        .map(str -> TextHelper.resolvePlaceholder(player, str))
+                        .map(str -> TextHelper.parsePlaceholder(player, str))
                         .toList();
 
                     commands.forEach(command -> ((ServerPlayerEntity) player).networkHandler.onCommandExecution(new CommandExecutionC2SPacket(command)));

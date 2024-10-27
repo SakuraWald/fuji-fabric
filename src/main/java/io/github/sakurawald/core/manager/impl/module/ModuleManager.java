@@ -133,6 +133,7 @@ public class ModuleManager extends BaseManager {
     }
 
     private void serverStartupReport() {
+        /* report enabled/disabled modules */
         List<String> enabledModuleList = new ArrayList<>();
         module2enable.forEach((module, enable) -> {
             if (enable) enabledModuleList.add(ReflectionUtil.joinModulePath(module));
@@ -140,6 +141,28 @@ public class ModuleManager extends BaseManager {
 
         enabledModuleList.sort(String::compareTo);
         LogUtil.info("enabled {}/{} modules -> {}", enabledModuleList.size(), module2enable.size(), enabledModuleList);
+
+        /* print first-time helper */
+        if (enabledModuleList.size() == 1) {
+            firstTimeHelper();
+        }
+    }
+
+    private void firstTimeHelper() {
+        LogUtil.info("""
+
+            [Fuji User Guide]
+            It seems that this is the first time you use fuji mod.
+
+            Here are some important points:
+            - Fuji is designed to be fully-modular, that is to say, all modules are disabled by default.
+            - To enable a module, is just like ordering food at a restaurant: you can enable a module by modifying the `config/fuji/config.json` file, and re-start the server to apply the modification.
+                - To use `/tpa` command, enable the `tpa` module.
+                - To use placeholders provided by fuji, enable the `placeholder` module.
+                - To use echo commands like `/send-message`, `/send-broadcast` etc, enable the `echo` module.
+            - To see the list of modules, and what functionality they provides, read the `fuji manual` pdf file in https://github.com/sakurawald/fuji/raw/dev/docs/release/fuji.pdf
+            - Anything unclear, open an issue in https://github.com/sakurawald/fuji/issues
+            """);
     }
 
     public boolean shouldWeEnableThis(String className) {

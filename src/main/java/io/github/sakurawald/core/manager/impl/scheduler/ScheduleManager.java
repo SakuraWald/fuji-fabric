@@ -92,7 +92,8 @@ public class ScheduleManager extends BaseManager {
     private void resetScheduler() {
         /* new scheduler */
         try {
-            scheduler = new StdSchedulerFactory().getScheduler();
+            StdSchedulerFactory stdSchedulerFactory = new StdSchedulerFactory();
+            scheduler = stdSchedulerFactory.getScheduler();
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
         }

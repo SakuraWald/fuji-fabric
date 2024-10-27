@@ -19,6 +19,7 @@
     "chat.history.PlayerManagerMixin",
     "chat.history.ServerPlayNetworkHandlerMixin",
     "chat.mention.ServerPlayNetworkHandlerMixin",
+    "chat.replace.ServerPlayNetworkHandlerMixin",
     "chat.rewrite.ServerPlayNetworkHandlerMixin",
     "chat.spy.ServerPlayNetworkHandlerMixin",
     "chat.stripe.ServerPlayNetworkHandlerMixin",

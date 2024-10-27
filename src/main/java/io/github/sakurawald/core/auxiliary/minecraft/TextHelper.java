@@ -19,8 +19,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
-import net.minecraft.text.PlainTextContent;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextContent;
 import org.jetbrains.annotations.NotNull;
@@ -34,13 +32,17 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @UtilityClass
 public class TextHelper {
 
+    /* constants */
     public static final Text TEXT_NEWLINE = Text.of("\n");
     public static final Text TEXT_SPACE = Text.of(" ");
 
+    /* class states */
     private static final NodeParser POWERFUL_PARSER = NodeParser.builder()
         .quickText()
         .simplifiedTextFormat()
@@ -206,7 +208,7 @@ public class TextHelper {
         return string;
     }
 
-    public static @NotNull String resolvePlaceholder(@Nullable Object audience, String value) {
+    public static @NotNull String parsePlaceholder(@Nullable Object audience, String value) {
         return TextHelper.getText(PLACEHOLDER_PARSER, audience, false, value).getString();
     }
 
@@ -281,6 +283,10 @@ public class TextHelper {
         return getTextList(audience, false, value);
     }
 
+    public static void sendMessageByFlag(@NotNull Object audience, boolean flag) {
+        sendMessageByKey(audience, flag ? "on" : "off");
+    }
+
     public static void sendMessageByKey(@NotNull Object audience, String key, Object... args) {
         Text text = getTextByKey(audience, key, args);
 
@@ -321,19 +327,6 @@ public class TextHelper {
         }
     }
 
-    public static MutableText replaceBracketedText(Text text, String charSeq, Text replacement) {
-        // verify the placeholder of replaceText
-        if (!charSeq.startsWith("[") || !charSeq.endsWith("]")) {
-            throw new IllegalArgumentException("The `charSeq` parameter must starts with '[' and ends with ']'");
-        }
-
-        return replaceText(text, charSeq, () -> replacement);
-    }
-
-    public static MutableText replaceText(Text text, String charSeq, Supplier<Text> replacementSupplier) {
-        return replaceText0(text, charSeq, replacementSupplier, Text.empty(), new ArrayList<>());
-    }
-
     private static String visitString(TextContent textContent) {
         StringBuilder stringBuilder = new StringBuilder();
         textContent.visit(string -> {
@@ -343,90 +336,75 @@ public class TextHelper {
         return stringBuilder.toString();
     }
 
-    private static MutableText replaceText0(Text text, String marker, Supplier<Text> replacementSupplier, MutableText builder, List<Style> stylePath) {
-        /* pass down style */
-        ArrayList<Style> newStylePath = new ArrayList<>(stylePath);
-        newStylePath.add(text.getStyle());
+    public static MutableText replaceTextWithMarker(Text text, String marker, Supplier<Text> replacementSupplier) {
+        return replaceTextWithRegex(text, "\\[%s\\]".formatted(marker), replacementSupplier);
+    }
+
+    public static MutableText replaceTextWithRegex(Text text, String regex, Supplier<Text> nonMemorizedReplacementSupplier) {
+        // memorize the supplier
+        nonMemorizedReplacementSupplier = memoizeSupplier(nonMemorizedReplacementSupplier);
+
+        return replaceText(text, Pattern.compile(regex), nonMemorizedReplacementSupplier);
+    }
+
+    private static MutableText replaceText(Text text, Pattern pattern, Supplier<Text> replacementSupplier) {
+        MutableText replacedText;
 
         /* process the atom */
-        splitText(text, marker, replacementSupplier, newStylePath).forEach(builder::append);
+        String textString = visitString(text.getContent());
+        @Nullable List<Text> splits = trySplitString(textString, pattern, replacementSupplier);
 
-        /* iterate children */
-        text.getSiblings().forEach(it -> replaceText0(it, marker, replacementSupplier, builder, newStylePath));
-        return builder;
-    }
+        if (splits == null) {
+            replacedText = text.copyContentOnly();
+        } else {
+            // use a dummy root to represent the replaced node.
+            MutableText dummyRoot = Text.empty();
+            replacedText = dummyRoot;
+            splits.forEach(dummyRoot::append);
+        }
+        replacedText.fillStyle(text.getStyle());
 
-    private static MutableText fillStyles(MutableText text, List<Style> stylePath) {
-        stylePath.forEach(text::fillStyle);
-        return text;
-    }
-
-    private static List<Text> splitText(Text text, String marker, Supplier<Text> replacementSupplier, List<Style> stylePath) {
-
-        /* get the string */
-        String string = visitString(text.getContent());
-
-        /* get the split points */
-        List<Integer> splitPoints = new ArrayList<>();
-        int fromIndex = 0;
-        while (fromIndex < string.length()) {
-            int i = string.indexOf(marker, fromIndex);
-            // break if no found the marker
-            if (i == -1) break;
-
-            splitPoints.add(i);
-            fromIndex = i + marker.length();
+        /* go down */
+        for (Text sibling : text.getSiblings()) {
+            MutableText replacedSibling = replaceText(sibling, pattern, replacementSupplier);
+            replacedText.append(replacedSibling);
         }
 
-        /* construct result texts */
+        return replacedText;
+    }
+
+    private static @Nullable List<Text> trySplitString(String string, Pattern pattern, Supplier<Text> replacementSupplier) {
+        /* quick return */
+        Matcher matcher = pattern.matcher(string);
+
         List<Text> ret = new ArrayList<>();
-        int beginIndex = 0;
-        Text replacement = null;
-        for (Integer splitPoint : splitPoints) {
-            int endIndex = splitPoint;
+        int startIndex = 0;
+        while (matcher.find()) {
+            int i = matcher.start();
 
-            String part = string.substring(beginIndex, endIndex);
-
-            // the part is empty, if the string starts with marker or ends with marker.
-            if (!part.isEmpty()) {
-                // add non-marker.
-                MutableText mutableText = MutableText.of(PlainTextContent.of(part));
-                fillStyles(mutableText, stylePath);
-                ret.add(mutableText);
+            // append the head text if exists
+            if (i != startIndex) {
+                ret.add(Text.literal(string.substring(startIndex, i)));
             }
 
-            // replace the marker with replacement
-            if (replacement == null) {
-                replacement = replacementSupplier.get();
-            }
-            MutableText styledReplacement = replacement.copy();
-            fillStyles(styledReplacement, stylePath);
-            ret.add(styledReplacement);
+            // append the replacement text
+            ret.add(replacementSupplier.get());
 
-            beginIndex = splitPoint + marker.length();
+            startIndex = matcher.end();
         }
 
-        /* handle the tail */
-        if (beginIndex == 0) {
-            // keep translatable text
-            MutableText mutableText = text.copyContentOnly();
-            fillStyles(mutableText, stylePath);
-            ret.add(mutableText);
-            return ret;
-        }
+        // return null if nothing is replaced.
+        if (ret.isEmpty()) return null;
 
-        if (beginIndex < string.length()) {
-            String part = string.substring(beginIndex);
-
-            MutableText mutableText = MutableText.of(PlainTextContent.of(part));
-            fillStyles(mutableText, stylePath);
-            ret.add(mutableText);
+        /* append the tail string if exists */
+        if (startIndex < string.length()) {
+            ret.add(Text.literal(string.substring(startIndex)));
         }
 
         return ret;
     }
 
-    private static <T> Supplier<T> memoize(Supplier<T> delegate) {
+    private static <T> Supplier<T> memoizeSupplier(Supplier<T> delegate) {
         AtomicReference<T> value = new AtomicReference<>();
         return () -> {
             T val = value.get();
