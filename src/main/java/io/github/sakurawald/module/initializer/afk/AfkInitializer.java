@@ -1,6 +1,6 @@
 package io.github.sakurawald.module.initializer.afk;
 
-import io.github.sakurawald.core.accessor.PlayerCombatExtension;
+import io.github.sakurawald.core.extension.PlayerCombatExtension;
 import io.github.sakurawald.core.annotation.Document;
 import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
