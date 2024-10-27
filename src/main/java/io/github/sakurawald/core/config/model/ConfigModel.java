@@ -141,6 +141,7 @@ public class ConfigModel {
             public Display display = new Display();
             public History history = new History();
             public Rewrite rewrite = new Rewrite();
+            public Replace replace = new Replace();
             public Stripe stripe = new Stripe();
             public Mention mention = new Mention();
             public Spy spy = new Spy();
@@ -173,6 +174,9 @@ public class ConfigModel {
                 public boolean enable = false;
             }
 
+            public static class Replace {
+                public boolean enable = true;
+            }
         }
 
         public static class Skin {
