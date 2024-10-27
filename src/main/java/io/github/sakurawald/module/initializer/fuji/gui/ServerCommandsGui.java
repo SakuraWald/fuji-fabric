@@ -25,12 +25,12 @@ public class ServerCommandsGui extends PagedGui<CommandNode> {
     }
 
     @Override
-    public PagedGui<CommandNode> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<CommandNode> entities, int pageIndex) {
+    protected PagedGui<CommandNode> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<CommandNode> entities, int pageIndex) {
         return new ServerCommandsGui(player, entities, pageIndex);
     }
 
     @Override
-    public GuiElementInterface toGuiElement(CommandNode entity) {
+    protected GuiElementInterface toGuiElement(CommandNode entity) {
         return new GuiElementBuilder()
             .setItem(Items.COMMAND_BLOCK)
             .setName(Text.literal(entity.getPath()))
@@ -45,7 +45,7 @@ public class ServerCommandsGui extends PagedGui<CommandNode> {
     }
 
     @Override
-    public List<CommandNode> filter(String keyword) {
+    protected List<CommandNode> filter(String keyword) {
         return getEntities().stream()
             .filter(it -> it.getPath().contains(keyword))
             .toList();

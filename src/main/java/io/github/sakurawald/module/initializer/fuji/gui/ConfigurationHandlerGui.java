@@ -24,12 +24,12 @@ public class ConfigurationHandlerGui extends PagedGui<BaseConfigurationHandler<?
     }
 
     @Override
-    public PagedGui<BaseConfigurationHandler<?>> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<BaseConfigurationHandler<?>> entities, int pageIndex) {
+    protected PagedGui<BaseConfigurationHandler<?>> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<BaseConfigurationHandler<?>> entities, int pageIndex) {
         return new ConfigurationHandlerGui(getGui(), player, entities, pageIndex);
     }
 
     @Override
-    public GuiElementInterface toGuiElement(BaseConfigurationHandler<?> entity) {
+    protected GuiElementInterface toGuiElement(BaseConfigurationHandler<?> entity) {
         String modelClassName = entity.getClass().getSimpleName();
         if (modelClassName.isBlank()) {
             modelClassName = "ANONYMOUS-CLASS";
@@ -49,7 +49,7 @@ public class ConfigurationHandlerGui extends PagedGui<BaseConfigurationHandler<?
     }
 
     @Override
-    public List<BaseConfigurationHandler<?>> filter(String keyword) {
+    protected List<BaseConfigurationHandler<?>> filter(String keyword) {
         return getEntities().stream()
             .filter(it -> it.getClass().getSimpleName().contains(keyword)
                 || it.getPath().toString().contains(keyword))

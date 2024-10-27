@@ -26,12 +26,12 @@ public class CommandPermissionGui extends PagedGui<CommandNodePermission> {
     }
 
     @Override
-    public PagedGui<CommandNodePermission> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<CommandNodePermission> entities, int pageIndex) {
+    protected PagedGui<CommandNodePermission> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<CommandNodePermission> entities, int pageIndex) {
         return new CommandPermissionGui(player, entities, pageIndex);
     }
 
     @Override
-    public GuiElementInterface toGuiElement(CommandNodePermission entity) {
+    protected GuiElementInterface toGuiElement(CommandNodePermission entity) {
         List<Text> lore = List.of(TextHelper.getTextByKey(getPlayer(), "command_permission.list.gui.entry.lore", entity.isWrapped()));
 
         return new GuiElementBuilder()
@@ -59,7 +59,7 @@ public class CommandPermissionGui extends PagedGui<CommandNodePermission> {
     }
 
     @Override
-    public List<CommandNodePermission> filter(String keyword) {
+    protected List<CommandNodePermission> filter(String keyword) {
         return getEntities().stream()
             .filter(it -> it.getPath().contains(keyword))
             .toList();

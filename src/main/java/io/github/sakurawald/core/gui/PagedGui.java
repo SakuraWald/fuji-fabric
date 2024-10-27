@@ -43,7 +43,7 @@ public abstract class PagedGui<T> extends LayeredGui {
         return super.open();
     }
 
-    public abstract PagedGui<T> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<T> entities, int pageIndex);
+    protected abstract PagedGui<T> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<T> entities, int pageIndex);
 
     private void drawNavigator(int pageIndex) {
         SingleLineLayer pageLayer = new SingleLineLayer(GuiHelper.makeSlotPlaceholder());
@@ -107,9 +107,9 @@ public abstract class PagedGui<T> extends LayeredGui {
         make(this.parent, getPlayer(), this.prefixTitle, this.entities, 0).open();
     }
 
-    public abstract GuiElementInterface toGuiElement(T entity);
+    protected abstract GuiElementInterface toGuiElement(T entity);
 
-    public abstract List<T> filter(String keyword);
+    protected abstract List<T> filter(String keyword);
 
     private void drawTitle() {
         MutableText formatted = this.prefixTitle.copy().append(TextHelper.getTextByKey(getPlayer(), "gui.page.title", this.getCurrentPageNumber(), this.getMaxPageNumber()));

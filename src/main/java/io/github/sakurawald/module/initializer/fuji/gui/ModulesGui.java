@@ -22,12 +22,12 @@ public class ModulesGui extends PagedGui<Pair<String, Boolean>> {
     }
 
     @Override
-    public PagedGui<Pair<String, Boolean>> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Pair<String, Boolean>> entities, int pageIndex) {
+    protected PagedGui<Pair<String, Boolean>> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Pair<String, Boolean>> entities, int pageIndex) {
         return new ModulesGui(player, entities, pageIndex);
     }
 
     @Override
-    public GuiElementInterface toGuiElement(Pair<String, Boolean> entity) {
+    protected GuiElementInterface toGuiElement(Pair<String, Boolean> entity) {
         return new GuiElementBuilder()
             .setName(Text.literal(entity.getKey()))
             .setItem(entity.getValue() ? Items.GREEN_STAINED_GLASS : Items.RED_STAINED_GLASS)
@@ -35,7 +35,7 @@ public class ModulesGui extends PagedGui<Pair<String, Boolean>> {
     }
 
     @Override
-    public List<Pair<String, Boolean>> filter(String keyword) {
+    protected List<Pair<String, Boolean>> filter(String keyword) {
         return getEntities().stream()
             .filter(it -> it.getKey().contains(keyword)
                 || it.getValue().toString().contains(keyword)).toList();

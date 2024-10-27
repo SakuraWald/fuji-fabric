@@ -22,7 +22,7 @@ public class CommandDescriptorGui extends PagedGui<CommandDescriptor> {
     }
 
     @Override
-    public PagedGui<CommandDescriptor> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<CommandDescriptor> entities, int pageIndex) {
+    protected PagedGui<CommandDescriptor> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<CommandDescriptor> entities, int pageIndex) {
         return new CommandDescriptorGui(player, entities, pageIndex);
     }
 
@@ -44,7 +44,7 @@ public class CommandDescriptorGui extends PagedGui<CommandDescriptor> {
     }
 
     @Override
-    public GuiElementInterface toGuiElement(CommandDescriptor entity) {
+    protected GuiElementInterface toGuiElement(CommandDescriptor entity) {
         return new GuiElementBuilder()
             .setName(Text.literal(entity.computeCommandSyntax()))
             .setLore(List.of(
@@ -59,7 +59,7 @@ public class CommandDescriptorGui extends PagedGui<CommandDescriptor> {
     }
 
     @Override
-    public List<CommandDescriptor> filter(String keyword) {
+    protected List<CommandDescriptor> filter(String keyword) {
         return getEntities().stream()
             .filter(it -> it.toString().contains(keyword)).toList();
     }
