@@ -1,4 +1,4 @@
-package io.github.sakurawald.core.accessor;
+package io.github.sakurawald.core.extension;
 
 public interface PlayerCombatExtension {
 
