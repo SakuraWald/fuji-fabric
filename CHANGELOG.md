@@ -1,5 +1,14 @@
 > The version number of fuji follows `semver` now: https://semver.org/ 
  
-cherry-pick the fixes from the version for `minecraft 1.21.1-rc1`:
-- fix: register the chat type twice while joining a single-player world in client.
-- fix: the console will display `if you see this text...` message while canceling the broadcasting a translatable text. (system_message module)
+cherry-pick commits from `fuji v4.2.0`:
+- feature: add new module chat.replace module, to replace the chat text with a given text. (chat.replace module)
+- feature: improve the performance of replacing text in language system, also enhance the compatibility of this function.
+- feature: add first time usage guide at server startup process, to help the new user to set up this mod.
+- feature: set the quartz thread name with prefix Fuji-Quartz, to identify the threads belongs to fuji.
+- feature: set the default input value to blank for player head gui. (head module)
+- feature: set the default display name based on the input warp name. (warp module)
+- feature: add /fuji debug command, to switch the debug all messages flag in game. (fuji module)
+- refactor: change the color of debug message from purple to gray.
+refactor: remove the [DEV] prefix in debug message.
+- build: update the contributor list
+fix: the default configuration file for command alias module. (command alias module)
