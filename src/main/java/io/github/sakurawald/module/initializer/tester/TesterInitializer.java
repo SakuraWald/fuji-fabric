@@ -50,7 +50,7 @@ public class TesterInitializer extends ModuleInitializer {
         LogUtil.debug("before = {}", root);
         player.sendMessage(root);
 
-        MutableText after = TextHelper.replaceText(root, "hi", () -> Text.literal("{replacement}"));
+        MutableText after = TextHelper.replaceTextWithRegex(root, "hi", () -> Text.literal("{replacement}"));
         LogUtil.debug("after = {}", after);
         player.sendMessage(after);
     }

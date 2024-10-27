@@ -98,7 +98,7 @@ public class DisplayHelper {
             .withClickEvent(makeDisplayClickEvent(displayUUID))
         );
 
-        text = TextHelper.replaceText(text, "[item]", () -> translatable);
+        text = TextHelper.replaceTextWithMarker(text, "item", () -> translatable);
         return text;
     }
 
