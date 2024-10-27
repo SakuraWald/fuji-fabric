@@ -24,7 +24,7 @@ public class ChatSpyInitializer extends ModuleInitializer {
         ChatSpyConfigModel.PerPlayerOptions options = getOptions(player);
         options.enabled = !options.enabled;
 
-        TextHelper.sendMessageByKey(player, options.enabled ? "on" : "off");
+        TextHelper.sendMessageByFlag(player, options.enabled);
         return CommandHelper.Return.SUCCESS;
     }
 

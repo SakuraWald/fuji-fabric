@@ -76,6 +76,16 @@ public class FujiInitializer extends ModuleInitializer {
         return CommandHelper.Return.SUCCESS;
     }
 
+    @CommandNode("debug")
+    @Document("Switch the `log_debug_message` option.")
+    private static int debug(@CommandSource ServerCommandSource source) {
+        var debug = Configs.configHandler.model().core.debug;
+        debug.log_debug_messages = !debug.log_debug_messages;
+
+        TextHelper.sendMessageByFlag(source,debug.log_debug_messages);
+        return CommandHelper.Return.SUCCESS;
+    }
+
     @CommandNode("inspect server-commands")
     @Document("Inspect all commands registered in server.")
     private static int $listServerCommands(@CommandSource ServerPlayerEntity player) {
