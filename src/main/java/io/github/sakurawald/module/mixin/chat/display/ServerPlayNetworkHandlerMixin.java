@@ -24,18 +24,18 @@ public abstract class ServerPlayNetworkHandlerMixin {
     @Unique
     private Text replaceDisplayText(Text original) {
         MutableText newValue
-            = TextHelper.replaceText(original
-            , ChatDisplayInitializer.config.model().replace_token.item_display_token
+            = TextHelper.replaceTextWithRegex(original
+            , ChatDisplayInitializer.config.model().replace_pattern.item_display
             , () -> DisplayHelper.createItemDisplayText(player));
 
         newValue
-            = TextHelper.replaceText(newValue
-            , ChatDisplayInitializer.config.model().replace_token.inv_display_token
+            = TextHelper.replaceTextWithRegex(newValue
+            , ChatDisplayInitializer.config.model().replace_pattern.inv_display
             , () -> DisplayHelper.createInvDisplayText(player));
 
         newValue
-            = TextHelper.replaceText(newValue
-            , ChatDisplayInitializer.config.model().replace_token.ender_display_token
+            = TextHelper.replaceTextWithRegex(newValue
+            , ChatDisplayInitializer.config.model().replace_pattern.ender_display
             , () -> DisplayHelper.createEnderDisplayText(player));
         return newValue;
     }

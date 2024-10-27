@@ -32,6 +32,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @UtilityClass
 public class TextHelper {
@@ -334,12 +336,23 @@ public class TextHelper {
         return stringBuilder.toString();
     }
 
-    public static MutableText replaceText(Text text, String marker, Supplier<Text> replacementSupplier) {
+    public static MutableText replaceTextWithMarker(Text text, String marker, Supplier<Text> replacementSupplier) {
+        return replaceTextWithRegex(text, "\\[%s\\]".formatted(marker), replacementSupplier);
+    }
+
+    public static MutableText replaceTextWithRegex(Text text, String regex, Supplier<Text> nonMemorizedReplacementSupplier) {
+        // memorize the supplier
+        nonMemorizedReplacementSupplier = memoizeSupplier(nonMemorizedReplacementSupplier);
+
+        return replaceText(text, Pattern.compile(regex), nonMemorizedReplacementSupplier);
+    }
+
+    private static MutableText replaceText(Text text, Pattern pattern, Supplier<Text> replacementSupplier) {
         MutableText replacedText;
 
         /* process the atom */
         String textString = visitString(text.getContent());
-        @Nullable List<Text> splits = trySplitString(textString, marker, replacementSupplier);
+        @Nullable List<Text> splits = trySplitString(textString, pattern, replacementSupplier);
 
         if (splits == null) {
             replacedText = text.copyContentOnly();
@@ -353,51 +366,45 @@ public class TextHelper {
 
         /* go down */
         for (Text sibling : text.getSiblings()) {
-            MutableText replacedSibling = replaceText(sibling, marker, replacementSupplier);
+            MutableText replacedSibling = replaceText(sibling, pattern, replacementSupplier);
             replacedText.append(replacedSibling);
         }
 
         return replacedText;
     }
 
-    private static @Nullable List<Text> trySplitString(String string, String marker, Supplier<Text> replacementSupplier) {
+    private static @Nullable List<Text> trySplitString(String string, Pattern pattern, Supplier<Text> replacementSupplier) {
         /* quick return */
-        if (!string.contains(marker)) {
-            return null;
-        }
+        Matcher matcher = pattern.matcher(string);
 
-        Text replacement = replacementSupplier.get();
-
-        /* indexOf the marker */
         List<Text> ret = new ArrayList<>();
-        int fromIndex = 0;
-        while (fromIndex < string.length()) {
-            int i = string.indexOf(marker, fromIndex);
+        int startIndex = 0;
+        while (matcher.find()) {
+            int i = matcher.start();
 
-            // break if the marker is not found.
-            if (i == -1) break;
-
-            // append the head string if exists
-            if (i != fromIndex) {
-                ret.add(Text.literal(string.substring(fromIndex, i)));
+            // append the head text if exists
+            if (i != startIndex) {
+                ret.add(Text.literal(string.substring(startIndex, i)));
             }
 
-            // append the replacement
-            ret.add(replacement);
+            // append the replacement text
+            ret.add(replacementSupplier.get());
 
-            // update fromIndex
-            fromIndex = i + marker.length();
+            startIndex = matcher.end();
         }
 
+        // return null if nothing is replaced.
+        if (ret.isEmpty()) return null;
+
         /* append the tail string if exists */
-        if (fromIndex < string.length()) {
-            ret.add(Text.literal(string.substring(fromIndex)));
+        if (startIndex < string.length()) {
+            ret.add(Text.literal(string.substring(startIndex)));
         }
 
         return ret;
     }
 
-    private static <T> Supplier<T> memoize(Supplier<T> delegate) {
+    private static <T> Supplier<T> memoizeSupplier(Supplier<T> delegate) {
         AtomicReference<T> value = new AtomicReference<>();
         return () -> {
             T val = value.get();

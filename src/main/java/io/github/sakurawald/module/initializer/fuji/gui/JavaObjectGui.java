@@ -83,7 +83,7 @@ public class JavaObjectGui extends PagedGui<Field> {
         /* make lore */
         Text valueText = TextHelper.getTextByKey(getPlayer(), "object.value");
         String abbreviate = StringUtils.abbreviate(value.toString(), "...", 128);
-        valueText = TextHelper.replaceText(valueText, "[value]", ()->Text.literal(abbreviate));
+        valueText = TextHelper.replaceTextWithMarker(valueText, "value", ()->Text.literal(abbreviate));
 
         return List.of(
             TextHelper.getTextByKey(getPlayer(), "object.type", field.getType().getSimpleName())
