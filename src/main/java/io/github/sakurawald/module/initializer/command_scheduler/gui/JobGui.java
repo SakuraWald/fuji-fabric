@@ -22,12 +22,12 @@ public class JobGui extends PagedGui<Job> {
     }
 
     @Override
-    public PagedGui<Job> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Job> entities, int pageIndex) {
+    protected PagedGui<Job> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Job> entities, int pageIndex) {
         return new JobGui(player, entities, pageIndex);
     }
 
     @Override
-    public GuiElementInterface toGuiElement(Job entity) {
+    protected GuiElementInterface toGuiElement(Job entity) {
         return new GuiElementBuilder()
             .setName(Text.literal(entity.getName()))
             .setItem(this.computeItem(entity))
@@ -43,7 +43,7 @@ public class JobGui extends PagedGui<Job> {
     }
 
     @Override
-    public List<Job> filter(String keyword) {
+    protected List<Job> filter(String keyword) {
         return getEntities().stream()
             .filter(it -> it.getName().equals(keyword))
             .toList();

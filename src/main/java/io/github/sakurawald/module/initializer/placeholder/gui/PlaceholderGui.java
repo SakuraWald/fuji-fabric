@@ -21,12 +21,12 @@ public class PlaceholderGui extends PagedGui<Identifier> {
     }
 
     @Override
-    public PagedGui<Identifier> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Identifier> entities, int pageIndex) {
+    protected PagedGui<Identifier> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Identifier> entities, int pageIndex) {
         return new PlaceholderGui(player, entities, pageIndex);
     }
 
     @Override
-    public GuiElementInterface toGuiElement(Identifier entity) {
+    protected GuiElementInterface toGuiElement(Identifier entity) {
         return new GuiElementBuilder()
             .setName(Text.literal(entity.toString()))
             .setItem(Items.NAME_TAG)
@@ -34,7 +34,7 @@ public class PlaceholderGui extends PagedGui<Identifier> {
     }
 
     @Override
-    public List<Identifier> filter(String keyword) {
+    protected List<Identifier> filter(String keyword) {
         return getEntities().stream().filter(it -> it.toString().contains(keyword)).toList();
     }
 }

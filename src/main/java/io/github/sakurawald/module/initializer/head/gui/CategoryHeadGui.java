@@ -28,12 +28,12 @@ public class CategoryHeadGui extends PagedGui<Head> {
     }
 
     @Override
-    public PagedGui<Head> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Head> entities, int pageIndex) {
+    protected PagedGui<Head> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Head> entities, int pageIndex) {
         return new CategoryHeadGui(parent, player, title, entities, pageIndex);
     }
 
     @Override
-    public GuiElementInterface toGuiElement(Head entity) {
+    protected GuiElementInterface toGuiElement(Head entity) {
         var builder = GuiElementBuilder.from(entity.toItemStack());
         if (HeadInitializer.head.model().economy_type != EconomyType.FREE) {
             builder.addLoreLine(Text.empty());
@@ -45,7 +45,7 @@ public class CategoryHeadGui extends PagedGui<Head> {
     }
 
     @Override
-    public List<Head> filter(String keywords) {
+    protected List<Head> filter(String keywords) {
         return getEntities().stream()
             .filter(head -> head.name.toLowerCase().contains(keywords.toLowerCase())
                 || head.getTagsOrEmpty().toLowerCase().contains(keywords.toLowerCase()))
