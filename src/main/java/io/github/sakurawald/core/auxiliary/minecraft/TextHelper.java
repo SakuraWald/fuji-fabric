@@ -38,9 +38,11 @@ import java.util.function.Supplier;
 @UtilityClass
 public class TextHelper {
 
+    /* constants */
     public static final Text TEXT_NEWLINE = Text.of("\n");
     public static final Text TEXT_SPACE = Text.of(" ");
 
+    /* class states */
     private static final NodeParser POWERFUL_PARSER = NodeParser.builder()
         .quickText()
         .simplifiedTextFormat()
@@ -206,7 +208,7 @@ public class TextHelper {
         return string;
     }
 
-    public static @NotNull String resolvePlaceholder(@Nullable Object audience, String value) {
+    public static @NotNull String parsePlaceholder(@Nullable Object audience, String value) {
         return TextHelper.getText(PLACEHOLDER_PARSER, audience, false, value).getString();
     }
 
@@ -323,15 +325,6 @@ public class TextHelper {
         for (ServerPlayerEntity player : ServerHelper.getDefaultServer().getPlayerManager().getPlayerList()) {
             TextHelper.sendMessageByKey(player, key, args);
         }
-    }
-
-    public static MutableText replaceBracketedText(Text text, String charSeq, Text replacement) {
-        // verify the placeholder of replaceText
-        if (!charSeq.startsWith("[") || !charSeq.endsWith("]")) {
-            throw new IllegalArgumentException("The `charSeq` parameter must starts with '[' and ends with ']'");
-        }
-
-        return replaceText(text, charSeq, () -> replacement);
     }
 
     public static MutableText replaceText(Text text, String charSeq, Supplier<Text> replacementSupplier) {
