@@ -1,15 +1,5 @@
 # TODO
 
-- feature: a rank module which is based on luckperms track concept. The rank system should allow to custom the
-  requirement/criteria, promote event, de-promote event.
-  - node
-    - name
-    - display name
-    - requirement -> based on placeholder
-    - on enter
-    - on leave
-    - is default
-    - auto rank up
 - feature: a lisp-like DSL, including a parse, transformer, analyzer, code-walker, with some built-in functions:
   predicate,
   equal...
