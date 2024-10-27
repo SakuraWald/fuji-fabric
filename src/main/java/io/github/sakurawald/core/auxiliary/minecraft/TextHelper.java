@@ -19,8 +19,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
-import net.minecraft.text.PlainTextContent;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextContent;
 import org.jetbrains.annotations.NotNull;
@@ -327,10 +325,6 @@ public class TextHelper {
         }
     }
 
-    public static MutableText replaceText(Text text, String charSeq, Supplier<Text> replacementSupplier) {
-        return replaceText0(text, charSeq, replacementSupplier, Text.empty(), new ArrayList<>());
-    }
-
     private static String visitString(TextContent textContent) {
         StringBuilder stringBuilder = new StringBuilder();
         textContent.visit(string -> {
@@ -340,84 +334,64 @@ public class TextHelper {
         return stringBuilder.toString();
     }
 
-    private static MutableText replaceText0(Text text, String marker, Supplier<Text> replacementSupplier, MutableText builder, List<Style> stylePath) {
-        /* pass down style */
-        ArrayList<Style> newStylePath = new ArrayList<>(stylePath);
-        newStylePath.add(text.getStyle());
+    public static MutableText replaceText(Text text, String marker, Supplier<Text> replacementSupplier) {
+        MutableText replacedText;
 
         /* process the atom */
-        splitText(text, marker, replacementSupplier, newStylePath).forEach(builder::append);
+        String textString = visitString(text.getContent());
+        @Nullable List<Text> splits = trySplitString(textString, marker, replacementSupplier);
 
-        /* iterate children */
-        text.getSiblings().forEach(it -> replaceText0(it, marker, replacementSupplier, builder, newStylePath));
-        return builder;
+        if (splits == null) {
+            replacedText = text.copyContentOnly();
+        } else {
+            // use a dummy root to represent the replaced node.
+            MutableText dummyRoot = Text.empty();
+            replacedText = dummyRoot;
+            splits.forEach(dummyRoot::append);
+        }
+        replacedText.fillStyle(text.getStyle());
+
+        /* go down */
+        for (Text sibling : text.getSiblings()) {
+            MutableText replacedSibling = replaceText(sibling, marker, replacementSupplier);
+            replacedText.append(replacedSibling);
+        }
+
+        return replacedText;
     }
 
-    private static MutableText fillStyles(MutableText text, List<Style> stylePath) {
-        stylePath.forEach(text::fillStyle);
-        return text;
-    }
+    private static @Nullable List<Text> trySplitString(String string, String marker, Supplier<Text> replacementSupplier) {
+        /* quick return */
+        if (!string.contains(marker)) {
+            return null;
+        }
 
-    private static List<Text> splitText(Text text, String marker, Supplier<Text> replacementSupplier, List<Style> stylePath) {
+        Text replacement = replacementSupplier.get();
 
-        /* get the string */
-        String string = visitString(text.getContent());
-
-        /* get the split points */
-        List<Integer> splitPoints = new ArrayList<>();
+        /* indexOf the marker */
+        List<Text> ret = new ArrayList<>();
         int fromIndex = 0;
         while (fromIndex < string.length()) {
             int i = string.indexOf(marker, fromIndex);
-            // break if no found the marker
+
+            // break if the marker is not found.
             if (i == -1) break;
 
-            splitPoints.add(i);
+            // append the head string if exists
+            if (i != fromIndex) {
+                ret.add(Text.literal(string.substring(fromIndex, i)));
+            }
+
+            // append the replacement
+            ret.add(replacement);
+
+            // update fromIndex
             fromIndex = i + marker.length();
         }
 
-        /* construct result texts */
-        List<Text> ret = new ArrayList<>();
-        int beginIndex = 0;
-        Text replacement = null;
-        for (Integer splitPoint : splitPoints) {
-            int endIndex = splitPoint;
-
-            String part = string.substring(beginIndex, endIndex);
-
-            // the part is empty, if the string starts with marker or ends with marker.
-            if (!part.isEmpty()) {
-                // add non-marker.
-                MutableText mutableText = MutableText.of(PlainTextContent.of(part));
-                fillStyles(mutableText, stylePath);
-                ret.add(mutableText);
-            }
-
-            // replace the marker with replacement
-            if (replacement == null) {
-                replacement = replacementSupplier.get();
-            }
-            MutableText styledReplacement = replacement.copy();
-            fillStyles(styledReplacement, stylePath);
-            ret.add(styledReplacement);
-
-            beginIndex = splitPoint + marker.length();
-        }
-
-        /* handle the tail */
-        if (beginIndex == 0) {
-            // keep translatable text
-            MutableText mutableText = text.copyContentOnly();
-            fillStyles(mutableText, stylePath);
-            ret.add(mutableText);
-            return ret;
-        }
-
-        if (beginIndex < string.length()) {
-            String part = string.substring(beginIndex);
-
-            MutableText mutableText = MutableText.of(PlainTextContent.of(part));
-            fillStyles(mutableText, stylePath);
-            ret.add(mutableText);
+        /* append the tail string if exists */
+        if (fromIndex < string.length()) {
+            ret.add(Text.literal(string.substring(fromIndex)));
         }
 
         return ret;
