@@ -74,9 +74,9 @@ public class ExtendedCommandSource {
 
         ServerPlayerEntity contextualPlayer = getPlaceholderParsingSource().getPlayer();
         if (contextualPlayer != null) {
-            string = TextHelper.resolvePlaceholder(contextualPlayer, string);
+            string = TextHelper.parsePlaceholder(contextualPlayer, string);
         } else {
-            string = TextHelper.resolvePlaceholder(ServerHelper.getDefaultServer(), string);
+            string = TextHelper.parsePlaceholder(ServerHelper.getDefaultServer(), string);
         }
 
         return string;
