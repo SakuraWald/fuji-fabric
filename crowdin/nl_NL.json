@@ -12,7 +12,7 @@
   "cancel": "<red>Annuleren",
   "chat.current_pos": "Huidige Positie",
   "chat.format.reset": "<gold>Chat formaat is gereset</gold>",
-  "chat.format.set": "<gold>Chat formaat is gewijzigd, huidige stijl:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Klik om opnieuw in te stellen '><click:run_command:/chat format reset>   [Reset]</click></hover></red>",
+  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat style reset>   [Reset]</click></hover></red>",
   "chat.format.show": "Uur-Bericht",
   "chat.xaero_waypoint_add": "Klik om een Xaero's minimap waypoint toe te voegen",
   "chat.xaero_waypoint_add.command": "/xaero_waypoint_add:Waypoint:·:%d:%s:%d:0:false:0:Internal_%s_waypoints",

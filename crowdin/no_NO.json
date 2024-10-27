@@ -12,7 +12,7 @@
   "cancel": "<red>Avbryt",
   "chat.current_pos": "Strømsposisjon",
   "chat.format.reset": "<gold>Chat format har blitt tilbakestilt</gold>",
-  "chat.format.set": "<gold>Chat format har blitt endret, nåværende stil:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Klikk for å tilbakestille'><click:run_command:/chat format reset>   [Reset]</click></hover></red>",
+  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat style reset>   [Reset]</click></hover></red>",
   "chat.format.show": "Diny-melding",
   "chat.xaero_waypoint_add": "Klikk for å legge til et Xaeros minimale veipunkt",
   "chat.xaero_waypoint_add.command": "/xaero_waypoint_add:Waypoint:·:%d:%s:%d:0:false:0:Internal_%s_waypoints",
