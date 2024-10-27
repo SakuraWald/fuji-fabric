@@ -1,7 +1,7 @@
 package io.github.sakurawald.module.initializer.command_cooldown.config.model;
 
 import com.google.gson.annotations.SerializedName;
-import io.github.sakurawald.core.structure.CommandCooldown;
+import io.github.sakurawald.module.initializer.command_cooldown.structure.CommandCooldown;
 
 import java.util.HashMap;
 import java.util.Map;
