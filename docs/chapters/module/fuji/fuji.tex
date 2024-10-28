@@ -4,23 +4,23 @@
 This module provides the command \cmd{/fuji}, which includes some operations on fuji itself.
 
 \LevelTwo{Command}
-\LevelThree{/fuji reload}
+\fcmd{/fuji reload}
 Reload all \ttt{configuration files} and all \ttt{modules}.
 
 \begin{note}{Module itself can't be hot reloaded}
     After you \ttt{enable} or \ttt{disable} a module, you must \ttt{restart} the server.
 \end{note}
 
-\LevelThree{/fuji about}
+\fcmd{/fuji about}
 Open a gui to display the about, including the mod version and contributor list.
 
-\LevelThree{/fuji inspect modules}
+\fcmd{/fuji inspect modules}
 Inspect all the enabled/disabled modules.
 
-\LevelThree{/fuji inspect server-commands}
+\fcmd{/fuji inspect server-commands}
 Inspect all the registered commands in the server.
 
-\LevelThree{/fuji inspect fuji-commands}
+\fcmd{/fuji inspect fuji-commands}
 Inspect all the commands registered by fuji mod.
 
 \begin{note}{This will not show the requirement override from command permission module}
@@ -28,12 +28,12 @@ Inspect all the commands registered by fuji mod.
     If you are using~\nameref{ch:command_permission} module, then this gui will not show the \ttt{overrided requirement} of a command.
 \end{note}
 
-\LevelThree{/fuji inspect argument-types}
+\fcmd{/fuji inspect argument-types}
 Inspect all the registered argument types.
 
-\LevelThree{/fuji inspect configurations}
+\fcmd{/fuji inspect configurations}
 Inspect all the loaded configuration files.
 
-\LevelThree{/fuji inspect registry}
+\fcmd{/fuji inspect registry}
 Inspect the registries in server.
 
