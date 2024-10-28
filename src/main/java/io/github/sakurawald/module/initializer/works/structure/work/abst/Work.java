@@ -6,7 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import eu.pb4.sgui.api.gui.SimpleGui;
-import io.github.sakurawald.core.auxiliary.DateUtil;
+import io.github.sakurawald.core.auxiliary.ChronosUtil;
 import io.github.sakurawald.core.auxiliary.minecraft.GuiHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.ServerHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
@@ -203,7 +203,7 @@ public abstract class Work {
         if (this.introduction != null) {
             ret.add(TextHelper.getTextByKey(player, "works.work.prop.introduction", this.introduction));
         }
-        ret.add(TextHelper.getTextByKey(player, "works.work.prop.time", DateUtil.toStandardDateFormat(this.createTimeMS)));
+        ret.add(TextHelper.getTextByKey(player, "works.work.prop.time", ChronosUtil.toStandardDateFormat(this.createTimeMS)));
         ret.add(TextHelper.getTextByKey(player, "works.work.prop.dimension", this.level));
         ret.add(TextHelper.getTextByKey(player, "works.work.prop.coordinate", this.x, this.y, this.z));
         return ret;
