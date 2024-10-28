@@ -2,6 +2,7 @@
 \documentclass[10pt,oneside]{book}
 
 % Packages
+
 % use a4 paper
 \usepackage[a4paper, total={6in, 8in}]{geometry}
 
@@ -30,6 +31,17 @@
 \DisableLigatures[-]{}
 
 %\usepackage[parfill]{parskip}
+
+% use fancy header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+%\fancyhf{}
+%\fancyfoot[LE,RO]{\thepage}
+%\fancyhead[RO]{\textbf{\nouppercase{\rightmark}}}
+%\fancyhead[LE]{\slshape\nouppercase{\leftmark}}
+\fancyhead[LE,RO]{\nouppercase{\rightmark}}
+\fancyhead[LO,RE]{\textbf{\nouppercase{\leftmark}}}
+\fancyfoot[C]{\thepage}
 
 % Macros
 \input{macros/macro}
