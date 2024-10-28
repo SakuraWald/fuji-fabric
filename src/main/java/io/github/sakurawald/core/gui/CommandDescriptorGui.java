@@ -45,16 +45,19 @@ public class CommandDescriptorGui extends PagedGui<CommandDescriptor> {
 
     @Override
     protected GuiElementInterface toGuiElement(CommandDescriptor entity) {
+        List<Text> lore = new ArrayList<>();
+        lore.addAll(List.of(
+            TextHelper.getTextByKey(getPlayer(), "command.source.can_be_executed_by_console", entity.canBeExecutedByConsole())
+            , TextHelper.getTextByKey(getPlayer(), "command.descriptor.type", entity.getClass().getSimpleName())
+            , TextHelper.getTextByKey(getPlayer(), "command.requirement.level_permission", entity.computeLevelPermission())
+            , TextHelper.getTextByKey(getPlayer(), "command.requirement.string_permission", entity.computeStringPermission())
+        ));
+        lore.addAll(computeLore(entity));
+
         return new GuiElementBuilder()
             .setName(Text.literal(entity.computeCommandSyntax()))
-            .setLore(List.of(
-                TextHelper.getTextByKey(getPlayer(), "command.source.can_be_executed_by_console", entity.canBeExecutedByConsole())
-                , TextHelper.getTextByKey(getPlayer(), "command.descriptor.type", entity.getClass().getSimpleName())
-                , TextHelper.getTextByKey(getPlayer(), "command.requirement.level_permission", entity.computeLevelPermission())
-                , TextHelper.getTextByKey(getPlayer(), "command.requirement.string_permission", entity.computeStringPermission())
-            ))
             .setItem(Items.REPEATING_COMMAND_BLOCK)
-            .setLore(this.computeLore(entity))
+            .setLore(lore)
             .build();
     }
 
