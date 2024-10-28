@@ -1,6 +1,5 @@
 package io.github.sakurawald.module.initializer.command_scheduler;
 
-import io.github.sakurawald.Fuji;
 import io.github.sakurawald.core.annotation.Document;
 import io.github.sakurawald.core.auxiliary.LogUtil;
 import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
@@ -9,7 +8,6 @@ import io.github.sakurawald.core.command.annotation.CommandRequirement;
 import io.github.sakurawald.core.command.annotation.CommandSource;
 import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
 import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
-import io.github.sakurawald.core.config.transformer.impl.MoveFileIntoModuleConfigDirectoryTransformer;
 import io.github.sakurawald.core.manager.Managers;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
 import io.github.sakurawald.module.initializer.command_scheduler.command.argument.wrapper.JobName;
@@ -28,8 +26,7 @@ import java.util.List;
 public class CommandSchedulerInitializer extends ModuleInitializer {
 
     public static final BaseConfigurationHandler<CommandSchedulerConfigModel> scheduler = new ObjectConfigurationHandler<>("scheduler.json", CommandSchedulerConfigModel.class)
-        .autoSaveEveryMinute()
-        .addTransformer(new MoveFileIntoModuleConfigDirectoryTransformer(Fuji.CONFIG_PATH.resolve("scheduler.json"), CommandSchedulerInitializer.class));
+        .autoSaveEveryMinute();
 
     @Override
     protected void onInitialize() {

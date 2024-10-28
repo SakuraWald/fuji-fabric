@@ -1,7 +1,6 @@
 package io.github.sakurawald.module.initializer.head;
 
 import com.mojang.brigadier.context.CommandContext;
-import io.github.sakurawald.Fuji;
 import io.github.sakurawald.core.annotation.Cite;
 import io.github.sakurawald.core.annotation.Document;
 import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
@@ -10,7 +9,6 @@ import io.github.sakurawald.core.command.annotation.CommandRequirement;
 import io.github.sakurawald.core.command.annotation.CommandSource;
 import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
 import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
-import io.github.sakurawald.core.config.transformer.impl.MoveFileIntoModuleConfigDirectoryTransformer;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
 import io.github.sakurawald.module.initializer.head.config.model.HeadConfigModel;
 import io.github.sakurawald.module.initializer.head.gui.HeadGui;
@@ -22,8 +20,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 @CommandNode("head")
 public class HeadInitializer extends ModuleInitializer {
 
-    public static final BaseConfigurationHandler<HeadConfigModel> head = new ObjectConfigurationHandler<>("head.json", HeadConfigModel.class)
-        .addTransformer(new MoveFileIntoModuleConfigDirectoryTransformer(Fuji.CONFIG_PATH.resolve("head.json"), HeadInitializer.class));
+    public static final BaseConfigurationHandler<HeadConfigModel> head = new ObjectConfigurationHandler<>("head.json", HeadConfigModel.class);
 
     @CommandNode("sync")
     @CommandRequirement(level = 4)

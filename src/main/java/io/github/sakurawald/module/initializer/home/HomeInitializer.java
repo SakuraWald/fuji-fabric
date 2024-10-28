@@ -1,6 +1,5 @@
 package io.github.sakurawald.module.initializer.home;
 
-import io.github.sakurawald.Fuji;
 import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.PermissionHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
@@ -9,7 +8,6 @@ import io.github.sakurawald.core.command.annotation.CommandSource;
 import io.github.sakurawald.core.command.exception.AbortCommandExecutionException;
 import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
 import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
-import io.github.sakurawald.core.config.transformer.impl.MoveFileIntoModuleConfigDirectoryTransformer;
 import io.github.sakurawald.core.structure.SpatialPose;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
 import io.github.sakurawald.module.initializer.home.command.argument.wrapper.HomeName;
@@ -26,8 +24,7 @@ public class HomeInitializer extends ModuleInitializer {
 
     @Getter
     private static final BaseConfigurationHandler<HomeDataModel> storage = new ObjectConfigurationHandler<>("home.json", HomeDataModel.class)
-        .autoSaveEveryMinute()
-        .addTransformer(new MoveFileIntoModuleConfigDirectoryTransformer(Fuji.CONFIG_PATH.resolve("home.json"), HomeInitializer.class));
+        .autoSaveEveryMinute();
 
     public static Map<String, SpatialPose> withHomes(@NotNull ServerPlayerEntity player) {
         String playerName = player.getGameProfile().getName();
