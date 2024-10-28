@@ -63,7 +63,7 @@ public class CommandHelper {
         public static final int PASS = 0;
         public static final int SUCCESS = 1;
 
-        public static int fromBoolean(boolean value) {
+        private static int fromBoolean(boolean value) {
             return value ? SUCCESS : FAIL;
         }
 

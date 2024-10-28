@@ -98,7 +98,7 @@ public class GuiHelper {
         }
     }
 
-    public boolean isInvalidSlotInPlayerInventory(int index) {
+    public boolean isInvalidSlotInsidePlayerInventory(int index) {
         return index == 41 || index == 42 || index == 43 || index == 44;
     }
 

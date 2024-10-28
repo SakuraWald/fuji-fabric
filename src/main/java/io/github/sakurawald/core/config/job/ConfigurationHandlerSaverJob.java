@@ -11,9 +11,9 @@ import org.quartz.JobExecutionContext;
 import java.util.function.Supplier;
 
 @NoArgsConstructor
-public class SaveConfigurationHandlerJob extends CronJob {
+public class ConfigurationHandlerSaverJob extends CronJob {
 
-    public SaveConfigurationHandlerJob(String jobName, JobDataMap jobDataMap, Supplier<String> cronSupplier) {
+    public ConfigurationHandlerSaverJob(String jobName, JobDataMap jobDataMap, Supplier<String> cronSupplier) {
         super(null, jobName, jobDataMap, cronSupplier);
     }
 

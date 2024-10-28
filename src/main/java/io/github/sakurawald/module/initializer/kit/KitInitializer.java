@@ -37,7 +37,7 @@ public class KitInitializer extends ModuleInitializer {
     /* schema keys */
     private static final String INVENTORY = "inventory";
 
-    private static final Path KIT_DATA_DIR_PATH = ReflectionUtil.getModuleConfigPath(KitInitializer.class).resolve("kit-data");
+    private static final Path KIT_DATA_DIR_PATH = ReflectionUtil.computeModuleConfigPath(KitInitializer.class).resolve("kit-data");
 
     public static @NotNull List<String> listKitNames() {
         try (Stream<Path> list = Files.list(KIT_DATA_DIR_PATH)) {

@@ -10,7 +10,6 @@ import lombok.experimental.UtilityClass;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -30,7 +29,7 @@ public class MojangProfileFetcher {
     public static @Nullable UUID fetchOnlineUUID(String playerName) {
         String rawUUID;
         try {
-            rawUUID = JsonParser.parseString(IOUtil.get(URI.create(API_SERVER + playerName))).getAsJsonObject().get("id").getAsString();
+            rawUUID = JsonParser.parseString(IOUtil.requestGet(API_SERVER + playerName)).getAsJsonObject().get("id").getAsString();
         } catch (IOException e) {
             LogUtil.debug("failed to fetch online uuid from mojang server for {}", playerName);
             return null;
@@ -41,7 +40,7 @@ public class MojangProfileFetcher {
     public static @Nullable Property fetchOnlineSkin(String playerName) {
         try {
             UUID uuid = fetchOnlineUUID(playerName);
-            String json = IOUtil.get(URI.create(SESSION_SERVER + uuid + "?unsigned=false"));
+            String json = IOUtil.requestGet(SESSION_SERVER + uuid + "?unsigned=false");
 
             JsonObject texture = JsonParser.parseString(json)
                 .getAsJsonObject()

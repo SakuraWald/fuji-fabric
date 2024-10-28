@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
-import java.net.URI;
 
 public class MineSkinSkinProvider {
 
@@ -20,7 +19,7 @@ public class MineSkinSkinProvider {
         try {
             String param = "{\"variant\":\"%s\",\"name\":\"%s\",\"visibility\":%d,\"url\":\"%s\"}"
                 .formatted(variant.toString(), "none", 0, url);
-            String json = IOUtil.post(URI.create(API_ENDPOINT), param);
+            String json = IOUtil.requestPost(API_ENDPOINT, param);
 
             JsonObject texture = JsonParser.parseString(json)
                 .getAsJsonObject()

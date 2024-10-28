@@ -23,7 +23,7 @@ import java.util.function.Function;
 @UtilityClass
 public class NbtHelper {
 
-    public static <T extends NbtElement> void setPath(@NotNull NbtCompound root, @NotNull String path, T value) {
+    private static <T extends NbtElement> void setPath(@NotNull NbtCompound root, @NotNull String path, T value) {
         /* walk the path */
         String[] nodes = path.split("\\.");
         for (int i = 0; i < nodes.length - 1; i++) {
@@ -50,7 +50,7 @@ public class NbtHelper {
         return (T) readPath(root, path);
     }
 
-    public static @Nullable NbtElement readPath(@NotNull NbtCompound root, @NotNull String path) {
+    private static @Nullable NbtElement readPath(@NotNull NbtCompound root, @NotNull String path) {
         // search the path
         String[] nodes = path.split("\\.");
         for (int i = 0; i < nodes.length - 1; i++) {

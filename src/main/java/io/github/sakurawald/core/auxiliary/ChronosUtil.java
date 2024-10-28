@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 
 @UtilityClass
-public class DateUtil {
+public class ChronosUtil {
 
     private static final SimpleDateFormat STANDARD_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 

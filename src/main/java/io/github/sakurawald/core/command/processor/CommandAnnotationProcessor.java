@@ -74,10 +74,9 @@ public class CommandAnnotationProcessor {
     }
 
     private static void processClass(Class<?> clazz) {
-        Set<Method> methods = ReflectionUtil.getMethodsWithAnnotation(clazz, CommandNode.class);
-        for (Method method : methods) {
-            processMethod(clazz, method);
-        }
+        ReflectionUtil
+            .getMethodsWithAnnotation(clazz, CommandNode.class)
+            .forEach(method -> processMethod(clazz, method));
     }
 
     private static void processMethod(Class<?> clazz, Method method) {

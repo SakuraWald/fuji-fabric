@@ -2,7 +2,7 @@ package io.github.sakurawald.module.initializer.works.structure.work.impl;
 
 import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import eu.pb4.sgui.api.gui.SimpleGui;
-import io.github.sakurawald.core.auxiliary.DateUtil;
+import io.github.sakurawald.core.auxiliary.ChronosUtil;
 import io.github.sakurawald.core.auxiliary.minecraft.GuiHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.gui.ConfirmGui;
@@ -79,8 +79,8 @@ public class ProductionWork extends Work {
             return ret;
         }
 
-        ret.add(TextHelper.getTextByKey(player, "works.production_work.prop.sample_start_time", DateUtil.toStandardDateFormat(this.sample.sampleStartTimeMS)));
-        ret.add(TextHelper.getTextByKey(player, "works.production_work.prop.sample_end_time", DateUtil.toStandardDateFormat(this.sample.sampleEndTimeMS)));
+        ret.add(TextHelper.getTextByKey(player, "works.production_work.prop.sample_start_time", ChronosUtil.toStandardDateFormat(this.sample.sampleStartTimeMS)));
+        ret.add(TextHelper.getTextByKey(player, "works.production_work.prop.sample_end_time", ChronosUtil.toStandardDateFormat(this.sample.sampleEndTimeMS)));
         ret.add(TextHelper.getTextByKey(player, "works.production_work.prop.sample_dimension", this.sample.sampleDimension));
         ret.add(TextHelper.getTextByKey(player, "works.production_work.prop.sample_coordinate", this.sample.sampleX, this.sample.sampleY, this.sample.sampleZ));
         ret.add(TextHelper.getTextByKey(player, "works.production_work.prop.sample_distance", this.sample.sampleDistance));

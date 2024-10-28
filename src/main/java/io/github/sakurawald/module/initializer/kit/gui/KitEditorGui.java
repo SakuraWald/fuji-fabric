@@ -82,7 +82,7 @@ public class KitEditorGui extends PagedGui<Kit> {
                 @Override
                 public void onSlotClick(int i, int j, SlotActionType slotActionType, PlayerEntity playerEntity) {
                     // note: skip BARRIER item stack click.
-                    if (GuiHelper.isInvalidSlotInPlayerInventory(i)) return;
+                    if (GuiHelper.isInvalidSlotInsidePlayerInventory(i)) return;
                     super.onSlotClick(i, j, slotActionType, playerEntity);
                 }
 
@@ -101,12 +101,12 @@ public class KitEditorGui extends PagedGui<Kit> {
     }
 
     @Override
-    public PagedGui<Kit> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Kit> entities, int pageIndex) {
+    protected PagedGui<Kit> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Kit> entities, int pageIndex) {
         return new KitEditorGui(player, entities, pageIndex);
     }
 
     @Override
-    public GuiElementInterface toGuiElement(@NotNull Kit entity) {
+    protected GuiElementInterface toGuiElement(@NotNull Kit entity) {
         return new GuiElementBuilder().setItem(Items.CHEST)
             .setName(Text.literal(entity.getName()))
             .setCallback((event) -> {
@@ -126,7 +126,8 @@ public class KitEditorGui extends PagedGui<Kit> {
     }
 
     @Override
-    public @NotNull List<Kit> filter(@NotNull String keyword) {
+    @NotNull
+    protected List<Kit> filter(@NotNull String keyword) {
         return getEntities().stream().filter(e -> e.getName().contains(keyword)).toList();
     }
 }

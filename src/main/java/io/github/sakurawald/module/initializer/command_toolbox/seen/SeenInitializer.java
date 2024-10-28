@@ -2,7 +2,7 @@ package io.github.sakurawald.module.initializer.command_toolbox.seen;
 
 import io.github.sakurawald.Fuji;
 import io.github.sakurawald.core.annotation.Document;
-import io.github.sakurawald.core.auxiliary.DateUtil;
+import io.github.sakurawald.core.auxiliary.ChronosUtil;
 import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.command.annotation.CommandNode;
@@ -31,7 +31,7 @@ public class SeenInitializer extends ModuleInitializer {
 
         if (data.model().player2seen.containsKey(target)) {
             Long time = data.model().player2seen.get(target);
-            TextHelper.sendMessageByKey(source, "seen.success", target, DateUtil.toStandardDateFormat(time));
+            TextHelper.sendMessageByKey(source, "seen.success", target, ChronosUtil.toStandardDateFormat(time));
         } else {
             TextHelper.sendMessageByKey(source, "seen.fail");
         }
