@@ -30,7 +30,7 @@ public class CommandEventConfigModel {
             public List<String> command_list = new ArrayList<>() {
                 {
                     this.add("send-message %player:name% you just break a block.");
-                    this.add("experience add %player:name% %fuji:random 2 8%");
+                    this.add("say dry run -> experience add %player:name% %fuji:random 2 8%");
                 }
             };
         }
