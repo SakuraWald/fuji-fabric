@@ -25,5 +25,4 @@
             - json operations
             - text operation
     - application: /air, /alert, /respawn, /vote
-
-- docs: remove the command level in docs
+- feature: add @CommandTarget annotation

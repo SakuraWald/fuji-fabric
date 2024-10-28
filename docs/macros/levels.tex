@@ -23,6 +23,10 @@
 \let\stdl@paragraph\l@paragraph
 \renewcommand*{\l@paragraph}[2]{\stdl@paragraph{\hspace{10pt}#1}{#2}}
 \makeatother
+
+\titlespacing{\paragraph}{0pt}{1em}{1em}
+%\titlespacing{\paragraph}{0pt}{\parskip}{-\parskip}
+
 \newcommand{\LevelFour}[1]{\paragraph{#1}\mbox{}\\}
 
 % level 5
@@ -31,6 +35,8 @@
 \renewcommand*{\l@subparagraph}[2]{\stdl@subparagraph{\hspace{40pt}#1}{#2}}
 \makeatother
 
-\titlespacing*{\subparagraph}{15pt}{0ex plus 1ex minus .2ex}{1em}
+\titlespacing{\subparagraph}{16pt}{1em}{1em}
 
 \newcommand{\LevelFive}[1]{\subparagraph{#1}\mbox{}\\}
+
+
