@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class SkinStorage {
 
-    private final Path rootPath = ReflectionUtil.getModuleConfigPath(SkinInitializer.class).resolve("skin-data");
+    private final Path rootPath = ReflectionUtil.computeModuleConfigPath(SkinInitializer.class).resolve("skin-data");
 
     private final Map<UUID, Property> uuid2skin = new HashMap<>();
 

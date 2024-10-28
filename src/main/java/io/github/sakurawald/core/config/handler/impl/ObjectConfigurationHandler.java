@@ -18,7 +18,7 @@ public class ObjectConfigurationHandler<T> extends BaseConfigurationHandler<T> {
     }
 
     public ObjectConfigurationHandler(@NotNull String other, Class<T> typeOfModel) {
-        this(ReflectionUtil.getModuleConfigPath(typeOfModel).resolve(other), typeOfModel);
+        this(ReflectionUtil.computeModuleConfigPath(typeOfModel).resolve(other), typeOfModel);
     }
 
     @SneakyThrows(Exception.class)

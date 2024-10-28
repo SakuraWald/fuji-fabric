@@ -26,7 +26,7 @@ import java.nio.file.Path;
 @UtilityClass
 public class HeadProvider {
 
-    private static final Path HEAD_DATA_DIR_PATH = ReflectionUtil.getModuleConfigPath(HeadInitializer.class).resolve("head-data").toAbsolutePath();
+    private static final Path HEAD_DATA_DIR_PATH = ReflectionUtil.computeModuleConfigPath(HeadInitializer.class).resolve("head-data").toAbsolutePath();
 
     private static final String HEAD_DATABASE_API = "https://minecraft-heads.com/scripts/api.php?cat=%s&tags=true";
 

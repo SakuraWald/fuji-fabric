@@ -2,7 +2,7 @@ package io.github.sakurawald.module.initializer.gameplay.carpet.fake_player_mana
 
 import com.mojang.brigadier.context.CommandContext;
 import io.github.sakurawald.core.annotation.Document;
-import io.github.sakurawald.core.auxiliary.DateUtil;
+import io.github.sakurawald.core.auxiliary.ChronosUtil;
 import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.ServerHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
@@ -53,13 +53,13 @@ public class FakePlayerManagerInitializer extends ModuleInitializer {
                 List<String> newValue = e.getValue()
                     .stream()
                     .filter(fakePlayerName -> {
-                        ServerPlayerEntity fakePlayer = ServerHelper.getPlayer(fakePlayerName);
+                        ServerPlayerEntity fakePlayer = ServerHelper.getPlayerByName(fakePlayerName);
                         if (fakePlayer == null) return false;
 
                         /* check: expiration */
                         if (currentTimeMs >= expiration) {
                             /* auto-renew the fake players if the owner player is online */
-                            ServerPlayerEntity owner = ServerHelper.getPlayer(ownerPlayerName);
+                            ServerPlayerEntity owner = ServerHelper.getPlayerByName(ownerPlayerName);
                             if (owner != null) {
                                 renewMyFakePlayers(owner);
                                 return true;
@@ -118,13 +118,13 @@ public class FakePlayerManagerInitializer extends ModuleInitializer {
         long newExpiration = System.currentTimeMillis() + renewDuration;
         player2expiration.put(player.getGameProfile().getName(), newExpiration);
 
-        TextHelper.sendMessageByKey(player, "fake_player_manager.renew.success", DateUtil.toStandardDateFormat(newExpiration));
+        TextHelper.sendMessageByKey(player, "fake_player_manager.renew.success", ChronosUtil.toStandardDateFormat(newExpiration));
     }
 
     public static void invalidFakePlayers() {
         player2fakePlayers.values()
             .forEach(value -> value.removeIf(fakePlayerName -> {
-                ServerPlayerEntity fakePlayer = ServerHelper.getPlayer(fakePlayerName);
+                ServerPlayerEntity fakePlayer = ServerHelper.getPlayerByName(fakePlayerName);
                 return fakePlayer == null || fakePlayer.isRemoved();
             }));
     }

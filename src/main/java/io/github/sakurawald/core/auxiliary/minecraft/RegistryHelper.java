@@ -11,7 +11,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
@@ -21,21 +20,20 @@ import org.jetbrains.annotations.Nullable;
 @UtilityClass
 public class RegistryHelper {
 
-    public static @NotNull String ofString(@NotNull ItemStack itemStack) {
-        Item item = itemStack.getItem().asItem();
-        return Registries.ITEM.getId(item).toString();
-    }
-
     public static @NotNull String ofString(@NotNull Item item) {
         return Registries.ITEM.getId(item).toString();
     }
 
-    public static @NotNull String ofString(@NotNull BlockState blockState) {
-        return ofString(blockState.getBlock());
+    public static @NotNull String ofString(@NotNull ItemStack itemStack) {
+        return ofString(itemStack.getItem());
     }
 
     public static @NotNull String ofString(Block block) {
         return Registries.BLOCK.getId(block).toString();
+    }
+
+    public static @NotNull String ofString(@NotNull BlockState blockState) {
+        return ofString(blockState.getBlock());
     }
 
     public static @NotNull String ofString(@NotNull Entity entity) {
@@ -46,25 +44,20 @@ public class RegistryHelper {
         return world.getRegistryKey().getValue().toString();
     }
 
-    public static @NotNull String ofString(@NotNull ServerWorld serverWorld) {
-        return serverWorld.getRegistryKey().getValue().toString();
-    }
-
     public static <T> Registry<T> ofRegistry(RegistryKey<? extends Registry<? extends T>> registryKey) {
-        return ServerHelper.getDefaultServer().getCombinedDynamicRegistries().getCombinedRegistryManager().getOrThrow(registryKey);
+        return ServerHelper.getDefaultServer()
+            .getCombinedDynamicRegistries()
+            .getCombinedRegistryManager()
+            .getOrThrow(registryKey);
     }
 
-    public static <T> RegistryKey<T> ofRegistryKey(@NotNull RegistryKey<? extends Registry<T>> registryKey, Identifier identifier) {
-        return RegistryKey.of(registryKey, identifier);
-    }
-
-    @SuppressWarnings("unused")
-    public static <T> RegistryEntry.@Nullable Reference<T> ofRegistryEntry(RegistryKey<? extends Registry<T>> registryKey, Identifier identifier) {
-        return ofRegistry(registryKey).getEntry(identifier).orElse(null);
+    public static <T> RegistryKey<T> ofRegistryKey(@NotNull RegistryKey<? extends Registry<T>> keyOfRegistry, Identifier identifier) {
+        return RegistryKey.of(keyOfRegistry, identifier);
     }
 
     public static @Nullable ServerWorld ofServerWorld(Identifier identifier) {
         RegistryKey<World> key = ofRegistryKey(RegistryKeys.WORLD, identifier);
+        // get the world instance from the server.
         return ServerHelper.getDefaultServer().getWorld(key);
     }
 
@@ -73,6 +66,7 @@ public class RegistryHelper {
     }
 
     public static RegistryWrapper.WrapperLookup getDefaultWrapperLookup() {
-        return ServerHelper.getDefaultServer().getRegistryManager();
+        return ServerHelper.getDefaultServer()
+            .getRegistryManager();
     }
 }

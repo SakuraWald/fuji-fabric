@@ -13,7 +13,7 @@ import com.jayway.jsonpath.spi.json.JsonProvider;
 import com.jayway.jsonpath.spi.mapper.GsonMappingProvider;
 import com.jayway.jsonpath.spi.mapper.MappingProvider;
 import io.github.sakurawald.core.auxiliary.LogUtil;
-import io.github.sakurawald.core.config.job.SaveConfigurationHandlerJob;
+import io.github.sakurawald.core.config.job.ConfigurationHandlerSaverJob;
 import io.github.sakurawald.core.config.transformer.abst.ConfigurationTransformer;
 import io.github.sakurawald.core.event.impl.ServerLifecycleEvents;
 import io.github.sakurawald.core.manager.impl.scheduler.ScheduleManager;
@@ -61,11 +61,11 @@ public abstract class BaseConfigurationHandler<T> {
     protected static Gson gson = new GsonBuilder()
         // the default naming policy is IDENTIFY, we ensure that the naming style is consistency, whatever the internal name is.
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        // for human
+        // for readability
         .setPrettyPrinting()
         // for mini-message language
         .disableHtmlEscaping()
-        // null-value is value, we should serialize it.
+        // null-value is legal value, we should serialize it.
         .serializeNulls()
         .create();
 
@@ -188,7 +188,7 @@ public abstract class BaseConfigurationHandler<T> {
     @SuppressWarnings("SameParameterValue")
     private void scheduleWriteStorageJob(@NotNull String cron) {
         String jobName = this.path.toString();
-        new SaveConfigurationHandlerJob(jobName, new JobDataMap() {
+        new ConfigurationHandlerSaverJob(jobName, new JobDataMap() {
             {
                 this.put(BaseConfigurationHandler.class.getName(), BaseConfigurationHandler.this);
             }

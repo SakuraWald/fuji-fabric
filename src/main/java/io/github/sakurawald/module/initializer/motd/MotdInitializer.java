@@ -29,7 +29,7 @@ public class MotdInitializer extends ModuleInitializer {
 
     private static final BaseConfigurationHandler<MotdConfigModel> config = new ObjectConfigurationHandler<>(BaseConfigurationHandler.CONFIG_JSON, MotdConfigModel.class);
 
-    private static final Path ICON_FOLDER = ReflectionUtil.getModuleConfigPath(MotdInitializer.class).resolve("icon");
+    private static final Path ICON_FOLDER = ReflectionUtil.computeModuleConfigPath(MotdInitializer.class).resolve("icon");
 
     public static @NotNull Optional<ServerMetadata.Favicon> getRandomIcon() {
         ByteArrayOutputStream byteArrayOutputStream;
