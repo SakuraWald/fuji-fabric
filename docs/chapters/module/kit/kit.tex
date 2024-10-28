@@ -41,7 +41,7 @@ Give a kit to a player.
 
     Now, create a new command using~\nameref{ch:command_bundle} module to execute the test command
     \begin{example}{The config to create a new command for cooldown test command to give a kit if the test is success}
-        \begin{json}
+        \begin{jsoncode}
         {
             "requirement": {
             "level": 0,
@@ -52,7 +52,7 @@ Give a kit to a player.
             "command-cooldown test example-kit-cooldown %player:name% --onFailed 'send-message %player:name% wait a moment (%fuji:command_cooldown_left_time example-kit-cooldown% ms)' kit give %player:name% example-kit|send-message %player:name% kit received."
             ]
         }
-        \end{json}
+        \end{jsoncode}
     \end{example}
 
 \end{example}

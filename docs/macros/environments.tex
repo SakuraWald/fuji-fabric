@@ -1,10 +1,23 @@
-\newenvironment{json}
-{\minted[autogobble,breaklines]{json}}
-{\endminted}
+\newminted{json}{
+    autogobble,
+    breaklines,
+    frame=single,
+    framerule=0.4pt,
+    framesep=2mm
+}
 
-%\BeforeBeginEnvironment{json}{\begin{tcolorbox}}
-%\AfterEndEnvironment{json}{\end{tcolorbox}}
+\newminted{sh}{
+    autogobble,
+    breaklines,
+    frame=single,
+    framerule=0.4pt,
+    framesep=2mm
+}
 
-\newenvironment{sh}
-{\minted[autogobble,breaklines]{sh}}
-{\endminted}
+\newminted{text}{
+    autogobble,
+    breaklines,
+    frame=single,
+    framerule=0.4pt,
+    framesep=2mm
+}

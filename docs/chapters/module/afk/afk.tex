@@ -27,12 +27,12 @@ In other words, if the \ttt{afk checker} is defined to run every 5 minutes, a pl
     \item[afk\_event]{
         Execute commands on afk events.
         \begin{example}{Kick a player if he enters afk state}
-            \begin{json}
+            \begin{jsoncode}
                 "on_enter_afk": [
                 "send-broadcast <gold>Player %player:name% is now afk",
                 "kick %player:name% You are kicked beacause of afk."
                 ]
-            \end{json}
+            \end{jsoncode}
         \end{example}
     }
 

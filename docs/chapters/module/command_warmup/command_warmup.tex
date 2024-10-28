@@ -10,7 +10,7 @@ This module adds a cooldown before command execution.
 
 \LevelTwo{Example}
 \begin{example}{Set warmup for all commands}
-    \begin{json}
+    \begin{jsoncode}
     {
         "command": {
         "regex": ".+",
@@ -23,13 +23,13 @@ This module adds a cooldown before command execution.
         "interrupt_in_combat": true
     }
     }
-    \end{json}
+    \end{jsoncode}
 \end{example}
 
 \begin{example}{Set warmup for all commands except the \ic{/back} command with a special setup}
     Since the rules are matched from up to down in order, you can just put the special case above.
 
-    \begin{json}
+    \begin{jsoncode}
     [
             {
             "command": {
@@ -57,12 +57,12 @@ This module adds a cooldown before command execution.
             }
         }
     ]
-    \end{json}
+    \end{jsoncode}
 \end{example}
 
 \begin{example}{Set warmup for all commands except the \ic{/back} command}
     Use \ttt{negative lookahead} to exclude a string that starts with \str{back}.
-    \begin{json}
+    \begin{jsoncode}
     {
         "command": {
         "regex": "(?!back).+",
@@ -75,12 +75,12 @@ This module adds a cooldown before command execution.
         "interrupt_in_combat": true
     }
     }
-    \end{json}
+    \end{jsoncode}
 \end{example}
 
 \begin{example}{Share the same setup for multiple commands}
     Use the \ttt{or clause} to share the same setup.
-    \begin{json}
+    \begin{jsoncode}
     {
         "command": {
         "regex": "(back)|(heal)|(feed)",
@@ -94,5 +94,5 @@ This module adds a cooldown before command execution.
     }
     }
         ,
-    \end{json}
+    \end{jsoncode}
 \end{example}
