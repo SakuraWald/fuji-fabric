@@ -20,3 +20,18 @@
 
 \definecolor{dark-green}{RGB}{0,170,0}
 \newcommand{\player}[0]{\textcolor{dark-green}{\texttt{<player> }}}
+
+% listing
+\usepackage{tocloft}
+\newcommand{\listfcmdname}{List of commands}
+\newlistof{fcmd}{fcmdfile}{\listfcmdname}
+
+\newcommand{\fcmd}[1]{%
+  \refstepcounter{fcmd}
+  \par\noindent\textbf{\thefcmd. \cmd{#1}}
+  \addcontentsline{fcmdfile}{fcmd}{\protect\numberline{\thefcmd}#1}\par}
+
+\usepackage{tocbibind}
+\renewcommand{\listoffcmd}{\begingroup
+  \tocfile{\listfcmdname}{fcmdfile}
+\endgroup}

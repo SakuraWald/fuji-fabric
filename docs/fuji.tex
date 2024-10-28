@@ -43,6 +43,9 @@
 \fancyhead[LO,RE]{\textbf{\nouppercase{\leftmark}}}
 \fancyfoot[C]{\thepage}
 
+% to listing a kind of objects
+\usepackage{listings}
+
 % Macros
 \input{macros/macro}
 
@@ -55,11 +58,15 @@
     }
     \author{sakurawald}
     \date{\today}
-
     \maketitle
-    \tableofcontents
 
+    % make toc
+    \tableofcontents
     \mainmatter
+
+    % make listing
+    \listoffcmd
+
 
     \input{chapters/concept/concept}
     \input{chapters/permission/permission}
