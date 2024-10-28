@@ -34,39 +34,3 @@
 \titlespacing*{\subparagraph}{15pt}{0ex plus 1ex minus .2ex}{1em}
 
 \newcommand{\LevelFive}[1]{\subparagraph{#1}\mbox{}\\}
-
-% level 6
-\titleclass{\subsubparagraph}{straight}[\subparagraph]
-\newcounter{subsubparagraph}[subparagraph]
-\renewcommand{\thesubsubparagraph}{\thesubparagraph.\arabic{subsubparagraph}}
-\titleformat{\subsubparagraph}[runin]
-{\normalfont\normalsize\bfseries}{\thesubsubparagraph}{1em}{}
-\makeatletter
-\newcommand\l@subsubparagraph{\@dottedtocline{6}{220pt}{7em}}
-\makeatother
-\newcommand{\LevelSix}[1]{\subsubparagraph{#1}\mbox{}\\}
-\titlespacing*{\subsubparagraph}{32pt}{2pt}{0pt}
-
-% level 7
-\titleclass{\subsubsubparagraph}{straight}[\subsubparagraph]
-\newcounter{subsubsubparagraph}[subsubparagraph]
-\renewcommand{\thesubsubsubparagraph}{\thesubsubparagraph.\arabic{subsubsubparagraph}}
-\titleformat{\subsubsubparagraph}[runin]
-{\normalfont\normalsize\bfseries}{\thesubsubsubparagraph}{1em}{}
-\titlespacing*{\subsubsubparagraph}{32pt}{3.25ex plus 1ex minus .2ex}{1em}
-\makeatletter
-\newcommand\l@subsubsubparagraph{\@dottedtocline{7}{16em}{8em}}
-\makeatother
-\newcommand{\LevelSeven}[1]{\subsubsubparagraph{#1}\mbox{}\\}
-
-% level 8
-\titleclass{\subsubsubsubparagraph}{straight}[\subsubsubparagraph]
-\newcounter{subsubsubsubparagraph}[subsubsubparagraph]
-\renewcommand{\thesubsubsubsubparagraph}{\thesubsubsubparagraph.\arabic{subsubsubsubparagraph}}
-\titleformat{\subsubsubsubparagraph}[runin]
-{\normalfont\normalsize\bfseries}{\thesubsubsubsubparagraph}{1em}{}
-\titlespacing*{\subsubsubsubparagraph}{32pt}{3.25ex plus 1ex minus .2ex}{1em}
-\makeatletter
-\newcommand\l@subsubsubsubparagraph{\@dottedtocline{8}{18em}{9em}}
-\makeatother
-\newcommand{\LevelEight}[1]{\subsubsubsubparagraph{#1}\mbox{}\\}
