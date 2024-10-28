@@ -32,6 +32,12 @@
 
 %\usepackage[parfill]{parskip}
 
+% to listing a kind of objects
+\usepackage{listings}
+
+% Macros
+\input{macros/macro}
+
 % use fancy header and footer
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -42,12 +48,6 @@
 \fancyhead[LE,RO]{\nouppercase{\rightmark}}
 \fancyhead[LO,RE]{\textbf{\nouppercase{\leftmark}}}
 \fancyfoot[C]{\thepage}
-
-% to listing a kind of objects
-\usepackage{listings}
-
-% Macros
-\input{macros/macro}
 
 % Document
 \begin{document}
@@ -67,7 +67,7 @@
     % make listing
     \listoffcmd
 
-
+    % input chapters
     \input{chapters/concept/concept}
     \input{chapters/permission/permission}
     \input{chapters/meta/meta}

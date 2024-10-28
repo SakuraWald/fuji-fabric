@@ -7,25 +7,33 @@ This module provides commands to send echo to players.
 \end{note}
 
 \LevelTwo{Sub-Module}
-\LevelThree{/send-message}
+\LevelThree{send-message}
+\fcmd{/send-message}
+
 
 \begin{example}{Say hello to a player}
     \cmd{/send-message \player Hello \ph{player:name}}
 \end{example}
 
-\LevelThree{/send-broadcast}
+\LevelThree{send-broadcast}
+\fcmd{/send-broadcast}
+
 
 \begin{example}{Say hello to all players}
     \cmd{/send-broadcast Hello \ph{player:name}}
 \end{example}
 
-\LevelThree{/send-actionbar}
+\LevelThree{send-actionbar}
+\fcmd{/send-actionbar}
+
 
 \begin{example}{Say hello to a player}
     \cmd{/send-actionbar \player Hello \ph{player:name}}
 \end{example}
 
-\LevelThree{/send-title}
+\LevelThree{send-title}
+\fcmd{/send-title}
+
 \begin{example}{Send title to a player}
     \cmd{/send-title \player --mainTitle "<rainbow>Hello" --subTitle "<blue>World" --fadeInTicks 60 --stayTicks 60 --fadeOutTicks 60}
 \end{example}
@@ -33,13 +41,17 @@ This module provides commands to send echo to players.
 \begin{example}{Send title to online players}
     \cmd{/foreach send-title \ph{player:name} --mainTitle "<rainbow>Hello \ph{player:name}"}
 \end{example}
-\LevelThree{/send-toast}
+\LevelThree{send-toast}
+\fcmd{/send-toast}
+
 
 \begin{example}{Send toast to a player}
     \cmd{/send-toast \player --icon minecraft:golden\_carrot <rb>eat this carrot}
 \end{example}
 
-\LevelThree{/send-chat}
+\LevelThree{send-chat}
+\fcmd{/send-chat}
+
 
 \begin{example}{Send chat as a player}
     \cmd{/send-chat Steve i am steve.}
@@ -49,7 +61,9 @@ This module provides commands to send echo to players.
     \cmd{/foreach send-chat \ph{player:name} i am \ph{player:name}}
 \end{example}
 
-\LevelThree{/send-bossbar}
+\LevelThree{send-bossbar}
+\fcmd{/send-bossbar}
+
 \begin{example}{A simple exapmle}
     \cmd{/send-bossbar \player Hello World}
 \end{example}
@@ -58,7 +72,9 @@ This module provides commands to send echo to players.
     \cmd{/send-bossbar \player --stepType BACKWARD --totalMs 5000 --color PURPLE --style NOTCHED\_6 --notifyMeOnComplete true --commandList "say the player \ph{player:name} is healed|heal \ph{player:name}" <rb>Healing is coming [elapsed\_time]/[total\_time]/[left\_time]}
 \end{example}
 
-\LevelThree{/send-custom}
+\LevelThree{send-custom}
+\fcmd{/send-custom}
+
 \begin{example}{Create a custom text}
     Create a plain text file named \str{guide} in \textbf{config/fuji/modules/echo/send\_custom/custom-text/guide} with content:
     \begin{textcode}

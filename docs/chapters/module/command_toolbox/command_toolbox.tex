@@ -5,26 +5,56 @@ This module provides some simple commands.
 (misc commands)
 
 \LevelTwo{Sub-Module}
-\LevelThree{/bed}
-\LevelThree{/extinguish}
-\LevelThree{/feed}
-\LevelThree{/fly}
-\LevelThree{/god}
-\LevelThree{/hat}
-\LevelThree{/sit}
-\LevelThree{/heal}
+\LevelThree{bed}
+\fcmd{/bed}
 
-\LevelThree{/lore}
+\LevelThree{extinguish}
+\fcmd{/extinguish}
+
+\LevelThree{feed}
+\fcmd{/feed}
+
+\LevelThree{fly}
+\fcmd{/fly}
+
+\LevelThree{god}
+\fcmd{/god}
+
+\LevelThree{hat}
+\fcmd{/hat}
+
+\LevelThree{sit}
+\fcmd{/sit}
+
+\LevelThree{heal}
+\fcmd{/heal}
+
+
+\LevelThree{lore}
+\fcmd{/lore}
+
 \begin{example}{Set lore for item in mainhand}
     \cmd{/lore set <rainbow>the first line<newline><bold><green>the second}
 \end{example}
 
-\LevelThree{/more}
-\LevelThree{/ping}
-\LevelThree{/realname}
-\LevelThree{/nickname}
-\LevelThree{/repair}
-\LevelThree{/reply}
+\LevelThree{more}
+\fcmd{/more}
+
+\LevelThree{ping}
+\fcmd{/ping}
+
+\LevelThree{realname}
+\fcmd{/realname}
+
+\LevelThree{nickname}
+\fcmd{/nickname}
+
+\LevelThree{repair}
+\fcmd{/repair}
+
+\LevelThree{reply}
+\fcmd{/reply}
+
 \LevelFour{How it works?}
 When a player use the command \cmd{/msg} or \cmd{/tell}, we track the usage, and allow the target player to use \cmd{/reply} to send message to the player recently meg he.
 
@@ -33,11 +63,21 @@ When a player use the command \cmd{/msg} or \cmd{/tell}, we track the usage, and
 \end{tips}
 
 
-\LevelThree{/seen}
-\LevelThree{/suicide}
-\LevelThree{/top}
-\LevelThree{/trashcan}
-\LevelThree{/tppos}
+\LevelThree{seen}
+\fcmd{/seen}
+
+\LevelThree{suicide}
+\fcmd{/suicide}
+
+\LevelThree{top}
+\fcmd{/top}
+
+\LevelThree{trashcan}
+\fcmd{/trashcan}
+
+\LevelThree{tppos}
+\fcmd{/tppos}
+
 
 \LevelFour{Example}
 \begin{example}{Teleport to offline location of a player}
@@ -58,7 +98,9 @@ When a player use the command \cmd{/msg} or \cmd{/tell}, we track the usage, and
     \cmd{/tppos --centerX 0 --centerZ 0 --circle true --minRange 512 --maxRange 2048 --minY 32 --maxY 128 --maxTryTimes 8 --dimension minecraft:overworld}
 \end{example}
 
-\LevelThree{/warp}
+\LevelThree{warp}
+\fcmd{/warp}
+
 \LevelFour{Example}
 \begin{example}{Set a display name for a warp}
     \cmd{/warp set-name <warp> <blue>This is the display name}
@@ -69,10 +111,24 @@ When a player use the command \cmd{/msg} or \cmd{/tell}, we track the usage, and
 \end{example}
 
 
-\LevelThree{/burn}
-\LevelThree{/help-op}
-\LevelThree{/near}
-\LevelThree{/jump}
-\LevelThree{/compass}
-\LevelThree{/glow}
-\LevelThree{/freeze}
+\LevelThree{burn}
+\fcmd{/burn}
+
+\LevelThree{help-op}
+\fcmd{/help-op}
+
+\LevelThree{near}
+\fcmd{/near}
+
+\LevelThree{jump}
+\fcmd{/jump}
+
+\LevelThree{compass}
+\fcmd{/compass}
+
+\LevelThree{glow}
+\fcmd{/glow}
+
+\LevelThree{freeze}
+\fcmd{/freeze}
+
