@@ -97,9 +97,9 @@ public class ChunkScore implements Comparable<ChunkScore> {
     public @NotNull Text asText(@NotNull ServerCommandSource source) {
         String chunkLocation;
         if (TopChunksInitializer.config.model().hide_location) {
-            chunkLocation = TextHelper.getValue(source, "top_chunks.prop.hidden");
+            chunkLocation = TextHelper.getValueByKey(source, "top_chunks.prop.hidden");
             if (source.hasPermissionLevel(4)) {
-                chunkLocation = TextHelper.getValue(source, "top_chunks.prop.hidden.bypass", this.getChunkPos().toString());
+                chunkLocation = TextHelper.getValueByKey(source, "top_chunks.prop.hidden.bypass", this.getChunkPos().toString());
             }
         } else {
             chunkLocation = this.getChunkPos().toString();
