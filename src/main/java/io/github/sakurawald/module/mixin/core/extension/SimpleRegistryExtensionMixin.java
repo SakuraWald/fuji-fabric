@@ -1,8 +1,8 @@
-package io.github.sakurawald.module.mixin.core.accessor;
+package io.github.sakurawald.module.mixin.core.extension;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import io.github.sakurawald.core.accessor.SimpleRegistryAccessor;
 import io.github.sakurawald.core.auxiliary.LogUtil;
+import io.github.sakurawald.core.extension.SimpleRegistryExtension;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import net.minecraft.registry.MutableRegistry;
@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 @Mixin(SimpleRegistry.class)
-public abstract class SimpleRegistryMixin<T> implements SimpleRegistryAccessor<T>, MutableRegistry<T> {
+public abstract class SimpleRegistryExtensionMixin<T> implements SimpleRegistryExtension<T>, MutableRegistry<T> {
 
     @Shadow
     @Final
@@ -50,7 +50,6 @@ public abstract class SimpleRegistryMixin<T> implements SimpleRegistryAccessor<T
     @Final
     private Reference2IntMap<T> entryToRawId;
 
-    @SuppressWarnings("ShadowModifiers")
     @Shadow
     @Final
     RegistryKey<? extends Registry<T>> key;

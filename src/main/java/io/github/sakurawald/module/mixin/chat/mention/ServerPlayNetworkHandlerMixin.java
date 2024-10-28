@@ -27,7 +27,7 @@ public abstract class ServerPlayNetworkHandlerMixin {
             .filter(string::contains)
             // mention the longest name first
             .sorted(Comparator.comparingInt(String::length).reversed())
-            .map(ServerHelper::getPlayer)
+            .map(ServerHelper::getPlayerByName)
             .toList();
 
         /* submit list */

@@ -14,15 +14,15 @@ A \ttt{commands} will be chosen randomly from the \ttt{commands list} of the job
 The commands will be executed as console.
 
 \LevelTwo{Command}
-\LevelThree{/command-scheduler trigger}
+\fcmd{/command-scheduler trigger}
 Immediately trigger a job.
 
-\LevelThree{/command-scheduler list}
+\fcmd{/command-scheduler list}
 List all defined jobs.
 
 \LevelTwo{Example}
 \begin{example}{Define a job that executes commands 32 times on every minute}
-    \begin{json}
+    \begin{jsoncode}
     {
         "name": "example_job",
         "enable": true,
@@ -39,5 +39,5 @@ List all defined jobs.
         ]
         ]
     }
-    \end{json}
+    \end{jsoncode}
 \end{example}

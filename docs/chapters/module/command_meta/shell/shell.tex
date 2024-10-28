@@ -1,7 +1,7 @@
 \LevelThree{shell}
 
 \LevelFour{Purpose}
-This module provides \ic{/shell} command, which executes the command line in the host shell.
+This module provides \cmd{/shell} command, which executes the command line in the host shell.
 
 \begin{danger}{This is a dangerous module}
     This module is a powerful and dangerous module, not recommended to enable it.
@@ -14,8 +14,8 @@ This module provides \ic{/shell} command, which executes the command line in the
         The security options for this module.
 
         \begin{NestedList}
-            \item[only\_allow\_console]{Only allow the console to execute \ic{/shell} command.}
-            \item[allowed\_player\_names]{Only allow the specified players to execute \ic{/shell} command.}
+            \item[only\_allow\_console]{Only allow the console to execute \cmd{/shell} command.}
+            \item[allowed\_player\_names]{Only allow the specified players to execute \cmd{/shell} command.}
         \end{NestedList}
     }
 
@@ -24,11 +24,11 @@ This module provides \ic{/shell} command, which executes the command line in the
 \LevelFour{Example}
 
 \begin{example}{Create a file using placeholder}
-    \ic{/shell touch \ph{player:name}.dangerous}
+    \cmd{/shell touch \ph{player:name}.dangerous}
 \end{example}
 
 \begin{example}{Execute a program in the host os}
-    \ic{/shell emacs}
+    \cmd{/shell emacs}
 \end{example}
 
 \begin{example}{Backup the data of your server}
@@ -37,5 +37,5 @@ This module provides \ic{/shell} command, which executes the command line in the
 \end{example}
 
 \begin{example}{Possible to download a virus from Internet and execute it!}
-    \ic{/shell ...}
+    \cmd{/shell ...}
 \end{example}

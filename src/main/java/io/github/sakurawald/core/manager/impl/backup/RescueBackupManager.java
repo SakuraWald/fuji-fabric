@@ -1,7 +1,7 @@
 package io.github.sakurawald.core.manager.impl.backup;
 
 import io.github.sakurawald.Fuji;
-import io.github.sakurawald.core.auxiliary.DateUtil;
+import io.github.sakurawald.core.auxiliary.ChronosUtil;
 import io.github.sakurawald.core.auxiliary.IOUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,7 +47,7 @@ public class RescueBackupManager extends BaseBackupManager {
     }
 
     protected @NotNull File getOutputFile() {
-        String fileName = DateUtil.getCurrentDate() + ".zip";
+        String fileName = ChronosUtil.getCurrentDate() + ".zip";
         return BACKUP_PATH.resolve(fileName).toFile();
     }
 

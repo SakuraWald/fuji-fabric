@@ -39,7 +39,7 @@ import java.util.List;
 @CommandRequirement(level = 4)
 public class DeathLogInitializer extends ModuleInitializer {
 
-    private static final Path DEATH_DATA_DIR_PATH = ReflectionUtil.getModuleConfigPath(DeathLogInitializer.class).resolve("death-data");
+    private static final Path DEATH_DATA_DIR_PATH = ReflectionUtil.computeModuleConfigPath(DeathLogInitializer.class).resolve("death-data");
 
     /* schema keys */
     private static final String DEATHS = "Deaths";

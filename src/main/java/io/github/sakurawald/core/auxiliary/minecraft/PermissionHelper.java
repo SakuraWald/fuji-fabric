@@ -6,9 +6,6 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.model.user.UserManager;
-import net.luckperms.api.node.NodeType;
-import net.luckperms.api.node.types.MetaNode;
-import net.luckperms.api.node.types.PermissionNode;
 import net.luckperms.api.util.Tristate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,18 +18,18 @@ import java.util.function.Function;
 @UtilityClass
 public class PermissionHelper {
 
-    private static LuckPerms luckPerms;
+    private static LuckPerms instance;
 
     private static @Nullable LuckPerms getAPI() {
-        if (luckPerms == null) {
+        if (instance == null) {
             try {
-                luckPerms = LuckPermsProvider.get();
+                instance = LuckPermsProvider.get();
             } catch (Exception e) {
                 return null;
             }
-            return luckPerms;
+            return instance;
         }
-        return luckPerms;
+        return instance;
     }
 
     /*
@@ -52,7 +49,7 @@ public class PermissionHelper {
         return userFuture.join();
     }
 
-    public static @NotNull Tristate checkPermission(@NotNull UUID uuid, @Nullable String permission) {
+    public static @NotNull Tristate getPermission(@NotNull UUID uuid, @Nullable String permission) {
         if (permission == null) return Tristate.FALSE;
         if (permission.isBlank()) return Tristate.FALSE;
 
@@ -68,7 +65,8 @@ public class PermissionHelper {
     }
 
     public static boolean hasPermission(UUID uuid, @Nullable String permission) {
-        return checkPermission(uuid, permission).asBoolean();
+        return getPermission(uuid, permission)
+            .asBoolean();
     }
 
     public static <T> @NonNull Optional<T> getMeta(@NotNull UUID uuid, @Nullable String meta, @NonNull Function<String, ? extends T> valueTransformer) {
@@ -113,50 +111,6 @@ public class PermissionHelper {
             .getMetaData()
             .getSuffix();
 
-    }
-
-    private static void ensureApiNotNull(LuckPerms api) {
-        if (api == null) {
-            throw new RuntimeException("Luckperms api is null now !");
-        }
-    }
-
-    @SuppressWarnings("unused")
-    public static void setPermission(UUID uuid, @NotNull String string) {
-        LuckPerms api = getAPI();
-        ensureApiNotNull(api);
-
-        User user = loadUser(api, uuid);
-        PermissionNode.Builder builder = PermissionNode.builder();
-
-        builder.permission(string);
-
-        PermissionNode node = builder.build();
-        user.data().add(node);
-        getAPI().getUserManager().saveUser(user);
-    }
-
-    @SuppressWarnings("unused")
-    public static void unsetPermission(UUID uuid, @NotNull String string) {
-        LuckPerms api = getAPI();
-        ensureApiNotNull(api);
-
-        User user = loadUser(api, uuid);
-        user.data().clear(NodeType.PERMISSION.predicate(p -> p.getPermission().equals(string)));
-        getAPI().getUserManager().saveUser(user);
-    }
-
-    @SuppressWarnings("unused")
-    public static void setMeta(UUID uuid, @NotNull String key, @NotNull String value) {
-        LuckPerms api = getAPI();
-        ensureApiNotNull(api);
-
-        User user = loadUser(api, uuid);
-
-        MetaNode node = MetaNode.builder(key, value).build();
-        user.data().clear(NodeType.META.predicate(mn -> mn.getMetaKey().equals(key)));
-        user.data().add(node);
-        getAPI().getUserManager().saveUser(user);
     }
 
 }

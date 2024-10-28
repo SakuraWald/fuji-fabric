@@ -12,7 +12,7 @@
   "cancel": "<red>Anuluj",
   "chat.current_pos": "Obecna pozycja",
   "chat.format.reset": "<gold>Format czatu został zresetowany</gold>",
-  "chat.format.set": "<gold>Format czatu został zmodyfikowany, obecny styl:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Kliknij, aby zresetować'><click:run_command:/chat format reset>   [Reset]</click></hover></red>",
+  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat style reset>   [Reset]</click></hover></red>",
   "chat.format.show": "Twoja wiadomość",
   "chat.xaero_waypoint_add": "Kliknij, aby dodać minimapowy punkt nawigacyjny Xero",
   "chat.xaero_waypoint_add.command": "/xaero_waypoint_add:Waypoint:·:%d:%s:%d:0:false:0:Internal_%s_waypoints",

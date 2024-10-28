@@ -24,7 +24,7 @@ public class FlattenModulesTransformer extends ConfigurationTransformer {
             FlattenTreeTransformer flattenTreeTransformer = new FlattenTreeTransformer(
                 modulesPath + "." + topLevelModule
                 , ModuleManager.ENABLE_SUPPLIER_KEY
-                , topLevelModule, (level) -> ReflectionUtil.getModuleConfigPath(level).resolve(BaseConfigurationHandler.CONFIG_JSON));
+                , topLevelModule, (level) -> ReflectionUtil.computeModuleConfigPath(level).resolve(BaseConfigurationHandler.CONFIG_JSON));
 
             flattenTreeTransformer.configure(this.getPath());
             flattenTreeTransformer.apply();

@@ -22,12 +22,12 @@ public class WarpGui extends PagedGui<WarpNode> {
     }
 
     @Override
-    public PagedGui<WarpNode> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<WarpNode> entities, int pageIndex) {
+    protected PagedGui<WarpNode> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<WarpNode> entities, int pageIndex) {
         return new WarpGui(player, entities, pageIndex);
     }
 
     @Override
-    public GuiElementInterface toGuiElement(WarpNode entity) {
+    protected GuiElementInterface toGuiElement(WarpNode entity) {
         return new GuiElementBuilder()
             .setName(TextHelper.getTextByValue(getPlayer(), entity.getName()))
             .setItem(RegistryHelper.ofItem(entity.getItem()))
@@ -44,7 +44,7 @@ public class WarpGui extends PagedGui<WarpNode> {
     }
 
     @Override
-    public List<WarpNode> filter(String keyword) {
+    protected List<WarpNode> filter(String keyword) {
         return getEntities()
             .stream()
             .filter(it -> it.getName().contains(keyword)

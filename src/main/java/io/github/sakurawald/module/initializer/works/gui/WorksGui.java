@@ -56,12 +56,12 @@ public class WorksGui extends PagedGui<Work> {
     }
 
     @Override
-    public PagedGui<Work> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Work> entities, int pageIndex) {
+    protected PagedGui<Work> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Work> entities, int pageIndex) {
         return new WorksGui(player, entities, pageIndex);
     }
 
     @Override
-    public GuiElementInterface toGuiElement(@NotNull Work entity) {
+    protected GuiElementInterface toGuiElement(@NotNull Work entity) {
         ServerPlayerEntity player = getPlayer();
         return new GuiElementBuilder()
             .setItem(entity.getIconItem())
@@ -106,7 +106,8 @@ public class WorksGui extends PagedGui<Work> {
     }
 
     @Override
-    public @NotNull List<Work> filter(@NotNull String keyword) {
+    @NotNull
+    protected List<Work> filter(@NotNull String keyword) {
         return this.getEntities().stream().filter(w ->
             w.creator.contains(keyword)
                 || w.name.contains(keyword)

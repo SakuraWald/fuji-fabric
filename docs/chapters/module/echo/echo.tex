@@ -7,61 +7,77 @@ This module provides commands to send echo to players.
 \end{note}
 
 \LevelTwo{Sub-Module}
-\LevelThree{/send-message}
+\LevelThree{send-message}
+\fcmd{/send-message}
+
 
 \begin{example}{Say hello to a player}
-    \ic{/send-message \player Hello \ph{player:name}}
+    \cmd{/send-message \player Hello \ph{player:name}}
 \end{example}
 
-\LevelThree{/send-broadcast}
+\LevelThree{send-broadcast}
+\fcmd{/send-broadcast}
+
 
 \begin{example}{Say hello to all players}
-    \ic{/send-broadcast Hello \ph{player:name}}
+    \cmd{/send-broadcast Hello \ph{player:name}}
 \end{example}
 
-\LevelThree{/send-actionbar}
+\LevelThree{send-actionbar}
+\fcmd{/send-actionbar}
+
 
 \begin{example}{Say hello to a player}
-    \ic{/send-actionbar \player Hello \ph{player:name}}
+    \cmd{/send-actionbar \player Hello \ph{player:name}}
 \end{example}
 
-\LevelThree{/send-title}
+\LevelThree{send-title}
+\fcmd{/send-title}
+
 \begin{example}{Send title to a player}
-    \ic{/send-title \player --mainTitle "<rainbow>Hello" --subTitle "<blue>World" --fadeInTicks 60 --stayTicks 60 --fadeOutTicks 60}
+    \cmd{/send-title \player --mainTitle "<rainbow>Hello" --subTitle "<blue>World" --fadeInTicks 60 --stayTicks 60 --fadeOutTicks 60}
 \end{example}
 
 \begin{example}{Send title to online players}
-    \ic{/foreach send-title \ph{player:name} --mainTitle "<rainbow>Hello \ph{player:name}"}
+    \cmd{/foreach send-title \ph{player:name} --mainTitle "<rainbow>Hello \ph{player:name}"}
 \end{example}
-\LevelThree{/send-toast}
+\LevelThree{send-toast}
+\fcmd{/send-toast}
+
 
 \begin{example}{Send toast to a player}
-    \ic{/send-toast \player --icon minecraft:golden\_carrot <rb>eat this carrot}
+    \cmd{/send-toast \player --icon minecraft:golden\_carrot <rb>eat this carrot}
 \end{example}
 
-\LevelThree{/send-chat}
+\LevelThree{send-chat}
+\fcmd{/send-chat}
+
 
 \begin{example}{Send chat as a player}
-    \ic{/send-chat Steve i am steve.}
+    \cmd{/send-chat Steve i am steve.}
 \end{example}
 
 \begin{example}{Send chat as a player for online players}
-    \ic{/foreach send-chat \ph{player:name} i am \ph{player:name}}
+    \cmd{/foreach send-chat \ph{player:name} i am \ph{player:name}}
 \end{example}
 
-\LevelThree{/send-bossbar}
+\LevelThree{send-bossbar}
+\fcmd{/send-bossbar}
+
 \begin{example}{A simple exapmle}
-    \ic{/send-bossbar \player Hello World}
+    \cmd{/send-bossbar \player Hello World}
 \end{example}
 
 \begin{example}{All in one exapmle}
-    \ic{/send-bossbar \player --stepType BACKWARD --totalMs 5000 --color PURPLE --style NOTCHED\_6 --notifyMeOnComplete true --commandList "say the player \ph{player:name} is healed|heal \ph{player:name}" <rb>Healing is coming [elapsed\_time]/[total\_time]/[left\_time]}
+    \cmd{/send-bossbar \player --stepType BACKWARD --totalMs 5000 --color PURPLE --style NOTCHED\_6 --notifyMeOnComplete true --commandList "say the player \ph{player:name} is healed|heal \ph{player:name}" <rb>Healing is coming [elapsed\_time]/[total\_time]/[left\_time]}
 \end{example}
 
-\LevelThree{/send-custom}
+\LevelThree{send-custom}
+\fcmd{/send-custom}
+
 \begin{example}{Create a custom text}
     Create a plain text file named \str{guide} in \textbf{config/fuji/modules/echo/send\_custom/custom-text/guide} with content:
-    \begin{sh}
+    \begin{textcode}
         <blue>===== custom text =====
         Hello <orange>%player:name%</orange>, you are in <orange>%world:name%</orange> now.
 
@@ -90,13 +106,13 @@ This module provides commands to send echo to players.
         <rb>The rainbow text</rb>
 
         <newpage>The end.
-    \end{sh}
+    \end{textcode}
 \end{example}
 
 \begin{example}{Send custom text as a book}
-    \ic{/send-custom as-book \player guide --author "alice" --title "<rb>The Guide" --giveBook true --openBook true}
+    \cmd{/send-custom as-book \player guide --author "alice" --title "<rb>The Guide" --giveBook true --openBook true}
 \end{example}
 
 \begin{example}{Send custom text as a message}
-    \ic{/send-custom as-message \player guide}
+    \cmd{/send-custom as-message \player guide}
 \end{example}

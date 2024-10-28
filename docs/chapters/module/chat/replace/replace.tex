@@ -10,10 +10,10 @@ Allow you to define \ttt{regex} to replace \ttt{chat text} with a given text bef
 
 \LevelFour{Example}
 \begin{example}{Define a shortcut to evaluate a placeholder}
-    \begin{json}
+    \begin{jsoncode}
     {
         "regex": "(?<=^|\\s)uuid(?=\\s|$)",
         "replacement": "<green>my uuid is %player:uuid%</green>"
     }
-    \end{json}
+    \end{jsoncode}
 \end{example}

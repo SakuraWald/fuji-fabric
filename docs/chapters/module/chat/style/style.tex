@@ -1,6 +1,6 @@
 \LevelThree{style}
 \LevelFour{Purpose}
-Customize global chat style, and also allow players to use \ic{/chat style} to set their per-player chat style.
+Customize global chat style, and also allow players to use \cmd{/chat style} to set their per-player chat style.
 
 \LevelFour{Feature}
 \begin{enumerate}
@@ -28,20 +28,23 @@ Customize global chat style, and also allow players to use \ic{/chat style} to s
 
 \end{Configuration}
 
+\LevelFour{Command}
+\fcmd{/chat style}
+
 \begin{example}{Set prefix and suffix for players}
     Luckperms is required to set \ttt{prefix} and \ttt{suffix}. \\
     \\
-    After you installed \ttt{luckperms} mod, just issue \ic{/lp group default meta setprefix <yellow>[awesome]} to assign prefix. \\
-    Don't forget to insert \ph{fuji:player\_prefix} and \ph{fuji:player\_suffix} in \ttt{sender} option in configuration file, and issue \ic{/fuji reload}
+    After you installed \ttt{luckperms} mod, just issue \cmd{/lp group default meta setprefix <yellow>[awesome]} to assign prefix. \\
+    Don't forget to insert \ph{fuji:player\_prefix} and \ph{fuji:player\_suffix} in \ttt{sender} option in configuration file, and issue \cmd{/fuji reload}
 \end{example}
 
 \LevelFour{Example}
 \begin{example}{Set per-player chat style}
-    \ic{/chat style set prefix + \%message\% + suffix}
+    \cmd{/chat style set prefix + \%message\% + suffix}
 \end{example}
 
 \begin{example}{Reset per-player chat style}
-    \ic{/chat style reset}
+    \cmd{/chat style reset}
 \end{example}
 
 \begin{example}{Use chat stripe module to control the style tags usage}

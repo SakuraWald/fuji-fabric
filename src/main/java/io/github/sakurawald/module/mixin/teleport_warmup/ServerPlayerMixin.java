@@ -31,7 +31,7 @@ public abstract class ServerPlayerMixin {
 
         // If we try to spawn a fake-player in the end or nether, the fake-player will initially spawn in overworld
         // and teleport to the target world. This will cause the teleport warmup to be triggered.
-        if (EntityHelper.isNonRealPlayer(player)) return;
+        if (!EntityHelper.isRealPlayer(player)) return;
 
         TeleportTicket ticket = TeleportWarmupInitializer.getTeleportTicket(player);
         if (ticket == null) {

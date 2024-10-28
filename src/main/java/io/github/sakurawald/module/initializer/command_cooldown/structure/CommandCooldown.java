@@ -1,5 +1,6 @@
-package io.github.sakurawald.core.structure;
+package io.github.sakurawald.module.initializer.command_cooldown.structure;
 
+import io.github.sakurawald.core.structure.Cooldown;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

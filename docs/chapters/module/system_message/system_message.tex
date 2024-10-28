@@ -27,13 +27,14 @@ As a loss of this approach, the client will always receive the customized text d
 
 \begin{warn}{Possible conflicting with StyledChat}
     If you are using this module with \tbf{StyledChat} mod installed, you need to remove the conflicting \tbf{language keys} in \tbf{key2value} configuration. \\
-    See also: \url{https://github.com/sakurawald/fuji/issues/65}
+    See also: \url{https://github.com/sakurawald/fuji/issues/65}\\
+    See also: \url{https://github.com/sakurawald/fuji/issues/203}\\
 \end{warn}
 
 \LevelTwo{Example}
 
 \begin{example}{Custom the player join and leave message.}
-    \begin{json}
+    \begin{jsoncode}
         "system_message": {
             "enable": true,
             "key2value": {
@@ -41,23 +42,23 @@ As a loss of this approach, the client will always receive the customized text d
                 "multiplayer.player.left": "<dark_gray>%s leeeeeeeeft the game"
             }
         },
-    \end{json}
+    \end{jsoncode}
 
 \end{example}
 
 \begin{example}{Custom a specific death message.}
-    \begin{json}
+    \begin{jsoncode}
         "system_message": {
             "enable": true,
             "key2value": {
                 "death.attack.explosion.player": "<rainbow>%1$s booooooom because of %2$s"
             }
         },
-    \end{json}
+    \end{jsoncode}
 \end{example}
 
 \begin{example}{Custom messages used in screen.}
-    \begin{json}
+    \begin{jsoncode}
         "system_message": {
             "enable": true,
             "key2value": {
@@ -65,46 +66,46 @@ As a loss of this approach, the client will always receive the customized text d
                 "multiplayer.disconnect.not_whitelisted": "<rainbow>Please apply a whitelist first!"
             }
         },
-    \end{json}
+    \end{jsoncode}
 \end{example}
 
 \begin{example}{Custom messages in a container}
-    \begin{json}
+    \begin{jsoncode}
         "key2value": {
             "container.chest": "<rb>I see you opening the chest!"
         }
-    \end{json}
+    \end{jsoncode}
 \end{example}
 
 \begin{example}{Custom the vanilla command feedback.}
-    \begin{json}
+    \begin{jsoncode}
         "system_message": {
             "enable": true,
             "key2value": {
                 "commands.seed.success": "<rainbow> Seeeeeeeeeeed: %s"
             }
         },
-    \end{json}
+    \end{jsoncode}
 \end{example}
 
 \begin{example}{Custom the player disconnect message}
-    \begin{json}
+    \begin{jsoncode}
         "system_message": {
             "enable": true,
             "key2value": {
                 "multiplayer.player.left": "<dark_gray>%s leeeeeeeeft the game"
             }
         },
-    \end{json}
+    \end{jsoncode}
 \end{example}
 
 \begin{example}{Cancel the player disconnect message}
-    \begin{json}
+    \begin{jsoncode}
         "system_message": {
             "enable": true,
             "key2value": {
                 "multiplayer.player.left": null
             }
         },
-    \end{json}
+    \end{jsoncode}
 \end{example}

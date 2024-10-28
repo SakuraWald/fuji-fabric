@@ -88,7 +88,7 @@ public class AboutGui extends PagedGui<Person> {
     }
 
     @Override
-    public PagedGui<Person> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Person> entities, int pageIndex) {
+    protected PagedGui<Person> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Person> entities, int pageIndex) {
         return new AboutGui(player, entities, pageIndex);
     }
 
@@ -123,7 +123,7 @@ public class AboutGui extends PagedGui<Person> {
     }
 
     @Override
-    public GuiElementInterface toGuiElement(Person entity) {
+    protected GuiElementInterface toGuiElement(Person entity) {
         return GuiHelper.makeUnknownPlayerSkull()
             .setName(TextHelper.getTextByKey(getPlayer(), "contact.name", entity.getName()))
             .setLore(makeTextListFromContact(entity.getContact()))
@@ -132,7 +132,7 @@ public class AboutGui extends PagedGui<Person> {
     }
 
     @Override
-    public List<Person> filter(String keyword) {
+    protected List<Person> filter(String keyword) {
         return getEntities().stream().filter(e -> {
                 Map<String, String> contact = e.getContact().asMap();
                 return e.getName().contains(keyword)

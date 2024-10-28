@@ -1,7 +1,7 @@
 package io.github.sakurawald.core.manager.impl.backup;
 
 import io.github.sakurawald.Fuji;
-import io.github.sakurawald.core.auxiliary.DateUtil;
+import io.github.sakurawald.core.auxiliary.ChronosUtil;
 import io.github.sakurawald.core.auxiliary.IOUtil;
 import io.github.sakurawald.core.config.Configs;
 import lombok.SneakyThrows;
@@ -61,7 +61,7 @@ public class StandardBackupManager extends BaseBackupManager {
 
     @SneakyThrows(IOException.class)
     protected void trimBackup() {
-        List<Path> latestFiles = IOUtil.getLatestFiles(BACKUP_PATH);
+        List<Path> latestFiles = IOUtil.listLatestFiles(BACKUP_PATH);
         Iterator<Path> iterator = latestFiles.iterator();
         while (iterator.hasNext() && latestFiles.size() > Configs.configHandler.model().core.backup.max_slots - 1) {
             Files.delete(iterator.next());
@@ -71,7 +71,7 @@ public class StandardBackupManager extends BaseBackupManager {
 
     @Override
     protected @NotNull File getOutputFile() {
-        String fileName = DateUtil.getCurrentDate() + ".zip";
+        String fileName = ChronosUtil.getCurrentDate() + ".zip";
         return BACKUP_PATH.resolve(fileName).toFile();
     }
 

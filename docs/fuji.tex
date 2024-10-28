@@ -2,6 +2,7 @@
 \documentclass[10pt,oneside]{book}
 
 % Packages
+
 % use a4 paper
 \usepackage[a4paper, total={6in, 8in}]{geometry}
 
@@ -29,8 +30,24 @@
 \usepackage{microtype}
 \DisableLigatures[-]{}
 
+%\usepackage[parfill]{parskip}
+
+% to listing a kind of objects
+\usepackage{listings}
+
 % Macros
 \input{macros/macro}
+
+% use fancy header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+%\fancyhf{}
+%\fancyfoot[LE,RO]{\thepage}
+%\fancyhead[RO]{\textbf{\nouppercase{\rightmark}}}
+%\fancyhead[LE]{\slshape\nouppercase{\leftmark}}
+\fancyhead[LE,RO]{\nouppercase{\rightmark}}
+\fancyhead[LO,RE]{\textbf{\nouppercase{\leftmark}}}
+\fancyfoot[C]{\thepage}
 
 % Document
 \begin{document}
@@ -41,12 +58,16 @@
     }
     \author{sakurawald}
     \date{\today}
-
     \maketitle
-    \tableofcontents
 
+    % make toc
+    \tableofcontents
     \mainmatter
 
+    % make listing
+    \listoffcmd
+
+    % input chapters
     \input{chapters/concept/concept}
     \input{chapters/permission/permission}
     \input{chapters/meta/meta}

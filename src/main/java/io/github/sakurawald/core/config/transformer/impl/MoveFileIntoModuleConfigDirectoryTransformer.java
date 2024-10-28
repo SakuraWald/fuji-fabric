@@ -8,6 +8,6 @@ import java.nio.file.Path;
 public class MoveFileIntoModuleConfigDirectoryTransformer extends MoveFileTransformer {
 
     public MoveFileIntoModuleConfigDirectoryTransformer(Path source, Class<?> clazz) {
-        super(source, ReflectionUtil.getModuleConfigPath(clazz));
+        super(source, ReflectionUtil.computeModuleConfigPath(clazz));
     }
 }

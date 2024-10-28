@@ -30,7 +30,9 @@ public class CommandExecutor {
         command = context.expandCommand(command);
 
         try {
-            return Objects.requireNonNull(ServerHelper.getCommandDispatcher()).execute(command, context.getExecutingSource());
+            return Objects
+                .requireNonNull(ServerHelper.getCommandDispatcher())
+                .execute(command, context.getExecutingSource());
         } catch (CommandSyntaxException e) {
             // echo to the executing source
             TextHelper.sendMessageByKey(context.getExecutingSource(), "command.execute.echo.executing_source", command, e.getMessage());

@@ -50,7 +50,7 @@ public class JavaObjectGui extends PagedGui<Field> {
     }
 
     @Override
-    public PagedGui<Field> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Field> entities, int pageIndex) {
+    protected PagedGui<Field> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<Field> entities, int pageIndex) {
         return new JavaObjectGui(getParent(), instance, player, entities, pageIndex, topLevel, path);
     }
 
@@ -117,7 +117,7 @@ public class JavaObjectGui extends PagedGui<Field> {
     }
 
     @Override
-    public GuiElementInterface toGuiElement(Field entity) {
+    protected GuiElementInterface toGuiElement(Field entity) {
         return new GuiElementBuilder()
             .setName(computeName(entity))
             .setItem(computeItem(entity))
@@ -138,7 +138,7 @@ public class JavaObjectGui extends PagedGui<Field> {
     }
 
     @Override
-    public List<Field> filter(String keyword) {
+    protected List<Field> filter(String keyword) {
         return getEntities().stream()
             .filter(it -> it.getName().contains(keyword))
             .collect(Collectors.toList());

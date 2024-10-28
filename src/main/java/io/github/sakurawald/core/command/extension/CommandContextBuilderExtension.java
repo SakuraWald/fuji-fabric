@@ -1,11 +1,11 @@
-package io.github.sakurawald.core.command.accessor;
+package io.github.sakurawald.core.command.extension;
 
 import com.mojang.brigadier.context.CommandContextBuilder;
 import com.mojang.brigadier.context.ParsedArgument;
 
 import java.util.Map;
 
-public interface CommandContextBuilderAccessor<S> {
+public interface CommandContextBuilderExtension<S> {
 
     @SuppressWarnings("EmptyMethod")
     Map<String, ParsedArgument<S, ?>> getArguments();

@@ -12,7 +12,7 @@
   "cancel": "<red>Cancel",
   "chat.current_pos": "Поточне розташування",
   "chat.format.reset": "<gold>Формат чату скинутий</gold>",
-  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat format reset>   [Reset]</click></hover></red>",
+  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat style reset>   [Reset]</click></hover></red>",
   "chat.format.show": "Ваші повідомлення",
   "chat.xaero_waypoint_add": "Клацніть, щоб додати мінімальну точку мапи Xaero",
   "chat.xaero_waypoint_add.command": "/xaero_waypoint_add:Waypoint:·:%d:%s:%d:0:false:0:Internal_%s_waypoints",

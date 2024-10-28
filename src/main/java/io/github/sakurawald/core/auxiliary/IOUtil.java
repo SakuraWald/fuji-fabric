@@ -37,7 +37,7 @@ public class IOUtil {
                 if (file.isFile()) {
                     try (FileInputStream fis = new FileInputStream(file)) {
 
-                        ZipEntry zipEntry = new ZipEntry(getEntryName(base, file));
+                        ZipEntry zipEntry = new ZipEntry(computeEntryName(base, file));
                         zos.putNextEntry(zipEntry);
 
                         byte[] buffer = new byte[BUFFER_SIZE];
@@ -54,7 +54,7 @@ public class IOUtil {
         }
     }
 
-    private static @NotNull String getEntryName(@NotNull File base, @NotNull File file) {
+    private static @NotNull String computeEntryName(@NotNull File base, @NotNull File file) {
         return computeRelativePath(base, file);
     }
 
@@ -70,7 +70,7 @@ public class IOUtil {
         return computeRelativePath(Fuji.CONFIG_PATH.getParent().toFile(), file);
     }
 
-    public static @NotNull List<Path> getLatestFiles(@NotNull Path path) {
+    public static @NotNull List<Path> listLatestFiles(@NotNull Path path) {
         try (Stream<Path> files = Files.list(path)) {
             return files
                 .filter(Files::isRegularFile)
@@ -89,7 +89,7 @@ public class IOUtil {
         }
     }
 
-    public static String post(@NotNull URI uri, @NotNull String param) throws IOException {
+    private static String requestPost(@NotNull URI uri, @NotNull String param) throws IOException {
         LogUtil.debug("post() -> uri = {}, param = {}", uri, param);
 
         HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
@@ -104,11 +104,7 @@ public class IOUtil {
         return IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8);
     }
 
-    public static String get(@NotNull String uri) throws IOException {
-        return get(URI.create(uri));
-    }
-
-    public static String get(@NotNull URI uri) throws IOException {
+    private static String requestGet(@NotNull URI uri) throws IOException {
         LogUtil.debug("get() -> uri = {}", uri);
 
         HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
@@ -116,5 +112,13 @@ public class IOUtil {
         connection.setDoOutput(true);
 
         return IOUtils.toString(connection.getInputStream(), StandardCharsets.UTF_8);
+    }
+
+    public static String requestGet(@NotNull String uri) throws IOException {
+        return requestGet(URI.create(uri));
+    }
+
+    public static String requestPost(@NotNull String uri, @NotNull String param) throws IOException {
+        return requestPost(URI.create(uri), param);
     }
 }

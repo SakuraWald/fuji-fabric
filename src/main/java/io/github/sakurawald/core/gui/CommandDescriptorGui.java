@@ -22,7 +22,7 @@ public class CommandDescriptorGui extends PagedGui<CommandDescriptor> {
     }
 
     @Override
-    public PagedGui<CommandDescriptor> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<CommandDescriptor> entities, int pageIndex) {
+    protected PagedGui<CommandDescriptor> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<CommandDescriptor> entities, int pageIndex) {
         return new CommandDescriptorGui(player, entities, pageIndex);
     }
 
@@ -44,22 +44,25 @@ public class CommandDescriptorGui extends PagedGui<CommandDescriptor> {
     }
 
     @Override
-    public GuiElementInterface toGuiElement(CommandDescriptor entity) {
+    protected GuiElementInterface toGuiElement(CommandDescriptor entity) {
+        List<Text> lore = new ArrayList<>();
+        lore.addAll(List.of(
+            TextHelper.getTextByKey(getPlayer(), "command.source.can_be_executed_by_console", entity.canBeExecutedByConsole())
+            , TextHelper.getTextByKey(getPlayer(), "command.descriptor.type", entity.getClass().getSimpleName())
+            , TextHelper.getTextByKey(getPlayer(), "command.requirement.level_permission", entity.computeLevelPermission())
+            , TextHelper.getTextByKey(getPlayer(), "command.requirement.string_permission", entity.computeStringPermission())
+        ));
+        lore.addAll(computeLore(entity));
+
         return new GuiElementBuilder()
             .setName(Text.literal(entity.computeCommandSyntax()))
-            .setLore(List.of(
-                TextHelper.getTextByKey(getPlayer(), "command.source.can_be_executed_by_console", entity.canBeExecutedByConsole())
-                , TextHelper.getTextByKey(getPlayer(), "command.descriptor.type", entity.getClass().getSimpleName())
-                , TextHelper.getTextByKey(getPlayer(), "command.requirement.level_permission", entity.computeLevelPermission())
-                , TextHelper.getTextByKey(getPlayer(), "command.requirement.string_permission", entity.computeStringPermission())
-            ))
             .setItem(Items.REPEATING_COMMAND_BLOCK)
-            .setLore(this.computeLore(entity))
+            .setLore(lore)
             .build();
     }
 
     @Override
-    public List<CommandDescriptor> filter(String keyword) {
+    protected List<CommandDescriptor> filter(String keyword) {
         return getEntities().stream()
             .filter(it -> it.toString().contains(keyword)).toList();
     }

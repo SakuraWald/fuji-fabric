@@ -21,12 +21,12 @@ public class ArgumentTypeGui extends PagedGui<BaseArgumentTypeAdapter> {
     }
 
     @Override
-    public PagedGui<BaseArgumentTypeAdapter> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<BaseArgumentTypeAdapter> entities, int pageIndex) {
+    protected PagedGui<BaseArgumentTypeAdapter> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<BaseArgumentTypeAdapter> entities, int pageIndex) {
         return new ArgumentTypeGui(player, entities, pageIndex);
     }
 
     @Override
-    public GuiElementInterface toGuiElement(BaseArgumentTypeAdapter entity) {
+    protected GuiElementInterface toGuiElement(BaseArgumentTypeAdapter entity) {
         return new GuiElementBuilder()
             .setName(Text.literal(entity.getClass().getSimpleName()))
             .setItem(Items.HOPPER)
@@ -38,7 +38,7 @@ public class ArgumentTypeGui extends PagedGui<BaseArgumentTypeAdapter> {
     }
 
     @Override
-    public List<BaseArgumentTypeAdapter> filter(String keyword) {
+    protected List<BaseArgumentTypeAdapter> filter(String keyword) {
         return getEntities().stream()
             .filter(it -> it.getTypeClasses().stream().anyMatch(c -> c.getSimpleName().contains(keyword))
                 || it.getTypeStrings().stream().anyMatch(s -> s.contains(keyword))

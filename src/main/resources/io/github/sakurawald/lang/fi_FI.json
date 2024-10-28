@@ -12,7 +12,7 @@
   "cancel": "<red>Peruuta",
   "chat.current_pos": "Nykyinen Sijainti",
   "chat.format.reset": "<gold>chatin muoto on nollattu</gold>",
-  "chat.format.set": "<gold>Keskustelumuoto on muutettu, nykyinen tyyli:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Klikkaa nollataksesi'><click:run_command:/chat format reset>   [Reset]</click></hover></red>",
+  "chat.format.set": "<gold>Chat format has been modified, current style:</gold><newline>%s<reset><newline><red><hover:show_text:'<red>Click to reset'><click:run_command:/chat style reset>   [Reset]</click></hover></red>",
   "chat.format.show": "Sinun Viesti",
   "chat.xaero_waypoint_add": "Klikkaa lisätäksesi Xawon minimaalisen reittipisteen",
   "chat.xaero_waypoint_add.command": "/xaero_waypoint_add:Waypoint:·:%d:%s:%d:0:false:0:Internal_%s_waypoints",

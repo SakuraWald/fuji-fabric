@@ -23,7 +23,7 @@ public class WorldGui extends PagedGui<DimensionNode> {
     }
 
     @Override
-    public PagedGui<DimensionNode> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<DimensionNode> entities, int pageIndex) {
+    protected PagedGui<DimensionNode> make(@Nullable SimpleGui parent, ServerPlayerEntity player, Text title, @NotNull List<DimensionNode> entities, int pageIndex) {
         return new WorldGui(player, entities, pageIndex);
     }
 
@@ -44,7 +44,7 @@ public class WorldGui extends PagedGui<DimensionNode> {
     }
 
     @Override
-    public GuiElementInterface toGuiElement(DimensionNode entity) {
+    protected GuiElementInterface toGuiElement(DimensionNode entity) {
         return new GuiElementBuilder()
             .setName(Text.of(entity.getDimension()))
             .setItem(this.computeItem(entity))
@@ -57,7 +57,7 @@ public class WorldGui extends PagedGui<DimensionNode> {
     }
 
     @Override
-    public List<DimensionNode> filter(String keyword) {
+    protected List<DimensionNode> filter(String keyword) {
         return getEntities().stream()
             .filter(it -> it.getDimension().contains(keyword)
                 || it.getDimension_type().contains(keyword))

@@ -1,7 +1,7 @@
 package io.github.sakurawald.core.manager.impl.bossbar.structure;
 
-import io.github.sakurawald.core.accessor.PlayerCombatExtension;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
+import io.github.sakurawald.core.extension.PlayerCombatExtension;
 import io.github.sakurawald.core.manager.impl.bossbar.BossBarTicket;
 import io.github.sakurawald.core.structure.SpatialPose;
 import lombok.Getter;
