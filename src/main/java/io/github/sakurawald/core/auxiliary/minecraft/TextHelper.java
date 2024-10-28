@@ -143,8 +143,21 @@ public class TextHelper {
         return code2json.get(languageCode);
     }
 
+    private static String getDefaultLanguageCode() {
+        // allow user to write `en_us` in `config.json`.
+        return convertToLanguageCode(Configs.configHandler.model().core.language.default_language);
+    }
 
-    public static @NotNull String getValue(@Nullable Object audience, String key) {
+    private static boolean isDefaultLanguageCode(String languageCode) {
+        return languageCode.equals(getDefaultLanguageCode());
+    }
+
+    public static @NotNull String getValueByKey(@Nullable Object audience, String key, Object... args) {
+        String value = getValueByKey(audience, key);
+        return resolveArgs(value, args);
+    }
+
+    public static @NotNull String getValueByKey(@Nullable Object audience, String key) {
         String languageCode = getClientSideLanguageCode(audience);
 
         String value = getValue(languageCode, key);
@@ -154,15 +167,6 @@ public class TextHelper {
         String fallbackValue = "(no key `%s` in language `%s`)".formatted(key, languageCode);
         LogUtil.warn("{} triggered by {}", fallbackValue, audience);
         return fallbackValue;
-    }
-
-    private static String getDefaultLanguageCode() {
-        // allow user to write `en_us` in `config.json`.
-        return convertToLanguageCode(Configs.configHandler.model().core.language.default_language);
-    }
-
-    private static boolean isDefaultLanguageCode(String languageCode) {
-        return languageCode.equals(getDefaultLanguageCode());
     }
 
     private static @Nullable String getValue(String languageCode, String key) {
@@ -189,9 +193,6 @@ public class TextHelper {
         return null;
     }
 
-    public static @NotNull String getValue(@Nullable Object audience, String key, Object... args) {
-        return resolveArgs(getValue(audience, key), args);
-    }
 
     private static @NotNull String resolveArgs(@NotNull String string, Object... args) {
         if (args.length > 0) {
@@ -216,7 +217,7 @@ public class TextHelper {
      *  All methods that return `Vomponent` are converted from this method.
      * */
     private static @NotNull Text getText(@NonNull NodeParser parser, @Nullable Object audience, boolean isKey, String keyOrValue, Object... args) {
-        String value = isKey ? getValue(audience, keyOrValue) : keyOrValue;
+        String value = isKey ? getValueByKey(audience, keyOrValue) : keyOrValue;
 
         // resolve args
         value = resolveArgs(value, args);
@@ -253,12 +254,13 @@ public class TextHelper {
     }
 
     public static String getKeywordValue(@Nullable Object audience, String keyword) {
-        return getValue(audience, "keyword." + keyword);
+        return getValueByKey(audience, "keyword." + keyword);
     }
 
-    public static MutableText getTextWithKeyword(@Nullable Object audience, String key, String keyword) {
+    public static MutableText getTextByKeyWithKeyword(@Nullable Object audience, String key, String keyword) {
         String replacement = getKeywordValue(audience, keyword);
-        return Text.literal(getValue(audience, key, replacement));
+        String value = getValueByKey(audience, key, replacement);
+        return Text.literal(value);
     }
 
     public static @NotNull Text getTextByValue(@Nullable Object audience, String value, Object... args) {
@@ -266,7 +268,7 @@ public class TextHelper {
     }
 
     private static @NotNull List<Text> getTextList(@Nullable Object audience, boolean isKey, String keyOrValue) {
-        String lines = isKey ? getValue(audience, keyOrValue) : keyOrValue;
+        String lines = isKey ? getValueByKey(audience, keyOrValue) : keyOrValue;
 
         List<Text> ret = new ArrayList<>();
         for (String line : lines.split("\n|<newline>")) {

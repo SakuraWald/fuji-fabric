@@ -4,7 +4,7 @@ import eu.pb4.placeholders.api.PlaceholderResult;
 import eu.pb4.placeholders.api.Placeholders;
 import io.github.sakurawald.Fuji;
 import io.github.sakurawald.core.annotation.Document;
-import io.github.sakurawald.core.auxiliary.DateUtil;
+import io.github.sakurawald.core.auxiliary.ChronosUtil;
 import io.github.sakurawald.core.auxiliary.RandomUtil;
 import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.PermissionHelper;
@@ -126,20 +126,20 @@ public class PlaceholderInitializer extends ModuleInitializer {
             int y = player.getBlockY();
             int z = player.getBlockZ();
             String dim_name = player.getWorld().getRegistryKey().getValue().toString();
-            String dim_display_name = TextHelper.getValue(player, dim_name);
-            String hoverString = TextHelper.getValue(player, "chat.current_pos");
+            String dim_display_name = TextHelper.getValueByKey(player, dim_name);
+            String hoverString = TextHelper.getValueByKey(player, "chat.current_pos");
             switch (dim_name) {
                 case "minecraft:overworld":
-                    hoverString += "\n" + TextHelper.getValue(player, "minecraft:the_nether")
+                    hoverString += "\n" + TextHelper.getValueByKey(player, "minecraft:the_nether")
                         + ": %d %s %d".formatted(x / 8, y, z / 8);
                     break;
                 case "minecraft:the_nether":
-                    hoverString += "\n" + TextHelper.getValue(player, "minecraft:overworld")
+                    hoverString += "\n" + TextHelper.getValueByKey(player, "minecraft:overworld")
                         + ": %d %s %d".formatted(x * 8, y, z * 8);
                     break;
             }
 
-            String clickCommand = TextHelper.getValue(player, "chat.xaero_waypoint_add.command");
+            String clickCommand = TextHelper.getValueByKey(player, "chat.xaero_waypoint_add.command");
 
             return TextHelper.getTextByKey(player, "placeholder.pos", x, y, z, dim_display_name)
                 .copy()
@@ -197,11 +197,11 @@ public class PlaceholderInitializer extends ModuleInitializer {
     private void registerDatePlaceholder() {
         PlaceholderHelper.withServer("date", (server, arg) -> {
             if (arg == null || arg.isEmpty()) {
-                return Text.literal(DateUtil.getCurrentDate());
+                return Text.literal(ChronosUtil.getCurrentDate());
             }
 
             try {
-                String currentDate = DateUtil.getCurrentDate(new SimpleDateFormat(arg));
+                String currentDate = ChronosUtil.getCurrentDate(new SimpleDateFormat(arg));
                 return Text.literal(currentDate);
             } catch (Exception e) {
                 return Text.of("Invalid date formatter: " + arg);

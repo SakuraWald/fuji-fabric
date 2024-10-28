@@ -54,8 +54,8 @@ public class ChatStyleInitializer extends ModuleInitializer {
         chat.writeStorage();
 
         /* feedback */
-        $format = TextHelper.getValue(player, "chat.format.set").replace("%s", $format);
-        $format = $format.replace("%message%", TextHelper.getValue(player, "chat.format.show"));
+        $format = TextHelper.getValueByKey(player, "chat.format.set").replace("%s", $format);
+        $format = $format.replace("%message%", TextHelper.getValueByKey(player, "chat.format.show"));
         Text text = CHAT_STYLE_PARSER.parseNode($format).toText();
         player.sendMessage(text);
         return CommandHelper.Return.SUCCESS;
