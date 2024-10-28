@@ -4,7 +4,7 @@ This module provides \ttt{predicate} commands.
 
 \LevelTwo{Definition}
 A command that suffixes with the character \str{?} is named \ttt{predicate command}.\\
-e.g.\ The \ic{/has-perm?} command.
+e.g.\ The \cmd{/has-perm?} command.
 
 \LevelTwo{How it works?}
 The \ttt{return value} is represented in an \ttt{integer} provided by vanilla minecraft command return layer.
@@ -14,5 +14,5 @@ See more: \url{https://minecraft.fandom.com/wiki/Commands/return}
 \LevelTwo{Example}
 \begin{example}{Test a condition and then run a command}
     See more in~\nameref{ch:chain}\\
-    \ic{/run as player \player chain has-perm? \ph{player:name} 4 chain say value is true}
+    \cmd{/run as player \player chain has-perm? \ph{player:name} 4 chain say value is true}
 \end{example}

@@ -16,7 +16,7 @@ This module provides some simple commands.
 
 \LevelThree{/lore}
 \begin{example}{Set lore for item in mainhand}
-    \ic{/lore set <rainbow>the first line<newline><bold><green>the second}
+    \cmd{/lore set <rainbow>the first line<newline><bold><green>the second}
 \end{example}
 
 \LevelThree{/more}
@@ -26,10 +26,10 @@ This module provides some simple commands.
 \LevelThree{/repair}
 \LevelThree{/reply}
 \LevelFour{How it works?}
-When a player use the command \ic{/msg} or \ic{/tell}, we track the usage, and allow the target player to use \ic{/reply} to send message to the player recently meg he.
+When a player use the command \cmd{/msg} or \cmd{/tell}, we track the usage, and allow the target player to use \cmd{/reply} to send message to the player recently meg he.
 
-\begin{tips}{Create a command alias like \ic{/r}}
-    You can use~\nameref{ch:command_alias} module to create a command alias from \ic{/r} to \ic{/reply}.
+\begin{tips}{Create a command alias like \cmd{/r}}
+    You can use~\nameref{ch:command_alias} module to create a command alias from \cmd{/r} to \cmd{/reply}.
 \end{tips}
 
 
@@ -41,31 +41,31 @@ When a player use the command \ic{/msg} or \ic{/tell}, we track the usage, and a
 
 \LevelFour{Example}
 \begin{example}{Teleport to offline location of a player}
-    \ic{/tppos offline \player}
+    \cmd{/tppos offline \player}
 \end{example}
 
 \begin{example}{Specify another player as the target player}
-    \ic{/tppos --targetPlayer \player}
+    \cmd{/tppos --targetPlayer \player}
 \end{example}
 
 \begin{example}{Use fixed teleport mode}
-    When any of the following args is specified, the \ic{/tppos} command will do a \ttt{fixed teleport}.\\
-    \ic{/tppos --x 32 --y 64 --z 128 --yaw 60 --pitch 90 --dimension minecraft:overworld}
+    When any of the following args is specified, the \cmd{/tppos} command will do a \ttt{fixed teleport}.\\
+    \cmd{/tppos --x 32 --y 64 --z 128 --yaw 60 --pitch 90 --dimension minecraft:overworld}
 \end{example}
 
 \begin{example}{Use random teleport mode}
-    The \ic{/tppos} command will do a \ttt{random teleport} if not doing a \ttt{fixed teleport}.\\
-    \ic{/tppos --centerX 0 --centerZ 0 --circle true --minRange 512 --maxRange 2048 --minY 32 --maxY 128 --maxTryTimes 8 --dimension minecraft:overworld}
+    The \cmd{/tppos} command will do a \ttt{random teleport} if not doing a \ttt{fixed teleport}.\\
+    \cmd{/tppos --centerX 0 --centerZ 0 --circle true --minRange 512 --maxRange 2048 --minY 32 --maxY 128 --maxTryTimes 8 --dimension minecraft:overworld}
 \end{example}
 
 \LevelThree{/warp}
 \LevelFour{Example}
 \begin{example}{Set a display name for a warp}
-    \ic{/warp set-name <warp> <blue>This is the display name}
+    \cmd{/warp set-name <warp> <blue>This is the display name}
 \end{example}
 
 \begin{example}{Set a lore for a warp}
-    \ic{/warp set-lore <warp> <blue>This is the first line|<red>This is the second line}
+    \cmd{/warp set-lore <warp> <blue>This is the first line|<red>This is the second line}
 \end{example}
 
 

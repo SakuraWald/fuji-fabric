@@ -1,25 +1,25 @@
 \LevelThree{run}
 
 \LevelFour{Purpose}
-This module provides \ic{/run} command, which can run a command with context.
+This module provides \cmd{/run} command, which can run a command with context.
 
 \LevelFour{Command}
 \LevelFive{/run}
 
 \LevelFour{Example}
 \begin{example}{Give random diamonds to online players}
-    \ic{/run as console give @a minecraft:diamond \ph{fuji:random 8 32}}
+    \cmd{/run as console give @a minecraft:diamond \ph{fuji:random 8 32}}
 \end{example}
 
 \begin{example}{Give online players random diamonds}
-    \ic{/run as console foreach give \ph{fuji:escape player:name} minecraft:diamond \ph{fuji:escape fuji:random 8 32 1}}
+    \cmd{/run as console foreach give \ph{fuji:escape player:name} minecraft:diamond \ph{fuji:escape fuji:random 8 32 1}}
 \end{example}
 
 \begin{example}{Execute a command as a player}
-   \ic{/run as player \player back}
+   \cmd{/run as player \player back}
 \end{example}
 
 \begin{example}{Execute a command as fake-op}
-   \ic{/run as fake-op \player give \ph{player:name} minecraft:apple 1}
+   \cmd{/run as fake-op \player give \ph{player:name} minecraft:apple 1}
 \end{example}
 

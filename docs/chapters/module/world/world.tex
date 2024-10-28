@@ -49,22 +49,22 @@ Provides a unified world management.
 
 \LevelTwo{Example}
 \begin{example}{Create an extra the\_nether dimension}
-    \ic{/world create my\_nether minecraft:the\_nether}
+    \cmd{/world create my\_nether minecraft:the\_nether}
 \end{example}
 
 \begin{example}{Delete the extra dimension}
-    \ic{/world delete fuji:my\_nether}
+    \cmd{/world delete fuji:my\_nether}
 \end{example}
 
 \begin{example}{Reset the extra dimension with random seed}
-    \ic{/world reset fuji:my\_nether}
+    \cmd{/world reset fuji:my\_nether}
 \end{example}
 
 \begin{example}{Specify a seed for an extra dimension.}
-    \ic{/world create my\_nether --seed 1234567890 minecraft:the\_nether}\\
-    \ic{/world reset --useTheSameSeed true fuji:my\_nether}
+    \cmd{/world create my\_nether --seed 1234567890 minecraft:the\_nether}\\
+    \cmd{/world reset --useTheSameSeed true fuji:my\_nether}
 \end{example}
 
 \begin{tips}{Make a resource-world that automatically reset every day}
-    You can use~\nameref{ch:command_scheduler} module to execute \ic{/world reset} command automatically.
+    You can use~\nameref{ch:command_scheduler} module to execute \cmd{/world reset} command automatically.
 \end{tips}

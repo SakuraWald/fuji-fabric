@@ -26,7 +26,7 @@ This module adds a cooldown before command execution.
     \end{jsoncode}
 \end{example}
 
-\begin{example}{Set warmup for all commands except the \ic{/back} command with a special setup}
+\begin{example}{Set warmup for all commands except the \cmd{/back} command with a special setup}
     Since the rules are matched from up to down in order, you can just put the special case above.
 
     \begin{jsoncode}
@@ -60,7 +60,7 @@ This module adds a cooldown before command execution.
     \end{jsoncode}
 \end{example}
 
-\begin{example}{Set warmup for all commands except the \ic{/back} command}
+\begin{example}{Set warmup for all commands except the \cmd{/back} command}
     Use \ttt{negative lookahead} to exclude a string that starts with \str{back}.
     \begin{jsoncode}
     {
