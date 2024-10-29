@@ -16,7 +16,6 @@ import lombok.Cleanup;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
@@ -43,10 +42,10 @@ public class HeadProvider {
         for (Category category : Category.values()) {
             String URL = null;
             try {
-                File destination = computePath(category).toFile();
+                Path destination = computePath(category);
 
                 // skip the downloading if file exists.
-                if (destination.exists()) {
+                if (Files.exists(destination)) {
                     loadCategory(result, category);
                     continue;
                 }
