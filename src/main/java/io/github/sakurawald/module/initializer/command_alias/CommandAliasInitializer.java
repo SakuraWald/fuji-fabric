@@ -41,7 +41,7 @@ public class CommandAliasInitializer extends ModuleInitializer {
 
             if (builder == null) {
                 if (target == null) {
-                    LogUtil.warn("[command alias] can't find the target command node for alias entry: {}", entry);
+                    LogUtil.warn("can't find the target command node for command alias entry: {}", entry);
                     return;
                 }
 
