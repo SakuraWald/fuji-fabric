@@ -15,7 +15,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
@@ -38,7 +37,7 @@ public class RandomTeleporter {
             LogUtil.info("request rtp: {}", player.getGameProfile().getName());
             Stopwatch timer = Stopwatch.createStarted();
 
-            ServerWorld world = RegistryHelper.ofServerWorld(Identifier.of(setup.getDimension()));
+            ServerWorld world = RegistryHelper.ofServerWorld(setup.getDimension());
             if (world == null) {
                 TextHelper.sendMessageByKey(player, "world.dimension.not_found");
                 return;
@@ -59,7 +58,7 @@ public class RandomTeleporter {
 
             // teleport the player
             SpatialPose spatialPose = new SpatialPose(world, result.get().getX() + 0.5, result.get().getY(), result.get().getZ() + 0.5, 0, 0);
-            ServerHelper.getDefaultServer().executeSync(() -> {
+            ServerHelper.getServer().executeSync(() -> {
                 // run the teleport action in main-thread
                 spatialPose.teleport(player);
             });
@@ -142,7 +141,7 @@ public class RandomTeleporter {
             && pos.getY() <= chunk.getTopYInclusive();
     }
 
-    public static @NotNull Iterable<BlockPos.Mutable> getChunkCandidateBlocks(@NotNull ChunkPos chunkPos) {
+    private static @NotNull Iterable<BlockPos.Mutable> getChunkCandidateBlocks(@NotNull ChunkPos chunkPos) {
         return () -> new Iterator<>() {
             private final BlockPos.Mutable bp = new BlockPos.Mutable();
             private int i = -1;

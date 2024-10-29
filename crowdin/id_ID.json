@@ -271,7 +271,7 @@
   "command_cooldown.not_found": "<red>Cooldown %s tidak ditemukan.",
   "command_cooldown.already_exists": "<red>Cooldown %s sudah ada.",
   "command_cooldown.deleted": "<red>Cooldown %s dihapus.",
-  "command_cooldown.created": "<red>Cooldown %s dibuat.",
+  "command_cooldown.created": "<green>The cooldown `%s` created.",
   "echo.send_custom.custom_text.not_found": "<red>Teks khusus %s tidak ditemukan.",
   "echo.send_custom.custom_text.invalid_page": "<red>Halaman tidak valid.",
   "echo.send_custom.custom_text.paginator.first_page": "<dark_green>-----<< <grey><hover:show_text:'Ini adalah halaman pertama'>Sebelumnya</grey> <green>%d<grey>/<green>%d <orange>click:run_command:'%s'<hover:show_text:'Halaman Berikutnya'>Berikutnya</hover></click></orange><dark_green> >>----",

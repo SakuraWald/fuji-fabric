@@ -45,7 +45,7 @@ public class RegistryHelper {
     }
 
     public static <T> Registry<T> ofRegistry(RegistryKey<? extends Registry<? extends T>> registryKey) {
-        return ServerHelper.getDefaultServer()
+        return ServerHelper.getServer()
             .getCombinedDynamicRegistries()
             .getCombinedRegistryManager()
             .getOrThrow(registryKey);
@@ -55,10 +55,10 @@ public class RegistryHelper {
         return RegistryKey.of(keyOfRegistry, identifier);
     }
 
-    public static @Nullable ServerWorld ofServerWorld(Identifier identifier) {
-        RegistryKey<World> key = ofRegistryKey(RegistryKeys.WORLD, identifier);
+    public static @Nullable ServerWorld ofServerWorld(String identifier) {
+        RegistryKey<World> key = ofRegistryKey(RegistryKeys.WORLD, Identifier.of(identifier));
         // get the world instance from the server.
-        return ServerHelper.getDefaultServer().getWorld(key);
+        return ServerHelper.getServer().getWorld(key);
     }
 
     public static @NotNull Item ofItem(@NotNull String identifier) {
@@ -66,7 +66,7 @@ public class RegistryHelper {
     }
 
     public static RegistryWrapper.WrapperLookup getDefaultWrapperLookup() {
-        return ServerHelper.getDefaultServer()
+        return ServerHelper.getServer()
             .getRegistryManager();
     }
 }

@@ -3,17 +3,17 @@ package io.github.sakurawald.core.structure;
 import io.github.sakurawald.core.auxiliary.LogUtil;
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
-public class Downloader {
+public abstract class Downloader {
 
     final URL url;
-    final File destination;
+    final Path destination;
 
-    public Downloader(URL url, File destination) {
+    public Downloader(URL url, Path destination) {
         this.url = url;
         this.destination = destination;
     }
@@ -22,7 +22,7 @@ public class Downloader {
         CompletableFuture.runAsync(() -> {
             try {
                 LogUtil.info("start download file from {} to {}.", url, destination);
-                FileUtils.copyURLToFile(url, destination);
+                FileUtils.copyURLToFile(url, destination.toFile());
                 onComplete();
                 LogUtil.info("end download file from {} to {}.", url, destination);
             } catch (IOException e) {
@@ -31,9 +31,6 @@ public class Downloader {
         });
     }
 
-    public void onComplete() {
-        // no-op
-    }
-
+    public abstract void onComplete();
 
 }

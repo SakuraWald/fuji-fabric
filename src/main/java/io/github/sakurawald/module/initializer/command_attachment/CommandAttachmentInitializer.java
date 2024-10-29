@@ -68,7 +68,7 @@ public class CommandAttachmentInitializer extends ModuleInitializer {
 
         // test stepping block
         if (!existsAttachmentModel(uuid)) return;
-        ServerHelper.getDefaultServer().executeSync(() -> triggerAttachmentModel(uuid, player, List.of(InteractType.STEP_ON)));
+        ServerHelper.getServer().executeSync(() -> triggerAttachmentModel(uuid, player, List.of(InteractType.STEP_ON)));
 
     }
 
@@ -78,7 +78,7 @@ public class CommandAttachmentInitializer extends ModuleInitializer {
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean existsAttachmentModel(String uuid) {
-        return Managers.getAttachmentManager().existsAttachmentFile(COMMAND_ATTACHMENT_SUBJECT_NAME, uuid);
+        return Managers.getAttachmentManager().existsAttachment(COMMAND_ATTACHMENT_SUBJECT_NAME, uuid);
     }
 
     @SneakyThrows(IOException.class)
@@ -257,6 +257,7 @@ public class CommandAttachmentInitializer extends ModuleInitializer {
         return CommandHelper.Return.SUCCESS;
     }
 
+    @SneakyThrows
     private static void doDetachAttachment(ServerPlayerEntity player, String uuid) {
         Managers.getAttachmentManager().unsetAttachment(COMMAND_ATTACHMENT_SUBJECT_NAME, uuid);
     }
@@ -290,7 +291,7 @@ public class CommandAttachmentInitializer extends ModuleInitializer {
 
     @SneakyThrows(IOException.class)
     private static void doQueryAttachment(ServerPlayerEntity player, String uuid) {
-        if (!Managers.getAttachmentManager().existsAttachmentFile(COMMAND_ATTACHMENT_SUBJECT_NAME, uuid)) {
+        if (!Managers.getAttachmentManager().existsAttachment(COMMAND_ATTACHMENT_SUBJECT_NAME, uuid)) {
             TextHelper.sendMessageByKey(player, "command_attachment.query.no_attachment");
             throw new AbortCommandExecutionException();
         }

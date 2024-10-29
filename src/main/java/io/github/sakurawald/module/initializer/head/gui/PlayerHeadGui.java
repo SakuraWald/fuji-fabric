@@ -57,7 +57,7 @@ public class PlayerHeadGui extends AnvilInputGui {
 
             CompletableFuture.runAsync(() -> {
                 /* make gui element */
-                GameProfile gameProfile = MojangProfileFetcher.makeGameProfile(this.getInput());
+                GameProfile gameProfile = MojangProfileFetcher.makeOnlineGameProfile(this.getInput());
                 GuiElementBuilder builder = new GuiElementBuilder()
                     .setItem(Items.PLAYER_HEAD)
                     .setSkullOwner(gameProfile, player.server);

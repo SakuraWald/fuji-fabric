@@ -211,7 +211,7 @@ public class PlaceholderInitializer extends ModuleInitializer {
 
     private void registerEscapePlaceholder() {
         PlaceholderHelper.withServer("escape", (server, args) -> {
-            if (args == null) return PlaceholderHelper.INVALID;
+            if (args == null) return PlaceholderHelper.INVALID_TEXT;
 
             Matcher matcher = ESCAPE_PARSER.matcher(args);
             if (matcher.find()) {
@@ -257,16 +257,16 @@ public class PlaceholderInitializer extends ModuleInitializer {
 
     private void registerRandomPlaceholder() {
         PlaceholderHelper.withServer("random", (server, args) -> {
-            if (args == null) return PlaceholderHelper.INVALID;
+            if (args == null) return PlaceholderHelper.INVALID_TEXT;
 
             String[] split = args.split(" ");
-            if (split.length != 2) return PlaceholderHelper.INVALID;
+            if (split.length != 2) return PlaceholderHelper.INVALID_TEXT;
 
             int i;
             try {
                 i = RandomUtil.getRandom().nextInt(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
             } catch (Exception e) {
-                return PlaceholderHelper.INVALID;
+                return PlaceholderHelper.INVALID_TEXT;
             }
 
             return Text.literal(String.valueOf(i));

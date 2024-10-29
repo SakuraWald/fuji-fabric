@@ -23,7 +23,7 @@ public class TabListSortInitializer extends ModuleInitializer {
         copy1.forEach(TabListEntry::getEntryFromRealPlayer);
 
         // refresh
-        PlayerManager playerManager = ServerHelper.getDefaultServer().getPlayerManager();
+        PlayerManager playerManager = ServerHelper.getServer().getPlayerManager();
         playerManager.sendToAll(new PlayerRemoveS2CPacket(copy2.stream().map(Entity::getUuid).toList()));
         playerManager.sendToAll(TabListEntry.makePacket(TabListEntry.getDummyPlayerList()));
     }

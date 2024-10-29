@@ -1,6 +1,6 @@
 package io.github.sakurawald.module.initializer.command_alias.config.model;
 
-import io.github.sakurawald.core.structure.CommandPathMappingNode;
+import io.github.sakurawald.module.initializer.command_alias.structure.CommandPathMappingNode;
 
 import java.util.ArrayList;
 import java.util.List;

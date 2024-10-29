@@ -43,7 +43,7 @@ public class TabListInitializer extends ModuleInitializer {
     }
 
     private void updateDisplayName() {
-        MinecraftServer server = ServerHelper.getDefaultServer();
+        MinecraftServer server = ServerHelper.getServer();
         for (ServerPlayerEntity player : ServerHelper.getPlayers()) {
             server.getPlayerManager().sendToAll(new PlayerListS2CPacket(PlayerListS2CPacket.Action.UPDATE_DISPLAY_NAME, player));
         }

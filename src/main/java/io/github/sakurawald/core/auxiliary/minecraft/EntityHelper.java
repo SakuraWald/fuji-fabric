@@ -6,7 +6,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.c2s.common.SyncedClientOptions;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.UserCache;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,11 +21,14 @@ public class EntityHelper {
         return player.getClass() == ServerPlayerEntity.class;
     }
 
-    public static void setDimension(ServerPlayerEntity player, @Nullable NbtCompound root) {
-        if (root == null) return;
-        if (root.contains(DIMENSION_NBT_KEY)) {
-            String dimensionId = root.getString(DIMENSION_NBT_KEY);
-            ServerWorld world = RegistryHelper.ofServerWorld(Identifier.of(dimensionId));
+    private static void applyPlayerDataNbt(ServerPlayerEntity player, @Nullable NbtCompound playerDataNbt) {
+        if (playerDataNbt == null) return;
+
+        /* apply saved dimension */
+        if (playerDataNbt.contains(DIMENSION_NBT_KEY)) {
+            String dimensionId = playerDataNbt.getString(DIMENSION_NBT_KEY);
+
+            ServerWorld world = RegistryHelper.ofServerWorld(dimensionId);
             if (world != null) {
                 player.setServerWorld(world);
             }
@@ -36,22 +38,22 @@ public class EntityHelper {
     public static ServerPlayerEntity loadOfflinePlayer(String playerName) {
         Optional<GameProfile> gameProfile = getGameProfileByName(playerName);
         if (gameProfile.isEmpty()) {
-            throw new IllegalArgumentException("Can't find player %s in usercache.json".formatted(playerName));
+            throw new IllegalArgumentException("can't find player %s in usercache.json".formatted(playerName));
         }
 
         ServerPlayerEntity player = ServerHelper.getPlayerManager().createPlayer(gameProfile.get(), SyncedClientOptions.createDefault());
 
             /*
-             the default dimension for ServerPlayerEntity instance if minecraft:overworld.
+             the default dimension for ServerPlayerEntity instance is minecraft:overworld.
              in order to keep original dimension, here we should set dimension for the loaded player entity.
              */
         Optional<NbtCompound> playerDataOpt = ServerHelper.getPlayerManager().loadPlayerData(player);
-        setDimension(player, playerDataOpt.orElse(null));
+        applyPlayerDataNbt(player, playerDataOpt.orElse(null));
         return player;
     }
 
     private static Optional<GameProfile> getGameProfileByName(String playerName) {
-        UserCache userCache = ServerHelper.getDefaultServer().getUserCache();
+        UserCache userCache = ServerHelper.getServer().getUserCache();
         if (userCache == null) return Optional.empty();
 
         return userCache.findByName(playerName);

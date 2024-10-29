@@ -8,7 +8,6 @@ import io.github.sakurawald.core.structure.TypeFormatter;
 import io.github.sakurawald.module.initializer.top_chunks.TopChunksInitializer;
 import lombok.Getter;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -18,7 +17,6 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Heightmap;
@@ -53,7 +51,6 @@ public class ChunkScore implements Comparable<ChunkScore> {
 
     public void plusEntity(@NotNull Entity entity) {
         String type = entity.getType().getTranslationKey();
-        type = TypeFormatter.type2transform_type.getOrDefault(type, type);
 
         type2amount.putIfAbsent(type, 0);
         type2amount.put(type, type2amount.get(type) + 1);
@@ -64,14 +61,7 @@ public class ChunkScore implements Comparable<ChunkScore> {
     }
 
     public void plusBlockEntity(@NotNull BlockEntity blockEntity) {
-        Identifier id = BlockEntityType.getId(blockEntity.getType());
-        if (id == null) return;
-
-        // fix: add the prefix of BlockEntity
-        String type = id.toTranslationKey("block");
-
-        // fix: some block entity has an error translatable key, like mob_spawner
-        type = TypeFormatter.type2transform_type.getOrDefault(type, type);
+        String type = blockEntity.getCachedState().getBlock().getTranslationKey();
 
         type2amount.putIfAbsent(type, 0);
         type2amount.put(type, type2amount.get(type) + 1);

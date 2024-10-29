@@ -28,7 +28,7 @@ public class DelayInitializer extends ModuleInitializer {
         String $rest = rest.getValue();
 
         executor
-            .schedule(() -> ServerHelper.getDefaultServer()
+            .schedule(() -> ServerHelper.getServer()
                 .executeSync(() -> CommandExecutor.execute(ExtendedCommandSource.asConsole(source), $rest)), time, TimeUnit.SECONDS);
 
         return CommandHelper.Return.SUCCESS;

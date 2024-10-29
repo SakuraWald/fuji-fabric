@@ -31,7 +31,7 @@ public class SyncDummyPlayersOnPlayerDisconnectMixin {
 
             PlayerRemoveS2CPacket playerRemoveS2CPacket = new PlayerRemoveS2CPacket(List.of(dummyPlayer.getUuid()));
 
-            ServerHelper.getDefaultServer().getPlayerManager().sendToAll(playerRemoveS2CPacket);
+            ServerHelper.sendPacketToAll(playerRemoveS2CPacket);
         });
     }
 }

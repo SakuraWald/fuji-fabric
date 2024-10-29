@@ -23,7 +23,7 @@ public class BedInitializer extends ModuleInitializer {
         BlockPos respawnPosition = player.getSpawnPointPosition();
         RegistryKey<World> respawnDimension = player.getSpawnPointDimension();
 
-        ServerWorld world = ServerHelper.getDefaultServer().getWorld(respawnDimension);
+        ServerWorld world = ServerHelper.getServer().getWorld(respawnDimension);
         if (respawnPosition == null || world == null) {
             TextHelper.sendMessageByKey(player, "bed.not_found");
             return CommandHelper.Return.FAIL;

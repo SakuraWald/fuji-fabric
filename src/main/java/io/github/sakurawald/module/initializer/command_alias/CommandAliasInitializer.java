@@ -8,9 +8,9 @@ import io.github.sakurawald.core.auxiliary.minecraft.ServerHelper;
 import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
 import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
 import io.github.sakurawald.core.event.impl.ServerLifecycleEvents;
-import io.github.sakurawald.core.structure.CommandPathMappingNode;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
 import io.github.sakurawald.module.initializer.command_alias.config.model.CommandAliasConfigModel;
+import io.github.sakurawald.module.initializer.command_alias.structure.CommandPathMappingNode;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +41,7 @@ public class CommandAliasInitializer extends ModuleInitializer {
 
             if (builder == null) {
                 if (target == null) {
-                    LogUtil.warn("[command alias] can't find the target command node for alias entry: {}", entry);
+                    LogUtil.warn("can't find the target command node for command alias entry: {}", entry);
                     return;
                 }
 

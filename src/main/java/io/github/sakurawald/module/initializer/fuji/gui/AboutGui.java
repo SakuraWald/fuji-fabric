@@ -65,14 +65,14 @@ public class AboutGui extends PagedGui<Person> {
 
                 // get the player name from the item name
                 String onlinePlayerName = itemStack.getName().getString().trim();
-                GameProfile gameProfile = MojangProfileFetcher.makeGameProfile(onlinePlayerName);
+                GameProfile gameProfile = MojangProfileFetcher.makeOnlineGameProfile(onlinePlayerName);
 
                 // with gui slot
                 GuiElementBuilder builder = new GuiElementBuilder()
                     .setItem(itemStack.getItem())
                     .setName(itemStack.getName())
                     .setCallback(slot.getGuiCallback())
-                    .setSkullOwner(gameProfile, ServerHelper.getDefaultServer());
+                    .setSkullOwner(gameProfile, ServerHelper.getServer());
 
                 LoreComponent loreComponent = itemStack.get(DataComponentTypes.LORE);
                 if (loreComponent != null) {

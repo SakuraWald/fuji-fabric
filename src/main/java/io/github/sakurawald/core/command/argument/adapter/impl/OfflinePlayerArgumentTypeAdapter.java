@@ -18,7 +18,7 @@ import java.util.List;
 public class OfflinePlayerArgumentTypeAdapter extends BaseArgumentTypeAdapter {
 
     private static @NotNull List<String> getPlayerNameListFromUserCache() {
-        UserCache userCache = ServerHelper.getDefaultServer().getUserCache();
+        UserCache userCache = ServerHelper.getServer().getUserCache();
         if (userCache == null) return List.of();
 
         List<String> playerNames = new ArrayList<>();

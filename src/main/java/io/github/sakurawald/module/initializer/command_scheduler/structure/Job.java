@@ -38,6 +38,6 @@ public class Job {
         List<String> commands = this.commands_list.get(new Random().nextInt(this.commands_list.size()));
         LogUtil.info("execute commands in job `{}`: {}", this.getName(), commands);
 
-        ServerHelper.getDefaultServer().executeSync(() -> CommandExecutor.execute(ExtendedCommandSource.asConsole(ServerHelper.getDefaultServer().getCommandSource()), commands));
+        ServerHelper.getServer().executeSync(() -> CommandExecutor.execute(ExtendedCommandSource.asConsole(ServerHelper.getServer().getCommandSource()), commands));
     }
 }

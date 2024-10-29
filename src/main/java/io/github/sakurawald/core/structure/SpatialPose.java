@@ -1,6 +1,5 @@
 package io.github.sakurawald.core.structure;
 
-import io.github.sakurawald.core.auxiliary.minecraft.RegistryHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.ServerHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import lombok.Data;
@@ -11,7 +10,6 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +25,7 @@ public class SpatialPose {
     final float yaw;
     final float pitch;
 
-    public SpatialPose(String level, double x, double y, double z, float yaw, float pitch) {
+    private SpatialPose(String level, double x, double y, double z, float yaw, float pitch) {
         this.level = level;
         this.x = x;
         this.y = y;
@@ -42,21 +40,6 @@ public class SpatialPose {
 
     public static @NotNull SpatialPose of(@NotNull ServerPlayerEntity player) {
         return new SpatialPose(player.getWorld().getRegistryKey().getValue().toString(), player.getX(), player.getY(), player.getZ(), player.getYaw(), player.getPitch());
-    }
-
-    public static @NotNull SpatialPose of(@NotNull ServerPlayerEntity player, @NotNull ServerWorld world) {
-        BlockPos spawnPos = world.getSpawnPos();
-        return new SpatialPose(world, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), player.getYaw(), player.getPitch());
-    }
-
-    @SuppressWarnings("unused")
-    public ServerWorld ofDimension() {
-        return RegistryHelper.ofServerWorld(Identifier.of(this.level));
-    }
-
-    @SuppressWarnings("unused")
-    public @NotNull BlockPos ofBlockPos() {
-        return new BlockPos((int) this.x, (int) this.y, (int) this.z);
     }
 
     public boolean sameLevel(@NotNull World level) {
@@ -74,7 +57,7 @@ public class SpatialPose {
 
     public void teleport(@NotNull ServerPlayerEntity player) {
         RegistryKey<World> worldKey = RegistryKey.of(RegistryKeys.WORLD, Identifier.of(this.level));
-        ServerWorld serverLevel = ServerHelper.getDefaultServer().getWorld(worldKey);
+        ServerWorld serverLevel = ServerHelper.getServer().getWorld(worldKey);
         if (serverLevel == null) {
             TextHelper.sendMessageByKey(player, "world.dimension.not_found", this.level);
             return;

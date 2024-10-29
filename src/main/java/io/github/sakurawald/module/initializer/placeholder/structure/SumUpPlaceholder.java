@@ -33,7 +33,7 @@ public class SumUpPlaceholder {
     public int moved;
 
     private static Path getStatPath() {
-        return ServerHelper.getDefaultServer().getSavePath(WorldSavePath.STATS);
+        return ServerHelper.getServer().getSavePath(WorldSavePath.STATS);
     }
 
     @SuppressWarnings("UnnecessaryLocalVariable")
@@ -49,7 +49,12 @@ public class SumUpPlaceholder {
             File file = getStatPath().resolve(uuid + ".json").toFile();
             if (!file.exists()) return ret;
 
-            JsonObject json = JsonParser.parseReader(new FileReader(file)).getAsJsonObject();
+            JsonElement jsonElement = JsonParser.parseReader(new FileReader(file));
+            if (!jsonElement.isJsonObject()) {
+                // return a dummy placeholder, if the related statistics file is not write into the storage, for a new player.
+                return new SumUpPlaceholder();
+            }
+            JsonObject json = jsonElement.getAsJsonObject();
             JsonObject stats = json.getAsJsonObject("stats");
             if (stats == null) return ret;
 

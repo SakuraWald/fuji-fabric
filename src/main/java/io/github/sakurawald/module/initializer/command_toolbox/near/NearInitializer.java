@@ -23,7 +23,7 @@ public class NearInitializer extends ModuleInitializer {
     @CommandNode("near")
     @Document("List nearby players.")
     private static int near(@CommandSource ServerPlayerEntity player, Optional<Integer> distance) {
-        MinecraftServer server = ServerHelper.getDefaultServer();
+        MinecraftServer server = ServerHelper.getServer();
 
         int $distance = distance.orElse(128);
 

@@ -58,7 +58,7 @@ public class WorldManager {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void requestToCreateWorld(DimensionNode dimensionNode) {
-        ServerHelper.getDefaultServer().submit(() -> {
+        ServerHelper.getServer().submit(() -> {
             creationQueue.add(dimensionNode);
         });
     }
@@ -80,7 +80,7 @@ public class WorldManager {
         }
 
         // register the dimension
-        MinecraftServer server = ServerHelper.getDefaultServer();
+        MinecraftServer server = ServerHelper.getServer();
         Identifier dimension = Identifier.of(dimensionNode.getDimension());
         Identifier dimensionType = Identifier.of(dimensionNode.getDimension_type());
         long seed = dimensionNode.getSeed();
