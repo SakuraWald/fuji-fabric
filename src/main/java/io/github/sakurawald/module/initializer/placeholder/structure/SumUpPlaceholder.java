@@ -33,7 +33,7 @@ public class SumUpPlaceholder {
     public int moved;
 
     private static Path getStatPath() {
-        return ServerHelper.getDefaultServer().getSavePath(WorldSavePath.STATS);
+        return ServerHelper.getServer().getSavePath(WorldSavePath.STATS);
     }
 
     @SuppressWarnings("UnnecessaryLocalVariable")

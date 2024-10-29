@@ -35,6 +35,6 @@ public abstract class ServerPlayNetworkHandlerMixin {
 
         /* make sender text*/
         Text senderText = ChatStyleInitializer.parseSenderText(player);
-        args.set(2, MessageType.params(ChatStyleInitializer.MESSAGE_TYPE_KEY, ServerHelper.getDefaultServer().getRegistryManager(), senderText));
+        args.set(2, MessageType.params(ChatStyleInitializer.MESSAGE_TYPE_KEY, ServerHelper.getServer().getRegistryManager(), senderText));
     }
 }

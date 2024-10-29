@@ -72,7 +72,7 @@ public class CleanerInitializer extends ModuleInitializer {
         CompletableFuture.runAsync(() -> {
             Map<String, Integer> counter = new HashMap<>();
 
-            for (ServerWorld world : ServerHelper.getDefaultServer().getWorlds()) {
+            for (ServerWorld world : ServerHelper.getServer().getWorlds()) {
                 for (Entity entity : world.iterateEntities()) {
                     if (ignoreEntity(entity)) continue;
 

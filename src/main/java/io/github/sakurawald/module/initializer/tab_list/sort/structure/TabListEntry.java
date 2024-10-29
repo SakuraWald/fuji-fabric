@@ -73,7 +73,7 @@ public class TabListEntry {
         }
 
         // send packet to remove it
-        ServerHelper.getDefaultServer().getPlayerManager().sendToAll(new PlayerRemoveS2CPacket(List.of(dummyPlayer.getUuid())));
+        ServerHelper.getServer().getPlayerManager().sendToAll(new PlayerRemoveS2CPacket(List.of(dummyPlayer.getUuid())));
         return Optional.empty();
     }
 
@@ -95,7 +95,7 @@ public class TabListEntry {
     }
 
     private static @NotNull ServerPlayerEntity makeServerPlayerEntity(@NotNull String playerName) {
-        MinecraftServer server = ServerHelper.getDefaultServer();
+        MinecraftServer server = ServerHelper.getServer();
         ServerWorld world = server.getWorlds().iterator().next();
         GameProfile gameProfile = new GameProfile(UUID.nameUUIDFromBytes(playerName.getBytes()), playerName);
         SyncedClientOptions syncedClientOptions = SyncedClientOptions.createDefault();

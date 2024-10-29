@@ -23,7 +23,7 @@ public class MultiObsidianPlatformInitializer extends ModuleInitializer {
 
     /* this method is used to fix Entity#position() async */
     private static BlockPos findNearbyEndPortalBlock(@NotNull BlockPos bp) {
-        ServerWorld overworld = ServerHelper.getDefaultServer().getOverworld();
+        ServerWorld overworld = ServerHelper.getServer().getOverworld();
 
         // should we find nearby END_PORTAL block ?
         if (overworld.getBlockState(bp) == Blocks.END_PORTAL.getDefaultState()) return bp;
@@ -44,7 +44,7 @@ public class MultiObsidianPlatformInitializer extends ModuleInitializer {
     }
 
     private static BlockPos findCenterEndPortalBlock(@NotNull BlockPos bp) {
-        ServerWorld overworld = ServerHelper.getDefaultServer().getOverworld();
+        ServerWorld overworld = ServerHelper.getServer().getOverworld();
         if (overworld.getBlockState(bp.north()) != Blocks.END_PORTAL.getDefaultState()) {
             if (overworld.getBlockState(bp.west()) != Blocks.END_PORTAL.getDefaultState()) {
                 return bp.south().east();

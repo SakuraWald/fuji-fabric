@@ -32,7 +32,7 @@ public class ExtendedCommandSource {
     }
 
     public static ExtendedCommandSource asConsole(@NotNull ServerCommandSource initiatingSource, boolean parsePlaceholder) {
-        return new ExtendedCommandSource(initiatingSource, ServerHelper.getDefaultServer().getCommandSource(), parsePlaceholder);
+        return new ExtendedCommandSource(initiatingSource, ServerHelper.getServer().getCommandSource(), parsePlaceholder);
     }
 
     public static ExtendedCommandSource asPlayer(@NotNull ServerCommandSource initiatingSource, PlayerEntity executingPlayer, boolean parsePlaceholder) {
@@ -76,7 +76,7 @@ public class ExtendedCommandSource {
         if (contextualPlayer != null) {
             string = TextHelper.parsePlaceholder(contextualPlayer, string);
         } else {
-            string = TextHelper.parsePlaceholder(ServerHelper.getDefaultServer(), string);
+            string = TextHelper.parsePlaceholder(ServerHelper.getServer(), string);
         }
 
         return string;

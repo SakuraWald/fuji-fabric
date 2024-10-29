@@ -22,7 +22,7 @@ public abstract class ServerPlayNetworkHandlerMixin {
     @Unique
     private List<ServerPlayerEntity> resolveMentionedPlayers(String string) {
         /* make list */
-        String[] playerNames = ServerHelper.getDefaultServer().getPlayerNames();
+        String[] playerNames = ServerHelper.getServer().getPlayerNames();
         List<ServerPlayerEntity> list = Arrays.stream(playerNames)
             .filter(string::contains)
             // mention the longest name first

@@ -58,7 +58,7 @@ public class RandomTeleporter {
 
             // teleport the player
             SpatialPose spatialPose = new SpatialPose(world, result.get().getX() + 0.5, result.get().getY(), result.get().getZ() + 0.5, 0, 0);
-            ServerHelper.getDefaultServer().executeSync(() -> {
+            ServerHelper.getServer().executeSync(() -> {
                 // run the teleport action in main-thread
                 spatialPose.teleport(player);
             });

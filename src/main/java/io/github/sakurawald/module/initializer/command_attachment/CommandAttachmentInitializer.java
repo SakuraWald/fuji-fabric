@@ -67,7 +67,7 @@ public class CommandAttachmentInitializer extends ModuleInitializer {
 
         // test stepping block
         if (!existsAttachmentModel(uuid)) return;
-        ServerHelper.getDefaultServer().executeSync(() -> triggerAttachmentModel(uuid, player, List.of(InteractType.STEP_ON)));
+        ServerHelper.getServer().executeSync(() -> triggerAttachmentModel(uuid, player, List.of(InteractType.STEP_ON)));
 
     }
 
