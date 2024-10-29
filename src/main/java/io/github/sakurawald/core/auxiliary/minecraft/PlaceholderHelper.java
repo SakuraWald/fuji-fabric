@@ -16,14 +16,14 @@ import java.util.function.Function;
 @UtilityClass
 public class PlaceholderHelper {
 
-    public static final Text INVALID = Text.literal("[INVALID]");
-    private static final Text NO_PLAYER = Text.literal("[NO-PLAYER]");
-    private static final Text NO_SERVER = Text.literal("[NO-SERVER]");
+    public static final Text INVALID_TEXT = Text.literal("[INVALID]");
+    private static final Text NO_PLAYER_TEXT = Text.literal("[NO-PLAYER]");
+    private static final Text NO_SERVER_TEXT = Text.literal("[NO-SERVER]");
 
     @SuppressWarnings("resource")
     public static void withServer(String name, BiFunction<MinecraftServer, String, Text> function) {
         PlaceholderHandler placeholderHandler = (ctx, arg) -> {
-            if (ctx.server() == null) return PlaceholderResult.value(PlaceholderHelper.NO_SERVER);
+            if (ctx.server() == null) return PlaceholderResult.value(PlaceholderHelper.NO_SERVER_TEXT);
             return PlaceholderResult.value(function.apply(ctx.server(), arg));
         };
 
@@ -32,7 +32,7 @@ public class PlaceholderHelper {
 
     public static void withPlayer(String name, BiFunction<ServerPlayerEntity, String, Text> function) {
         PlaceholderHandler placeholderHandler = (ctx, arg) -> {
-            if (ctx.player() == null) return PlaceholderResult.value(NO_PLAYER);
+            if (ctx.player() == null) return PlaceholderResult.value(NO_PLAYER_TEXT);
             return PlaceholderResult.value(function.apply(ctx.player(), arg));
         };
 

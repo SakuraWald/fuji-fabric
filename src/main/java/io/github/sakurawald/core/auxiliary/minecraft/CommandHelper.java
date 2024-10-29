@@ -13,7 +13,6 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -36,6 +35,11 @@ public class CommandHelper {
         return String.join(".", array);
     }
 
+    public static void updateCommandTree() {
+        CommandManager commandManager = ServerHelper.getServer().getCommandManager();
+        ServerHelper.getPlayers().forEach(commandManager::sendCommandTree);
+    }
+
     public static List<CommandNode<ServerCommandSource>> getCommandNodes() {
         List<CommandNode<ServerCommandSource>> ret = new ArrayList<>();
         RootCommandNode<ServerCommandSource> root = Objects.requireNonNull(ServerHelper.getCommandDispatcher()).getRoot();
@@ -43,17 +47,12 @@ public class CommandHelper {
         return ret;
     }
 
-    public static void updateCommandTree() {
-        CommandManager commandManager = ServerHelper.getDefaultServer().getCommandManager();
-        ServerHelper.getPlayers().forEach(commandManager::sendCommandTree);
-    }
-
-    private static void getCommandNodes(List<CommandNode<ServerCommandSource>> list, CommandNode<ServerCommandSource> parent) {
-        parent.getChildren().forEach(it -> getCommandNodes(list, it));
+    private static void getCommandNodes(List<CommandNode<ServerCommandSource>> collector, CommandNode<ServerCommandSource> parent) {
+        parent.getChildren().forEach(it -> getCommandNodes(collector, it));
 
         // ignore the root command node
         if (!parent.getName().isEmpty()) {
-            list.add(parent);
+            collector.add(parent);
         }
     }
 
@@ -77,16 +76,6 @@ public class CommandHelper {
     }
 
     public static class Suggestion {
-        public static <T> @NotNull SuggestionProvider<ServerCommandSource> identifiers(RegistryKey<? extends Registry<T>> registryKey) {
-            return (context, builder) -> {
-                Registry<T> registry = RegistryHelper.ofRegistry(registryKey);
-                for (Identifier identifier : registry.getIds()) {
-                    builder.suggest(identifier.toString());
-                }
-                return builder.buildFuture();
-            };
-        }
-
         public static <T> @NotNull SuggestionProvider<ServerCommandSource> enums(Supplier<T[]> enumSupplier) {
             return (context, builder) -> {
                 for (T value : enumSupplier.get()) {
@@ -105,6 +94,11 @@ public class CommandHelper {
             };
         }
 
+        public static <T> @NotNull SuggestionProvider<ServerCommandSource> identifiers(RegistryKey<? extends Registry<T>> registryKey) {
+            return iterable(() -> RegistryHelper
+                .ofRegistry(registryKey)
+                .getIds());
+        }
     }
 
     public static class Pattern {
