@@ -72,7 +72,7 @@ public class ModuleManager extends BaseManager {
         while (!MODULE_PATHS.contains(modulePathString)) {
             // remove last!
             if (modulePath.isEmpty()) {
-                throw new RuntimeException("Can't find the module enable-supplier in `config.json` for class name %s. Did you forget to add the enable-supplier key in ConfigModel ?".formatted(className));
+                throw new RuntimeException("can't find the module enable-supplier in `config.json` for class name %s. Did you forget to add the enable-supplier key in ConfigModel ?".formatted(className));
             }
             modulePath.removeLast();
 
@@ -185,7 +185,7 @@ public class ModuleManager extends BaseManager {
             parent = parent.getAsJsonObject(node);
 
             if (parent == null || !parent.has(ModuleManager.ENABLE_SUPPLIER_KEY)) {
-                throw new RuntimeException("Missing `enable supplier` key for dir name list `%s`".formatted(modulePath));
+                throw new RuntimeException("missing `enable supplier` key for dir name list `%s`".formatted(modulePath));
             }
 
             // only enable a sub-module if the parent module is enabled.

@@ -20,7 +20,7 @@ public class CommandExecutor {
     }
 
     /**
-     * Cases:
+     * cases:
      * - /run as console bad command
      * - /run as console run as player bad command
      * - /run as console run as player <player> run as console bad command

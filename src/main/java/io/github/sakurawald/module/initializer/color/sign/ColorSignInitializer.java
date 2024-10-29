@@ -22,7 +22,7 @@ public class ColorSignInitializer extends ModuleInitializer {
     public static @Nullable SignCache readSignCache(SpatialBlock spatialBlock) {
         String uuid = UuidHelper.getAttachedUuid(spatialBlock);
 
-        if (!Managers.getAttachmentManager().existsAttachmentFile(ATTACHMENT_SUBJECT, uuid)) {
+        if (!Managers.getAttachmentManager().existsAttachment(ATTACHMENT_SUBJECT, uuid)) {
             return null;
         }
 
