@@ -66,7 +66,7 @@ public class AboutGui extends PagedGui<Person> {
 
                 // get the player name from the item name
                 String onlinePlayerName = itemStack.getName().getString().trim();
-                GameProfile gameProfile = MojangProfileFetcher.makeGameProfile(onlinePlayerName);
+                GameProfile gameProfile = MojangProfileFetcher.makeOnlineGameProfile(onlinePlayerName);
 
                 // with gui slot
                 GuiElementBuilder builder = new GuiElementBuilder()

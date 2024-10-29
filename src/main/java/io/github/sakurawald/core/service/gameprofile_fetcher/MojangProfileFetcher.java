@@ -22,8 +22,8 @@ public class MojangProfileFetcher {
     private static final Pattern UUID_CONVERTER_PATTERN = Pattern.compile("(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)");
 
     @SuppressWarnings("DataFlowIssue")
-    public static GameProfile makeGameProfile(String onlinePlayerName) {
-        return new GameProfile(fetchOnlineUUID(onlinePlayerName), onlinePlayerName);
+    public static GameProfile makeOnlineGameProfile(String playerName) {
+        return new GameProfile(fetchOnlineUUID(playerName), playerName);
     }
 
     public static @Nullable UUID fetchOnlineUUID(String playerName) {

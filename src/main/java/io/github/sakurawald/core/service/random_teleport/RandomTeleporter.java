@@ -141,7 +141,7 @@ public class RandomTeleporter {
             && pos.getY() <= chunk.getTopY();
     }
 
-    public static @NotNull Iterable<BlockPos.Mutable> getChunkCandidateBlocks(@NotNull ChunkPos chunkPos) {
+    private static @NotNull Iterable<BlockPos.Mutable> getChunkCandidateBlocks(@NotNull ChunkPos chunkPos) {
         return () -> new Iterator<>() {
             private final BlockPos.Mutable bp = new BlockPos.Mutable();
             private int i = -1;
