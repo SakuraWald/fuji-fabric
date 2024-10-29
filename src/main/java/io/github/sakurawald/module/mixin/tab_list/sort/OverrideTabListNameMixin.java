@@ -36,7 +36,7 @@ public abstract class OverrideTabListNameMixin {
      */
     @ModifyReturnValue(method = "getPlayerListName", at = @At("RETURN"))
     Text modifyPlayerListName(Text original) {
-        MinecraftServer server = ServerHelper.getDefaultServer();
+        MinecraftServer server = ServerHelper.getServer();
         String name = player.getGameProfile().getName();
 
         /*

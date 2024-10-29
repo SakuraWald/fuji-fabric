@@ -1,6 +1,7 @@
 package io.github.sakurawald.core.auxiliary.minecraft;
 
 import com.mojang.brigadier.CommandDispatcher;
+import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.server.MinecraftServer;
@@ -17,27 +18,24 @@ import java.util.UUID;
 
 public class ServerHelper {
 
+    @Getter
     @Setter
     private static MinecraftServer server;
 
-    public static MinecraftServer getDefaultServer() {
-        return server;
-    }
-
     public static Collection<ServerWorld> getWorlds() {
-        return getDefaultServer().worlds.values();
+        return getServer().worlds.values();
     }
 
     public static @Nullable CommandDispatcher<ServerCommandSource> getCommandDispatcher() {
-        if (getDefaultServer() == null || getDefaultServer().getCommandManager() == null) {
+        if (getServer() == null || getServer().getCommandManager() == null) {
             return null;
         }
 
-        return getDefaultServer().getCommandManager().getDispatcher();
+        return getServer().getCommandManager().getDispatcher();
     }
 
     public static PlayerManager getPlayerManager() {
-        return getDefaultServer().getPlayerManager();
+        return getServer().getPlayerManager();
     }
 
     public static List<ServerPlayerEntity> getPlayers() {

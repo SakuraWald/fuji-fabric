@@ -239,7 +239,7 @@ public class TextHelper {
         if (audience instanceof PlayerEntity playerEntity) {
             placeholderContext = PlaceholderContext.of(playerEntity);
         } else {
-            placeholderContext = PlaceholderContext.of(ServerHelper.getDefaultServer());
+            placeholderContext = PlaceholderContext.of(ServerHelper.getServer());
         }
 
         return placeholderContext;
@@ -324,7 +324,7 @@ public class TextHelper {
         Text text = getTextByKey(null, key, args);
         LogUtil.info(text.getString());
 
-        for (ServerPlayerEntity player : ServerHelper.getDefaultServer().getPlayerManager().getPlayerList()) {
+        for (ServerPlayerEntity player : ServerHelper.getServer().getPlayerManager().getPlayerList()) {
             TextHelper.sendMessageByKey(player, key, args);
         }
     }

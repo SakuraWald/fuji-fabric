@@ -34,7 +34,7 @@ public abstract class RedirectScreenHandlerFactory {
     }
 
     private void loadTargetPlayer() {
-        ServerPlayerEntity player = ServerHelper.getDefaultServer().getPlayerManager().getPlayer(targetPlayerName);
+        ServerPlayerEntity player = ServerHelper.getServer().getPlayerManager().getPlayer(targetPlayerName);
         if (player != null) {
             onlineEditMode = true;
             targetPlayer = player;
@@ -58,7 +58,7 @@ public abstract class RedirectScreenHandlerFactory {
     protected abstract boolean canClick(int i);
 
     private void savePlayerData() {
-        ServerHelper.getDefaultServer().saveHandler.savePlayerData(targetPlayer);
+        ServerHelper.getServer().saveHandler.savePlayerData(targetPlayer);
     }
 
     private GenericContainerScreenHandler makeGenericContainerScreenHandler(int syncId, PlayerInventory sourceInventory, PlayerEntity source) {

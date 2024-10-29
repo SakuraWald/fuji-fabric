@@ -47,7 +47,7 @@ public class MentionPlayersJob extends FixedIntervalJob {
         for (ServerPlayerEntity player : players) {
             if (player == null) continue;
 
-            ServerHelper.getDefaultServer().executeSync(() -> {
+            ServerHelper.getServer().executeSync(() -> {
                 SoundEvent soundEvent = SoundEvent.of(Identifier.of(setup.sound));
                 SoundCategory soundCategory = SoundCategory.MUSIC;
                 player.playSoundToPlayer(soundEvent, soundCategory, setup.volume, setup.pitch);

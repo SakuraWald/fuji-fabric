@@ -37,7 +37,7 @@ public interface TextMixin {
         Map<String, String> key2value = SystemMessageInitializer.config.model().key2value;
         if (key2value.containsKey(key)) {
             /* prevent hijack too early */
-            if (ServerHelper.getDefaultServer() == null) {
+            if (ServerHelper.getServer() == null) {
                 LogUtil.warn("server is null currently -> cannot hijack the text with the key: {}", key);
                 return null;
             }

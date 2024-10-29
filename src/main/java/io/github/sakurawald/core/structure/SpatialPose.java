@@ -57,7 +57,7 @@ public class SpatialPose {
 
     public void teleport(@NotNull ServerPlayerEntity player) {
         RegistryKey<World> worldKey = RegistryKey.of(RegistryKeys.WORLD, Identifier.of(this.level));
-        ServerWorld serverLevel = ServerHelper.getDefaultServer().getWorld(worldKey);
+        ServerWorld serverLevel = ServerHelper.getServer().getWorld(worldKey);
         if (serverLevel == null) {
             TextHelper.sendMessageByKey(player, "world.dimension.not_found", this.level);
             return;

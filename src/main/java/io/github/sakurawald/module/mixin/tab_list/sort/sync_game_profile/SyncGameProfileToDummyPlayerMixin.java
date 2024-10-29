@@ -45,7 +45,7 @@ public class SyncGameProfileToDummyPlayerMixin {
 
         // sync the properties from game profile
         for (ServerPlayerEntity player : players) {
-            PlayerManager playerManager = ServerHelper.getDefaultServer().getPlayerManager();
+            PlayerManager playerManager = ServerHelper.getServer().getPlayerManager();
             String name = player.getGameProfile().getName();
 
             // if it's real player

@@ -87,7 +87,7 @@ public class NbtHelper {
 
 
     public static void withNbtFile(@NotNull Path path, @NotNull Consumer<NbtCompound> function) {
-        //discard the return value
+        // discard the return value
         withNbtFileAndGettingReturnValue(path, (root) -> {
             function.accept(root);
             return null;

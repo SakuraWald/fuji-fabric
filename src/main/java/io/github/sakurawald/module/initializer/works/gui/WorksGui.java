@@ -71,7 +71,7 @@ public class WorksGui extends PagedGui<Work> {
                 /* left click -> visit */
                 if (clickType.isLeft) {
                     RegistryKey<World> worldKey = RegistryKey.of(RegistryKeys.WORLD, Identifier.of(entity.level));
-                    ServerWorld level = ServerHelper.getDefaultServer().getWorld(worldKey);
+                    ServerWorld level = ServerHelper.getServer().getWorld(worldKey);
                     if (level != null) {
                         new SpatialPose(level, entity.x, entity.y, entity.z, entity.yaw, entity.pitch)
                             .teleport(player);

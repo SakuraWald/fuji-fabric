@@ -14,6 +14,16 @@ import org.jetbrains.annotations.NotNull;
 @UtilityClass
 public class GuiHelper {
 
+    public static void fill(@NotNull SimpleGui gui, ItemStack itemStack) {
+        for (int i = 0; i < gui.getSize(); i++) {
+            gui.setSlot(i, itemStack);
+        }
+    }
+
+    public boolean isInvalidSlotInsidePlayerInventory(int index) {
+        return index == 41 || index == 42 || index == 43 || index == 44;
+    }
+
     public static int getRows(ScreenHandlerType<GenericContainerScreenHandler> screenHandlerType) {
         if (screenHandlerType == ScreenHandlerType.GENERIC_9X1) return 1;
         if (screenHandlerType == ScreenHandlerType.GENERIC_9X2) return 2;
@@ -92,18 +102,7 @@ public class GuiHelper {
         return makeSkullButton(Icon.A_ICON);
     }
 
-    public static void fill(@NotNull SimpleGui gui, ItemStack itemStack) {
-        for (int i = 0; i < gui.getSize(); i++) {
-            gui.setSlot(i, itemStack);
-        }
-    }
-
-    public boolean isInvalidSlotInsidePlayerInventory(int index) {
-        return index == 41 || index == 42 || index == 43 || index == 44;
-    }
-
     private static class Icon {
-
         public static final String PLAYER_PLACEHOLDER_ICON = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ5Y2M1OGFkMjVhMWFiMTZkMzZiYjVkNmQ0OTNjOGY1ODk4YzJiZjMwMmI2NGUzMjU5MjFjNDFjMzU4NjcifX19";
 
         public static final String PREVIOUS_PAGE_ICON = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWYxMzNlOTE5MTlkYjBhY2VmZGMyNzJkNjdmZDg3YjRiZTg4ZGM0NGE5NTg5NTg4MjQ0NzRlMjFlMDZkNTNlNiJ9fX0=";
