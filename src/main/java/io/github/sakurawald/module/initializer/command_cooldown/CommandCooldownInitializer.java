@@ -167,7 +167,7 @@ public class CommandCooldownInitializer extends ModuleInitializer {
             if (cooldown == null) return NOT_COOLDOWN_FOUND;
 
             String key = player.getGameProfile().getName();
-            long leftTime = cooldown.computeCooldown(key, cooldown.getCooldownMs());
+            long leftTime = cooldown.getCooldown(key, cooldown.getCooldownMs());
             leftTime = Math.max(0, leftTime);
             return Text.literal(String.valueOf(leftTime));
         });

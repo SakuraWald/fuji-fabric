@@ -1,4 +1,4 @@
-package io.github.sakurawald.core.structure;
+package io.github.sakurawald.module.initializer.command_alias.structure;
 
 import lombok.Data;
 

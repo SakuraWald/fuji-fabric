@@ -19,7 +19,7 @@ public class AttachmentManager extends BaseManager {
 
     @Override
     public void onInitialize() {
-
+        // no-op
     }
 
     @SuppressWarnings("DataFlowIssue")

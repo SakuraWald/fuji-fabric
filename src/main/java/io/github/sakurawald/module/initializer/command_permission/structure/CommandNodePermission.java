@@ -1,11 +1,11 @@
 package io.github.sakurawald.module.initializer.command_permission.structure;
 
-import io.github.sakurawald.core.structure.CommandNode;
+import io.github.sakurawald.core.structure.CommandNodeWrapper;
 import lombok.Getter;
 import net.minecraft.server.command.ServerCommandSource;
 
 @Getter
-public class CommandNodePermission extends CommandNode {
+public class CommandNodePermission extends CommandNodeWrapper {
 
     final boolean wrapped;
 

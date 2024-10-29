@@ -18,6 +18,7 @@ import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
 import io.github.sakurawald.core.gui.CommandDescriptorGui;
 import io.github.sakurawald.core.job.abst.BaseJob;
 import io.github.sakurawald.core.manager.Managers;
+import io.github.sakurawald.core.structure.CommandNodeWrapper;
 import io.github.sakurawald.core.structure.Pair;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
 import io.github.sakurawald.module.initializer.fuji.gui.AboutGui;
@@ -89,9 +90,9 @@ public class FujiInitializer extends ModuleInitializer {
     @CommandNode("inspect server-commands")
     @Document("Inspect all commands registered in server.")
     private static int $listServerCommands(@CommandSource ServerPlayerEntity player) {
-        List<io.github.sakurawald.core.structure.CommandNode> entities = CommandHelper.getCommandNodes().stream()
-            .map(io.github.sakurawald.core.structure.CommandNode::new)
-            .sorted(Comparator.comparing(io.github.sakurawald.core.structure.CommandNode::getPath))
+        List<CommandNodeWrapper> entities = CommandHelper.getCommandNodes().stream()
+            .map(CommandNodeWrapper::new)
+            .sorted(Comparator.comparing(CommandNodeWrapper::getPath))
             .toList();
         new ServerCommandsGui(player, entities, 0).open();
         return CommandHelper.Return.SUCCESS;
