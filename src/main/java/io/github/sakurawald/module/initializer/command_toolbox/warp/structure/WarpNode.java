@@ -21,6 +21,14 @@ public class WarpNode {
     public String item = "minecraft:painting";
     public List<String> lore = new ArrayList<>();
 
+    public Event event = new Event();
+    public static class Event {
+        public OnWarped on_warped = new OnWarped();
+        public static class OnWarped {
+            public List<String> command_list = new ArrayList<>();
+        }
+    }
+
     public WarpNode(SpatialPose position) {
         this.position = position;
     }

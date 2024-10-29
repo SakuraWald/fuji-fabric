@@ -9,6 +9,8 @@ import io.github.sakurawald.core.command.annotation.CommandRequirement;
 import io.github.sakurawald.core.command.annotation.CommandSource;
 import io.github.sakurawald.core.command.argument.wrapper.impl.GreedyString;
 import io.github.sakurawald.core.command.exception.AbortCommandExecutionException;
+import io.github.sakurawald.core.command.executor.CommandExecutor;
+import io.github.sakurawald.core.command.structure.ExtendedCommandSource;
 import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
 import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
 import io.github.sakurawald.core.service.string_splitter.StringSplitter;
@@ -47,10 +49,18 @@ public class WarpInitializer extends ModuleInitializer {
         return consumer.apply(entry);
     }
 
+    public static void doWarp(WarpNode warpNode, ServerPlayerEntity player) {
+        warpNode.getPosition().teleport(player);
+
+        CommandExecutor.execute(
+            ExtendedCommandSource.asConsole(player.getCommandSource())
+            , warpNode.getEvent().on_warped.command_list);
+    }
+
     @CommandNode("tp")
     private static int $tp(@CommandSource ServerPlayerEntity player, WarpName warpName) {
         return withWarpNode(player, warpName, warpNode -> {
-            warpNode.getPosition().teleport(player);
+            doWarp(warpNode, player);
             return CommandHelper.Return.SUCCESS;
         });
     }

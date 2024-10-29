@@ -6,6 +6,7 @@ import eu.pb4.sgui.api.gui.SimpleGui;
 import io.github.sakurawald.core.auxiliary.minecraft.RegistryHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.gui.PagedGui;
+import io.github.sakurawald.module.initializer.command_toolbox.warp.WarpInitializer;
 import io.github.sakurawald.module.initializer.command_toolbox.warp.structure.WarpNode;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -37,7 +38,7 @@ public class WarpGui extends PagedGui<WarpNode> {
                 }
             })
             .setCallback(() -> {
-                entity.getPosition().teleport(getPlayer());
+                WarpInitializer.doWarp(entity, getPlayer());
                 close();
             })
             .build();
