@@ -1,8 +1,8 @@
 package io.github.sakurawald.module.mixin.core.extension;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import io.github.sakurawald.core.extension.SimpleRegistryExtension;
 import io.github.sakurawald.core.auxiliary.LogUtil;
+import io.github.sakurawald.core.extension.SimpleRegistryExtension;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import net.minecraft.registry.MutableRegistry;

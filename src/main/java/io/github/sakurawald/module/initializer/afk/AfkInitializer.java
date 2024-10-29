@@ -1,6 +1,5 @@
 package io.github.sakurawald.module.initializer.afk;
 
-import io.github.sakurawald.core.extension.PlayerCombatExtension;
 import io.github.sakurawald.core.annotation.Document;
 import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
@@ -10,6 +9,7 @@ import io.github.sakurawald.core.command.annotation.CommandSource;
 import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
 import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
 import io.github.sakurawald.core.event.impl.ServerLifecycleEvents;
+import io.github.sakurawald.core.extension.PlayerCombatExtension;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
 import io.github.sakurawald.module.initializer.afk.accessor.AfkStateAccessor;
 import io.github.sakurawald.module.initializer.afk.config.model.AfkConfigModel;

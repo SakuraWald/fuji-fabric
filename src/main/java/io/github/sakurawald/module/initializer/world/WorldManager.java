@@ -1,12 +1,12 @@
 package io.github.sakurawald.module.initializer.world;
 
 import com.google.common.collect.ImmutableList;
-import io.github.sakurawald.core.extension.SimpleRegistryExtension;
 import io.github.sakurawald.core.auxiliary.LogUtil;
 import io.github.sakurawald.core.auxiliary.minecraft.RegistryHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.ServerHelper;
 import io.github.sakurawald.core.event.impl.ServerTickEvents;
 import io.github.sakurawald.core.event.impl.ServerWorldEvents;
+import io.github.sakurawald.core.extension.SimpleRegistryExtension;
 import io.github.sakurawald.core.manager.Managers;
 import io.github.sakurawald.core.structure.SpatialPose;
 import io.github.sakurawald.core.structure.TeleportTicket;
