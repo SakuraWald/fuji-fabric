@@ -6,7 +6,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.c2s.common.SyncedClientOptions;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.UserCache;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,7 +25,7 @@ public class EntityHelper {
         if (root == null) return;
         if (root.contains(DIMENSION_NBT_KEY)) {
             String dimensionId = root.getString(DIMENSION_NBT_KEY);
-            ServerWorld world = RegistryHelper.ofServerWorld(Identifier.of(dimensionId));
+            ServerWorld world = RegistryHelper.ofServerWorld(dimensionId);
             if (world != null) {
                 player.setServerWorld(world);
             }

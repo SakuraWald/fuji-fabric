@@ -4,7 +4,6 @@ import io.github.sakurawald.core.auxiliary.minecraft.RegistryHelper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +24,7 @@ public class SpatialBlock {
     }
 
     public ServerWorld ofDimension() {
-        return RegistryHelper.ofServerWorld(Identifier.of(this.dimension));
+        return RegistryHelper.ofServerWorld(this.dimension);
     }
 
     public @NotNull BlockPos ofBlockPos() {
