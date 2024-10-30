@@ -1,4 +1,5 @@
 > The version number of fuji follows `semver` now: https://semver.org/
+> 
 
 Cherry-pick commits for `mc1.21`:
 > This version includes the following **breaking changes** if you are using them:
