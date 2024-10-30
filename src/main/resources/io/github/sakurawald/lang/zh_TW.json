@@ -271,7 +271,7 @@
   "command_cooldown.not_found": "<red>找不到冷卻時間 %s。",
   "command_cooldown.already_exists": "<red>冷卻時間 %s 已存在。",
   "command_cooldown.deleted": "<red>已刪除冷卻時間 %s。",
-  "command_cooldown.created": "<green>已建立冷卻時間 %s。",
+  "command_cooldown.created": "<green>The cooldown `%s` created.",
   "echo.send_custom.custom_text.not_found": "<red>找不到自訂文字 %s。",
   "echo.send_custom.custom_text.invalid_page": "<red>無效的頁面。",
   "echo.send_custom.custom_text.paginator.first_page": "<dark_green>-----<< <grey><hover:show_text:'這是第一頁'>上一頁</grey> <green>%d<grey>/<green>%d <orange><click:run_command:'%s'><hover:show_text:'下一頁'>下一頁</hover></click></orange><dark_green> >>----",
