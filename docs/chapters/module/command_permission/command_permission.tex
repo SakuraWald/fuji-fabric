@@ -34,6 +34,10 @@ Also, each \tbf{command node} has its \tbf{requirement}, which is a \tbf{predica
     or \cmd{/fuji inspect server-commands}
 \end{tips}
 
+\begin{warn}{Understand the parent permission node and its children node}
+    It's recommend to modify the \ttt{apply-sponge-implicit-wildcard} option to \ttt{false} in \ttt{luckperms.conf}, to control the \ttt{permission node} more fine-grained.
+\end{warn}
+
 \LevelTwo{Example}
 \begin{example}{Allow everyone to use \cmd{/gamemode} command}
     \cmd{/lp group default permission set fuji.permission.gamemode true}
