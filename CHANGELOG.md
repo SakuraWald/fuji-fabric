@@ -1,5 +1,6 @@
 > The version number of fuji follows `semver` now: https://semver.org/
 
+Cherry-pick commits for `mc1.21`:
 > This version includes the following **breaking changes** if you are using them:
 > - feature: add `others` literal arguments to most commands that only targeted at command source player in the past,
     now allows to use `others` argument to apply the command to a collection of players. This influence the following
