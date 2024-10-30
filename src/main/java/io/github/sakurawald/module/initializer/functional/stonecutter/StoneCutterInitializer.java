@@ -3,6 +3,7 @@ package io.github.sakurawald.module.initializer.functional.stonecutter;
 import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
 import io.github.sakurawald.core.command.annotation.CommandNode;
 import io.github.sakurawald.core.command.annotation.CommandSource;
+import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -15,7 +16,7 @@ import net.minecraft.text.Text;
 public class StoneCutterInitializer extends ModuleInitializer {
 
     @CommandNode("stonecutter")
-    private static int $stonecutter(@CommandSource ServerPlayerEntity player) {
+    private static int $stonecutter(@CommandSource @CommandTarget ServerPlayerEntity player) {
         player.openHandledScreen(new SimpleNamedScreenHandlerFactory((i, inventory, p) -> new StonecutterScreenHandler(i, inventory, ScreenHandlerContext.create(p.getWorld(), p.getBlockPos())) {
             @Override
             public boolean canUse(PlayerEntity player) {

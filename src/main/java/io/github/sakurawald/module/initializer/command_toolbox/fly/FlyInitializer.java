@@ -5,6 +5,7 @@ import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.command.annotation.CommandNode;
 import io.github.sakurawald.core.command.annotation.CommandRequirement;
 import io.github.sakurawald.core.command.annotation.CommandSource;
+import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -13,7 +14,7 @@ public class FlyInitializer extends ModuleInitializer {
 
     @CommandNode("fly")
     @CommandRequirement(level = 4)
-    private static int $fly(@CommandSource ServerPlayerEntity player) {
+    private static int $fly(@CommandSource @CommandTarget ServerPlayerEntity player) {
         boolean flag = !player.getAbilities().allowFlying;
         player.getAbilities().allowFlying = flag;
 

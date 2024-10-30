@@ -6,6 +6,7 @@ import io.github.sakurawald.core.auxiliary.minecraft.RegistryHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.command.annotation.CommandNode;
 import io.github.sakurawald.core.command.annotation.CommandSource;
+import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.core.command.argument.wrapper.impl.Dimension;
 import io.github.sakurawald.core.command.exception.AbortCommandExecutionException;
 import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
@@ -40,7 +41,7 @@ public class RtpInitializer extends ModuleInitializer {
 
     @CommandNode("rtp")
     @Document("Random rtp in specified dimension.")
-    private static int $rtp(@CommandSource ServerPlayerEntity player, Optional<Dimension> dimension) {
+    private static int $rtp(@CommandSource @CommandTarget ServerPlayerEntity player, Optional<Dimension> dimension) {
         ServerWorld serverWorld = dimension.isPresent() ? dimension.get().getValue() : player.getServerWorld();
         TeleportSetup setup = withTeleportSetup(player, serverWorld);
 

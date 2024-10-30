@@ -26,18 +26,18 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
         this.commandTargetAnnotationIndex = commandTargetAnnotationIndex;
     }
 
-    private static CommandRequirementDescriptor deriveCommandRequirementForInsertPoint(List<Argument> arguments, int insertIndex) {
-        /* try to copy the requirement from next level */
-        if (insertIndex < arguments.size()) {
-            return arguments.get(insertIndex).getRequirement();
-        }
-
-        /* try to copy the requirement from prev level */
-        return arguments.getLast().getRequirement();
-    }
-
-    private static List<Argument> insertOthersArguments(List<Argument> arguments) {
-        List<Argument> ret = new ArrayList<>(arguments);
+    private static List<Argument> transformWithOthersArguments(List<Argument> arguments, int commandTargetAnnotationIndex) {
+        List<Argument> ret = new ArrayList<>(arguments
+            .stream()
+            .filter(it ->
+                /*
+                 remove the argument that is annotated with @CommandTarget and is not annotated with @CommandSource,
+                 so that this argument will not be registered in the command tree.
+                 */
+                it.isCommandSource() ||
+                    it.getMethodParameterIndex() != commandTargetAnnotationIndex
+            )
+            .toList());
 
         for (int argumentIndex = 0; argumentIndex < arguments.size(); argumentIndex++) {
             Argument argument = arguments.get(argumentIndex);
@@ -63,6 +63,11 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
         for (int i = 0; i < parameters.length; i++) {
             Parameter parameter = parameters[i];
             if (parameter.isAnnotationPresent(CommandTarget.class)) {
+                // verify
+                if (!parameter.getType().equals(ServerPlayerEntity.class)) {
+                    throw new IllegalArgumentException("the annotation @CommandTarget can only be used in a parameter whose type is ServerPlayerEntity: class = %s, method = %s".formatted(method.getDeclaringClass().getSimpleName(), method.getName()));
+                }
+
                 return Optional.of(i);
             }
         }
@@ -88,11 +93,22 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
             PlayerCollection targets = (PlayerCollection) args.getFirst();
             LogUtil.debug("unbox the first argument and get the targets: {}", targets.getValue().stream().map(it -> it.getGameProfile().getName()).toList());
 
-            int totalValue = CommandHelper.Return.SUCCESS;
+            int finalValue = CommandHelper.Return.SUCCESS;
             for (ServerPlayerEntity target : targets.getValue()) {
 
                 List<Object> unboxedArgs = args.subList(1, args.size());
-                unboxedArgs.set(this.commandTargetAnnotationIndex, target);
+                /*
+                 if the @CommandSource and @CommandTarget are both annotated in the same parameter:
+                 1. The @CommandSource will still be used to verify the type of `initialing command source`.
+                 2. After that, the command source passed to the command method will be overridden by the @CommandTarget.
+                 3. Any exceptions thrown during the execution of the command method, will be reported to the `initialing command source`.
+                 */
+                if (this.commandTargetAnnotationIndex < unboxedArgs.size()) {
+                    unboxedArgs.set(this.commandTargetAnnotationIndex, target);
+                } else {
+                    // if the commandTargetAnnotationIndex < unboxedArgs, then it means the argument annotated with @CommandTarget is filtered.
+                    unboxedArgs.add(this.commandTargetAnnotationIndex, target);
+                }
 
                 LogUtil.debug("invoke command method {} in class {}: target = {}, args = {}"
                     , this.method.getName()
@@ -103,9 +119,13 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
                 try {
                     // if one of the execution if failed, then it's considered the whole return value is failed.
                     int singleValue = (int) this.method.invoke(null, unboxedArgs.toArray());
+                    LogUtil.debug("the return value of command method is {}: target = {}, args = {}"
+                        , singleValue
+                        , target.getGameProfile().getName()
+                        , unboxedArgs);
 
                     if (singleValue != CommandHelper.Return.SUCCESS) {
-                        totalValue = CommandHelper.Return.FAIL;
+                        finalValue = CommandHelper.Return.FAIL;
                     }
 
                 } catch (Exception wrappedOrUnwrappedException) {
@@ -113,13 +133,12 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
                 }
             }
 
-            return totalValue;
+            return finalValue;
         };
     }
 
     public static Optional<RetargetCommandDescriptor> make(CommandDescriptor commandDescriptor) {
-
-        /* filter */
+        /* filter: the method that contains @CommandTarget */
         Optional<Integer> commandTargetAnnotationIndexOpt = findCommandTargetAnnotationIndex(commandDescriptor.method);
         if (commandTargetAnnotationIndexOpt.isEmpty()) {
             return Optional.empty();
@@ -128,10 +147,9 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
 
         /* make retarget command descriptor */
         Method delegateMethod = commandDescriptor.getMethod();
-        List<Argument> argsWithOthers = insertOthersArguments(commandDescriptor.getArguments());
+        List<Argument> transformedArgs = transformWithOthersArguments(commandDescriptor.getArguments(), commandTargetAnnotationIndex);
 
-        RetargetCommandDescriptor retargetCommandDescriptor = new RetargetCommandDescriptor(delegateMethod, argsWithOthers, commandTargetAnnotationIndex);
-
+        RetargetCommandDescriptor retargetCommandDescriptor = new RetargetCommandDescriptor(delegateMethod, transformedArgs, commandTargetAnnotationIndex);
         return Optional.of(retargetCommandDescriptor);
     }
 
