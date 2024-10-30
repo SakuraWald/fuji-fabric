@@ -6,6 +6,7 @@ import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.command.annotation.CommandNode;
 import io.github.sakurawald.core.command.annotation.CommandSource;
+import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
 import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
 import io.github.sakurawald.core.event.impl.ServerLifecycleEvents;
@@ -50,7 +51,7 @@ public class SitInitializer extends ModuleInitializer {
     @SuppressWarnings("deprecation")
     @CommandNode("sit")
     @Document("Sit in current position.")
-    private static int $sit(@CommandSource ServerPlayerEntity player) {
+    private static int $sit(@CommandSource @CommandTarget ServerPlayerEntity player) {
         // fix: if the player stand in the slab/stair block
         BlockPos steppingBlockPos = player.getSteppingPos();
         BlockState steppingBlockState = player.getWorld().getBlockState(steppingBlockPos);

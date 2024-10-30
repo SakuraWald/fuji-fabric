@@ -5,6 +5,7 @@ import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.command.annotation.CommandNode;
 import io.github.sakurawald.core.command.annotation.CommandSource;
+import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.core.command.argument.wrapper.impl.Dimension;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
 import net.minecraft.component.DataComponentTypes;
@@ -39,7 +40,7 @@ public class CompassInitializer extends ModuleInitializer {
 
     @CommandNode("track pos")
     @Document("Let the compass in hand track a specified position.")
-    private static int track(@CommandSource ServerPlayerEntity player, Dimension dimension, BlockPos blockPos) {
+    private static int track(@CommandSource @CommandTarget ServerPlayerEntity player, Dimension dimension, BlockPos blockPos) {
         return withCompassInHand(player, (itemStack) -> {
             setTrackedTarget(itemStack, dimension.getValue(), blockPos);
             return CommandHelper.Return.SUCCESS;
@@ -48,7 +49,7 @@ public class CompassInitializer extends ModuleInitializer {
 
     @CommandNode("track player")
     @Document("Let the compass in hand track a specified player.")
-    private static int track(@CommandSource ServerPlayerEntity player, ServerPlayerEntity target) {
+    private static int track(@CommandSource @CommandTarget ServerPlayerEntity player, ServerPlayerEntity target) {
         return withCompassInHand(player, (itemStack) -> {
             setTrackedTarget(itemStack, target.getServerWorld(), target.getBlockPos());
             return CommandHelper.Return.SUCCESS;
@@ -57,7 +58,7 @@ public class CompassInitializer extends ModuleInitializer {
 
     @CommandNode("reset")
     @Document("Let the compass in hand track nothing.")
-    private static int reset(@CommandSource ServerPlayerEntity player) {
+    private static int reset(@CommandSource @CommandTarget ServerPlayerEntity player) {
         return withCompassInHand(player, (itemStack) -> {
             itemStack.set(DataComponentTypes.LODESTONE_TRACKER, null);
             return CommandHelper.Return.SUCCESS;
