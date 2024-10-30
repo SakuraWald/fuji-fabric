@@ -49,13 +49,13 @@ public class CommandDescriptorGui extends PagedGui<CommandDescriptor> {
         lore.addAll(List.of(
             TextHelper.getTextByKey(getPlayer(), "command.source.can_be_executed_by_console", entity.canBeExecutedByConsole())
             , TextHelper.getTextByKey(getPlayer(), "command.descriptor.type", entity.getClass().getSimpleName())
-            , TextHelper.getTextByKey(getPlayer(), "command.requirement.level_permission", entity.computeLevelPermission())
-            , TextHelper.getTextByKey(getPlayer(), "command.requirement.string_permission", entity.computeStringPermission())
+            , TextHelper.getTextByKey(getPlayer(), "command.requirement.level_permission", entity.getDefaultLevelPermission())
+            , TextHelper.getTextByKey(getPlayer(), "command.requirement.string_permission", entity.getDefaultStringPermission())
         ));
         lore.addAll(computeLore(entity));
 
         return new GuiElementBuilder()
-            .setName(Text.literal(entity.computeCommandSyntax()))
+            .setName(Text.literal(entity.getCommandSyntax()))
             .setItem(Items.REPEATING_COMMAND_BLOCK)
             .setLore(lore)
             .build();

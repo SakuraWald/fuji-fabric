@@ -3,14 +3,12 @@ package io.github.sakurawald.core.command.structure;
 import com.mojang.brigadier.Command;
 import io.github.sakurawald.core.auxiliary.LogUtil;
 import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
-import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.core.command.argument.structure.Argument;
 import io.github.sakurawald.core.command.argument.wrapper.impl.PlayerCollection;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,23 +17,50 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
 
     private static final int COMMAND_TARGET_DUMMY_PARAMETER_INDEX = 1024;
 
-    private final int commandTargetAnnotationIndex;
+    private final int commandTargetArgumentIndex;
 
-    private RetargetCommandDescriptor(Method method, List<Argument> arguments, int commandTargetAnnotationIndex) {
+    private RetargetCommandDescriptor(Method method, List<Argument> arguments, int commandTargetArgumentIndex) {
         super(method, arguments);
-        this.commandTargetAnnotationIndex = commandTargetAnnotationIndex;
+        this.commandTargetArgumentIndex = commandTargetArgumentIndex;
     }
 
-    private static List<Argument> transformWithOthersArguments(List<Argument> arguments, int commandTargetAnnotationIndex) {
+    private static Optional<Integer> findCommandTargetArgumentIndex(CommandDescriptor descriptor) {
+        for (int i = 0; i < descriptor.arguments.size(); i++) {
+            Argument argument = descriptor.arguments.get(i);
+            if (argument.isCommandTarget()) {
+                return Optional.of(i);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    public static Optional<RetargetCommandDescriptor> make(CommandDescriptor commandDescriptor) {
+        /* filter: the method that contains @CommandTarget */
+        Optional<Integer> commandTargetArgumentIndexOpt = findCommandTargetArgumentIndex(commandDescriptor);
+        if (commandTargetArgumentIndexOpt.isEmpty()) {
+            return Optional.empty();
+        }
+        int commandTargetArgumentIndex = commandTargetArgumentIndexOpt.get();
+
+        /* make retarget command descriptor */
+        List<Argument> transformedArgs = transformWithOthersArguments(commandDescriptor.arguments);
+
+        RetargetCommandDescriptor retargetCommandDescriptor = new RetargetCommandDescriptor(commandDescriptor.method, transformedArgs, commandTargetArgumentIndex);
+        return Optional.of(retargetCommandDescriptor);
+    }
+
+
+    private static List<Argument> transformWithOthersArguments(List<Argument> arguments) {
         List<Argument> ret = new ArrayList<>(arguments
             .stream()
             .filter(it ->
                 /*
                  remove the argument that is annotated with @CommandTarget and is not annotated with @CommandSource,
                  so that this argument will not be registered in the command tree.
+                 Consider `/fly{4} others{4} <others>(){4} <player>(ST){4}`
                  */
-                it.isCommandSource() ||
-                    it.getMethodParameterIndex() != commandTargetAnnotationIndex
+                it.isCommandSource() || !it.isCommandTarget()
             )
             .toList());
 
@@ -49,30 +74,13 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
                 CommandRequirementDescriptor requirement = new CommandRequirementDescriptor(4, null);
 
                 ret.add(argumentIndex, Argument.makeLiteralArgument("others", requirement));
-                ret.add(argumentIndex + 1, Argument.makeRequiredArgument(PlayerCollection.class, "others", COMMAND_TARGET_DUMMY_PARAMETER_INDEX, false, requirement));
+                ret.add(argumentIndex + 1, Argument.makeRequiredArgument(PlayerCollection.class, "others", false, requirement));
                 break;
             }
 
         }
 
         return ret;
-    }
-
-    private static Optional<Integer> findCommandTargetAnnotationIndex(Method method) {
-        Parameter[] parameters = method.getParameters();
-        for (int i = 0; i < parameters.length; i++) {
-            Parameter parameter = parameters[i];
-            if (parameter.isAnnotationPresent(CommandTarget.class)) {
-                // verify
-                if (!parameter.getType().equals(ServerPlayerEntity.class)) {
-                    throw new IllegalArgumentException("the annotation @CommandTarget can only be used in a parameter whose type is ServerPlayerEntity: class = %s, method = %s".formatted(method.getDeclaringClass().getSimpleName(), method.getName()));
-                }
-
-                return Optional.of(i);
-            }
-        }
-
-        return Optional.empty();
     }
 
     @Override
@@ -91,11 +99,10 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
 
             /* apply the command execution for each target. */
             PlayerCollection targets = (PlayerCollection) args.getFirst();
-            LogUtil.debug("unbox the first argument and get the targets: {}", targets.getValue().stream().map(it -> it.getGameProfile().getName()).toList());
+            LogUtil.debug("get the targets argument (the first argument in args): {}", targets.getValue().stream().map(it -> it.getGameProfile().getName()).toList());
 
             int finalValue = CommandHelper.Return.SUCCESS;
             for (ServerPlayerEntity target : targets.getValue()) {
-
                 List<Object> unboxedArgs = args.subList(1, args.size());
                 /*
                  if the @CommandSource and @CommandTarget are both annotated in the same parameter:
@@ -103,11 +110,11 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
                  2. After that, the command source passed to the command method will be overridden by the @CommandTarget.
                  3. Any exceptions thrown during the execution of the command method, will be reported to the `initialing command source`.
                  */
-                if (this.commandTargetAnnotationIndex < unboxedArgs.size()) {
-                    unboxedArgs.set(this.commandTargetAnnotationIndex, target);
+                if (this.commandTargetArgumentIndex < unboxedArgs.size()) {
+                    unboxedArgs.set(this.commandTargetArgumentIndex, target);
                 } else {
                     // if the commandTargetAnnotationIndex < unboxedArgs, then it means the argument annotated with @CommandTarget is filtered.
-                    unboxedArgs.add(this.commandTargetAnnotationIndex, target);
+                    unboxedArgs.add(this.commandTargetArgumentIndex, target);
                 }
 
                 LogUtil.debug("invoke command method {} in class {}: target = {}, args = {}"
@@ -136,21 +143,4 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
             return finalValue;
         };
     }
-
-    public static Optional<RetargetCommandDescriptor> make(CommandDescriptor commandDescriptor) {
-        /* filter: the method that contains @CommandTarget */
-        Optional<Integer> commandTargetAnnotationIndexOpt = findCommandTargetAnnotationIndex(commandDescriptor.method);
-        if (commandTargetAnnotationIndexOpt.isEmpty()) {
-            return Optional.empty();
-        }
-        int commandTargetAnnotationIndex = commandTargetAnnotationIndexOpt.get();
-
-        /* make retarget command descriptor */
-        Method delegateMethod = commandDescriptor.getMethod();
-        List<Argument> transformedArgs = transformWithOthersArguments(commandDescriptor.getArguments(), commandTargetAnnotationIndex);
-
-        RetargetCommandDescriptor retargetCommandDescriptor = new RetargetCommandDescriptor(delegateMethod, transformedArgs, commandTargetAnnotationIndex);
-        return Optional.of(retargetCommandDescriptor);
-    }
-
 }
