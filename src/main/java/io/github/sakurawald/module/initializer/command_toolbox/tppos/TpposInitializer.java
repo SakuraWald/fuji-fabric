@@ -7,6 +7,7 @@ import io.github.sakurawald.core.auxiliary.minecraft.RegistryHelper;
 import io.github.sakurawald.core.command.annotation.CommandNode;
 import io.github.sakurawald.core.command.annotation.CommandRequirement;
 import io.github.sakurawald.core.command.annotation.CommandSource;
+import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.core.command.argument.wrapper.impl.Dimension;
 import io.github.sakurawald.core.command.argument.wrapper.impl.OfflinePlayerName;
 import io.github.sakurawald.core.service.random_teleport.RandomTeleporter;
@@ -23,8 +24,7 @@ public class TpposInitializer extends ModuleInitializer {
     @CommandNode("tppos")
     @CommandRequirement(level = 4)
     @Document("The unified teleport command.")
-    private static int tppos(@CommandSource ServerPlayerEntity player
-        , @Document("the target player") Optional<ServerPlayerEntity> targetPlayer
+    private static int tppos(@CommandSource @CommandTarget ServerPlayerEntity player
         , @Document("the target dimension") Optional<Dimension> dimension
         , @Document("the target x for fixed-tp") Optional<Double> x
         , @Document("the target y for fixed-tp") Optional<Double> y
@@ -40,11 +40,6 @@ public class TpposInitializer extends ModuleInitializer {
         , @Document("max y for rtp") Optional<Integer> maxY
         , @Document("max try times for rtp") Optional<Integer> maxTryTimes
     ) {
-        // specify another player
-        if (targetPlayer.isPresent()) {
-            player = targetPlayer.get();
-        }
-
         /* specify the dimension */
         ServerWorld world = dimension.isPresent() ? dimension.get().getValue() : player.getServerWorld();
 
