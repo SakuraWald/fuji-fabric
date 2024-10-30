@@ -15,8 +15,6 @@ import java.util.Optional;
 
 public class RetargetCommandDescriptor extends CommandDescriptor {
 
-    private static final int COMMAND_TARGET_DUMMY_PARAMETER_INDEX = 1024;
-
     private final int commandTargetArgumentIndex;
 
     private RetargetCommandDescriptor(Method method, List<Argument> arguments, int commandTargetArgumentIndex) {
