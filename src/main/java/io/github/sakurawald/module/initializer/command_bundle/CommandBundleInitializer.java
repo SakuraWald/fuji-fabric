@@ -64,7 +64,7 @@ public class CommandBundleInitializer extends ModuleInitializer {
         if (ctx.getSource().isExecutedByPlayer()) {
             new CommandDescriptorGui(ctx.getSource().getPlayer(), commandDescriptorStream.toList(), 0).open();
         } else {
-            commandDescriptorStream.forEach(it -> ctx.getSource().sendMessage(Text.literal(it.buildCommandNodePath())));
+            commandDescriptorStream.forEach(it -> ctx.getSource().sendMessage(Text.literal(it.getCommandNodePath())));
         }
 
         return CommandHelper.Return.SUCCESS;

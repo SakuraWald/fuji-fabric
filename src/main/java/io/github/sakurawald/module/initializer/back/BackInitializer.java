@@ -5,6 +5,7 @@ import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.command.annotation.CommandNode;
 import io.github.sakurawald.core.command.annotation.CommandSource;
+import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
 import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
 import io.github.sakurawald.core.structure.SpatialPose;
@@ -25,7 +26,7 @@ public class BackInitializer extends ModuleInitializer {
 
     @CommandNode("back")
     @Document("Back to the recent death location or recent teleport location.")
-    private static int $back(@CommandSource ServerPlayerEntity player) {
+    private static int $back(@CommandSource @CommandTarget ServerPlayerEntity player) {
         SpatialPose lastPos = player2lastPos.get(player.getName().getString());
         if (lastPos == null) {
             TextHelper.sendActionBarByKey(player, "back.no_previous_position");

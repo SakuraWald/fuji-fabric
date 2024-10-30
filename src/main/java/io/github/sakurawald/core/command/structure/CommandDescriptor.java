@@ -18,7 +18,6 @@ import io.github.sakurawald.core.command.argument.structure.Argument;
 import io.github.sakurawald.core.command.exception.AbortCommandExecutionException;
 import io.github.sakurawald.core.command.processor.CommandAnnotationProcessor;
 import io.github.sakurawald.core.manager.impl.module.ModuleManager;
-import lombok.Getter;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -38,10 +37,10 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-@Getter
 public class CommandDescriptor {
 
     public final Method method;
+
     public final List<Argument> arguments;
 
     // it's null if get before register()
@@ -111,10 +110,10 @@ public class CommandDescriptor {
         return (LiteralArgumentBuilder<ServerCommandSource>) root;
     }
 
-    private static String buildCommandNodePath(CommandNode<ServerCommandSource> node) {
+    private static String getCommandNodePath(CommandNode<ServerCommandSource> node) {
         StringBuilder sb = new StringBuilder();
         sb.append(node.getName());
-        node.getChildren().forEach(child -> sb.append(".").append(buildCommandNodePath(child)));
+        node.getChildren().forEach(child -> sb.append(".").append(getCommandNodePath(child)));
         return sb.toString();
     }
 
@@ -245,9 +244,9 @@ public class CommandDescriptor {
         source.sendMessage(report);
     }
 
-    public String buildCommandNodePath() {
+    public String getCommandNodePath() {
         assert this.registerReturnValue != null;
-        return buildCommandNodePath(this.registerReturnValue.build());
+        return getCommandNodePath(this.registerReturnValue.build());
     }
 
     public void unregister() {
@@ -268,16 +267,23 @@ public class CommandDescriptor {
         CommandAnnotationProcessor.descriptors.remove(this);
     }
 
-    protected List<Object> makeCommandFunctionArgs(CommandContext<ServerCommandSource> ctx) {
+    protected List<Argument> collectArgumentsToMakeObjects() {
+        return this.arguments
+            .stream()
+            /* filter out the literal command node and root command node. */
+            .filter(Argument::isRequiredArgument)
+            .toList();
+    }
+
+    protected List<Object> makeObjectsByArguments(CommandContext<ServerCommandSource> ctx) {
         List<Object> args = new ArrayList<>();
 
-        for (Argument argument : this.arguments) {
-            /* the literal argument doesn't receive a value. */
-            if (argument.isLiteralArgument()) continue;
-
+        for (Argument argument : this.collectArgumentsToMakeObjects()) {
             /* inject the value into a required argument. */
             try {
-                Object arg = BaseArgumentTypeAdapter.getAdapter(argument.getType()).makeParameterObject(ctx, argument);
+                Object arg = BaseArgumentTypeAdapter
+                    .getAdapter(argument.getType())
+                    .makeParameterObject(ctx, argument);
 
                 args.add(arg);
             } catch (Exception e) {
@@ -316,7 +322,7 @@ public class CommandDescriptor {
             }
 
             /* invoke the command function */
-            List<Object> args = makeCommandFunctionArgs(ctx);
+            List<Object> args = makeObjectsByArguments(ctx);
 
             int value;
             try {
@@ -345,7 +351,6 @@ public class CommandDescriptor {
         CommandAnnotationProcessor.descriptors.add(this);
         return root;
     }
-
 
     @SuppressWarnings("UnusedReturnValue")
     private LiteralArgumentBuilder<ServerCommandSource> registerNonOptionalArguments() {
@@ -382,19 +387,20 @@ public class CommandDescriptor {
         return "/" + this.arguments.stream().map(Argument::toString).collect(Collectors.joining(" "));
     }
 
-    public String computeCommandSyntax() {
-        StringBuilder sb = new StringBuilder()
+    public String getCommandSyntax() {
+        StringBuilder syntax = new StringBuilder()
             .append("/");
 
-        this.getArguments().stream()
+        this.arguments.stream()
             .filter(it -> !it.isCommandSource())
-            .forEach(it -> sb.append(it.toInGameString()).append(" "));
+            .forEach(it -> syntax.append(it.toHumanReadableString()).append(" "));
 
-        return sb.toString();
+        return syntax.toString();
     }
 
-    public int computeLevelPermission() {
+    public int getDefaultLevelPermission() {
         int minRequiredLevel = CommandRequirementDescriptor.getDefaultLevel();
+
         for (Argument argument : this.arguments) {
             if (argument.getRequirement() == null) continue;
 
@@ -403,7 +409,7 @@ public class CommandDescriptor {
         return minRequiredLevel;
     }
 
-    public String computeStringPermission() {
+    public String getDefaultStringPermission() {
         String requiredString = CommandRequirementDescriptor.getDefaultString();
         for (Argument argument : this.arguments) {
             if (argument.getRequirement() == null) continue;
@@ -422,6 +428,7 @@ public class CommandDescriptor {
         for (Argument argument : this.arguments) {
             if (!argument.isCommandSource()) continue;
 
+            assert argument.getType() != null;
             return argument.getType().equals(CommandContext.class)
                 || argument.getType().equals(ServerCommandSource.class);
         }

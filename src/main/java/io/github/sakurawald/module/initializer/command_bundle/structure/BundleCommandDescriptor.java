@@ -136,7 +136,7 @@ public class BundleCommandDescriptor extends CommandDescriptor {
                     String argumentType = matcher.group(REQUIRED_OPTIONAL_ARGUMENT_TYPE_GROUP_INDEX);
                     String argumentName = matcher.group(REQUIRED_OPTIONAL_ARGUMENT_NAME_GROUP_INDEX);
                     Class<?> type = BaseArgumentTypeAdapter.toTypeClass(argumentType);
-                    arguments.add(Argument.makeRequiredArgument(type, argumentName, argumentIndex, true, requirement));
+                    arguments.add(Argument.makeRequiredArgument(type, argumentName, true, requirement));
 
                     // put default value for optional argument
                     String defaultValue = matcher.group(REQUIRED_OPTIONAL_ARGUMENT_DEFAULT_VALUE_GROUP_INDEX);
@@ -149,7 +149,7 @@ public class BundleCommandDescriptor extends CommandDescriptor {
                     String argumentType = matcher.group(REQUIRED_NON_OPTIONAL_ARGUMENT_TYPE_GROUP_INDEX);
                     String argumentName = matcher.group(REQUIRED_NON_OPTIONAL_ARGUMENT_NAME_GROUP_INDEX);
                     Class<?> type = BaseArgumentTypeAdapter.toTypeClass(argumentType);
-                    arguments.add(Argument.makeRequiredArgument(type, argumentName, argumentIndex, false, requirement));
+                    arguments.add(Argument.makeRequiredArgument(type, argumentName, false, requirement));
                 }
 
             }
@@ -165,19 +165,15 @@ public class BundleCommandDescriptor extends CommandDescriptor {
     }
 
     @Override
-    protected List<Object> makeCommandFunctionArgs(CommandContext<ServerCommandSource> ctx) {
+    protected List<Object> makeObjectsByArguments(CommandContext<ServerCommandSource> ctx) {
         List<Object> args = new ArrayList<>();
 
         CommandContextAccessor<?> ctxAccessor = (CommandContextAccessor<?>) ctx;
-        for (Argument argument : this.arguments) {
-            /* filter the literal command node and root command node. */
-            if (!(argument.isRequiredArgument())) continue;
-
+        for (Argument argument : this.collectArgumentsToMakeObjects()) {
             String argumentName = argument.getArgumentName();
 
             /* collect the matched lexeme. */
             String arg;
-
             ParsedArgument<?, ?> parsedArgument = ctxAccessor.fuji$getArguments().get(argumentName);
             if (parsedArgument != null) {
                 StringRange range = parsedArgument.getRange();
@@ -201,7 +197,7 @@ public class BundleCommandDescriptor extends CommandDescriptor {
 
             /* invoke the command function */
             BundleCommandDescriptor descriptor = this;
-            List<Object> args = makeCommandFunctionArgs(ctx);
+            List<Object> args = makeObjectsByArguments(ctx);
 
             int value;
             try {

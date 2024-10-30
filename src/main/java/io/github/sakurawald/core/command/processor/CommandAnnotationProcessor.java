@@ -11,6 +11,7 @@ import io.github.sakurawald.core.command.argument.adapter.abst.BaseArgumentTypeA
 import io.github.sakurawald.core.command.argument.structure.Argument;
 import io.github.sakurawald.core.command.structure.CommandDescriptor;
 import io.github.sakurawald.core.command.structure.CommandRequirementDescriptor;
+import io.github.sakurawald.core.command.structure.RetargetCommandDescriptor;
 import io.github.sakurawald.core.event.impl.CommandEvents;
 import io.github.sakurawald.core.manager.Managers;
 import lombok.Getter;
@@ -35,6 +36,8 @@ import java.util.concurrent.ConcurrentHashMap;
     , "https://github.com/henkelmax/admiral"
 })
 public class CommandAnnotationProcessor {
+
+    private static final String REQUIRED_ARGUMENT_PLACEHOLDER = "$";
 
     /*
      yeah, this is a concurrent hash set.
@@ -91,9 +94,12 @@ public class CommandAnnotationProcessor {
 
         /* make command descriptor */
         CommandDescriptor descriptor = makeCommandDescriptor(clazz, method);
-
-        /* register the command descriptor */
         descriptor.register();
+
+        /* make retarget command descriptor */
+        RetargetCommandDescriptor
+            .make(descriptor)
+            .ifPresent(CommandDescriptor::register);
     }
 
     private static Class<?> unbox(Parameter parameter) {
@@ -103,6 +109,20 @@ public class CommandAnnotationProcessor {
         }
 
         return parameter.getType();
+    }
+
+    private static boolean isRequiredArgumentPlaceholder(Argument argument) {
+        return argument.getArgumentName().startsWith(REQUIRED_ARGUMENT_PLACEHOLDER);
+    }
+
+    private static int parseMethodParameterIndexFromArgumentName(Argument argument) {
+        // parse the method parameter index
+        String argumentName = argument.getArgumentName();
+        if (argumentName.startsWith(REQUIRED_ARGUMENT_PLACEHOLDER)) {
+            return Integer.parseInt(argumentName.substring(REQUIRED_ARGUMENT_PLACEHOLDER.length()));
+        }
+
+        throw new IllegalArgumentException("failed to parse parameter index from argument name for argument" + argument);
     }
 
     private static @NotNull CommandDescriptor makeCommandDescriptor(Class<?> clazz, Method method) {
@@ -143,22 +163,24 @@ public class CommandAnnotationProcessor {
         }
 
         /* process the required arguments */
-        boolean hasAnyRequiredArgumentPlaceholder = argumentList.stream().anyMatch(Argument::isRequiredArgumentPlaceholder);
+        boolean hasAnyRequiredArgumentPlaceholder = argumentList.stream().anyMatch(CommandAnnotationProcessor::isRequiredArgumentPlaceholder);
         if (hasAnyRequiredArgumentPlaceholder) {
             /* specify the mappings between argument and parameter manually.  */
             for (int argumentIndex = 0; argumentIndex < argumentList.size(); argumentIndex++) {
                 /* find $1, $2 ... and replace them with the correct argument. */
                 Argument argument = argumentList.get(argumentIndex);
-                if (!argument.isRequiredArgumentPlaceholder()) continue;
+                if (!isRequiredArgumentPlaceholder(argument)) continue;
 
                 /* replace the required argument placeholder `$1` with the parameter in method whose index is 1*/
-                int methodParameterIndex = argument.getMethodParameterIndex();
+                int methodParameterIndex = parseMethodParameterIndexFromArgumentName(argument);
                 Parameter parameter = method.getParameters()[methodParameterIndex];
                 Class<?> type = unbox(parameter);
                 boolean isOptional = parameter.getType().equals(Optional.class);
-                argumentList.set(argumentIndex, Argument
-                    .makeRequiredArgument(type, parameter.getName(), methodParameterIndex, isOptional, CommandRequirementDescriptor.of(methodRequirement))
-                    .withDocument(parameter.getAnnotation(Document.class))
+                argumentList.set(argumentIndex,
+                    Argument
+                        .makeRequiredArgument(type, parameter.getName(), isOptional, CommandRequirementDescriptor.of(methodRequirement))
+                        .markWithParameter(parameter)
+                        .withDocument(parameter.getAnnotation(Document.class))
                 );
             }
             /* generate the command source argument for lazy programmers. */
@@ -168,27 +190,23 @@ public class CommandAnnotationProcessor {
                 Class<?> type = unbox(parameter);
                 // for a command source argument, we don't care the index
                 argumentList.addFirst(Argument
-                    .makeRequiredArgument(type, parameter.getName(), parameterIndex, false, CommandRequirementDescriptor.of(methodRequirement)).markAsCommandSource()
+                    .makeRequiredArgument(type, parameter.getName(), false, CommandRequirementDescriptor.of(methodRequirement))
+                    .markWithParameter(parameter)
                     .withDocument(parameter.getAnnotation(Document.class))
                 );
             }
         } else {
             /* generate the mappings between argument and parameter automatically. */
             Parameter[] parameters = method.getParameters();
-            for (int parameterIndex = 0; parameterIndex < parameters.length; parameterIndex++) {
+            for (Parameter parameter : parameters) {
                 /* append the argument to the tail*/
-                Parameter parameter = parameters[parameterIndex];
                 Class<?> type = unbox(parameter);
                 boolean isOptional = parameter.getType().equals(Optional.class);
                 Argument argument = Argument
-                    .makeRequiredArgument(type, parameter.getName(), parameterIndex, isOptional, CommandRequirementDescriptor.of(methodRequirement))
+                    .makeRequiredArgument(type, parameter.getName(), isOptional, CommandRequirementDescriptor.of(methodRequirement))
+                    .markWithParameter(parameter)
                     .withDocument(parameter.getAnnotation(Document.class));
                 argumentList.add(argument);
-
-                /* mark as command source */
-                if (parameter.isAnnotationPresent(CommandSource.class)) {
-                    argument.markAsCommandSource();
-                }
             }
         }
 

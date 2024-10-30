@@ -1,7 +1,14 @@
-> The version number of fuji follows `semver` now: https://semver.org/ 
- 
+> The version number of fuji follows `semver` now: https://semver.org/
 
-- feature: add `on_warped` event for warps. (command_toolbox.warp module)
-- fix: possible to trigger `Not a JSON Object: null` when a new fake-player is spawned via `carpet` mod. (placeholder module)
-- fix: can't display a specific type of block entity properly, e.g. beds, banners etc. (chunks module)
-- refactor: cleanup unused functions in core, rename and simplify symbols in core. 
+> This version includes the following **breaking changes** if you are using them:
+> - feature: add `others` literal arguments to most commands that only targeted at command source player in the past,
+    now allows to use `others` argument to apply the command to a collection of players. This influence the following
+    commands (**If you are using `command_permission module` with `apply-sponge-implicit-wildcard=false`
+    in `luckperms.conf`, then everything is fine. If the option is true, then be careful that the `wildcard permission`
+    may allow players to use the following commands with `others` option.**):
+>   - all functional commands.
+>   - most of the commands in `command_toolbox`
+>   - /afk, /back, /chat style, /pvp, /rtp
+> - The command option `/tppos --targetPlayer ...` is replaced by `/tppos others ...`. (command_toolbox.tppos module)
+> - make the default required level permission to 4: /heal, /ping, /extinguish, /near (command_toolbox.* module)
+> - make the default required level permission to 4: all functional commands. (functional module)

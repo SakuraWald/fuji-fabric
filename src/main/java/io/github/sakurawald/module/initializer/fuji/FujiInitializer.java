@@ -118,7 +118,7 @@ public class FujiInitializer extends ModuleInitializer {
         List<CommandDescriptor> descriptors = CommandAnnotationProcessor
             .descriptors
             .stream()
-            .sorted(Comparator.comparing(CommandDescriptor::buildCommandNodePath))
+            .sorted(Comparator.comparing(CommandDescriptor::getCommandNodePath))
             .toList();
 
         new CommandDescriptorGui(player, descriptors, 0).open();

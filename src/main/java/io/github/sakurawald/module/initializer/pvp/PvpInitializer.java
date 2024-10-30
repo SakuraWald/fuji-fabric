@@ -4,6 +4,7 @@ import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.command.annotation.CommandNode;
 import io.github.sakurawald.core.command.annotation.CommandSource;
+import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
 import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
@@ -19,7 +20,7 @@ public class PvpInitializer extends ModuleInitializer {
     private static final BaseConfigurationHandler<PvPDataModel> pvpHandler = new ObjectConfigurationHandler<>("pvp.json", PvPDataModel.class);
 
     @CommandNode("pvp on")
-    private static int $on(@CommandSource ServerPlayerEntity player) {
+    private static int $on(@CommandSource @CommandTarget ServerPlayerEntity player) {
         Set<String> whitelist = pvpHandler.model().whitelist;
         String name = player.getGameProfile().getName();
         if (!whitelist.contains(name)) {
@@ -35,7 +36,7 @@ public class PvpInitializer extends ModuleInitializer {
     }
 
     @CommandNode("pvp off")
-    private static int $off(@CommandSource ServerPlayerEntity player) {
+    private static int $off(@CommandSource @CommandTarget ServerPlayerEntity player) {
         Set<String> whitelist = pvpHandler.model().whitelist;
         String name = player.getGameProfile().getName();
         if (whitelist.contains(name)) {
@@ -51,7 +52,7 @@ public class PvpInitializer extends ModuleInitializer {
     }
 
     @CommandNode("pvp status")
-    private static int $status(@CommandSource ServerPlayerEntity player) {
+    private static int $status(@CommandSource @CommandTarget ServerPlayerEntity player) {
         Set<String> whitelist = pvpHandler.model().whitelist;
 
         boolean flag = whitelist.contains(player.getGameProfile().getName());

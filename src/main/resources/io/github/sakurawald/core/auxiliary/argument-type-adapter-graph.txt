@@ -33,6 +33,7 @@ io.github.sakurawald.core.command.argument.adapter.impl.OfflinePlayerArgumentTyp
 io.github.sakurawald.core.command.argument.adapter.impl.OperationArgumentTypeAdapter
 io.github.sakurawald.core.command.argument.adapter.impl.ParticleEffectArgumentTypeAdapter
 io.github.sakurawald.core.command.argument.adapter.impl.PlayerArgumentTypeAdapter
+io.github.sakurawald.core.command.argument.adapter.impl.PlayerCollectionArgumentTypeAdapter
 io.github.sakurawald.core.command.argument.adapter.impl.RotationArgumentTypeAdapter
 io.github.sakurawald.core.command.argument.adapter.impl.ScoreboardCriterionArgumentTypeAdapter
 io.github.sakurawald.core.command.argument.adapter.impl.ScoreboardObjectiveArgumentTypeAdapter

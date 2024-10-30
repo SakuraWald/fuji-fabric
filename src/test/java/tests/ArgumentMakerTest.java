@@ -17,7 +17,7 @@ public class ArgumentMakerTest {
     void test1() {
         BundleCommandDescriptor descriptor = BundleCommandDescriptor.make(new BundleCommandNode(null, "my-command <int int-arg-name> [str str-arg-name]", null));
         System.out.println(descriptor);
-        List<Argument> args = descriptor.getArguments();
+        List<Argument> args = descriptor.arguments;
 
         Argument firstArg = args.getFirst();
         assertTrue(firstArg.isLiteralArgument());
@@ -41,7 +41,7 @@ public class ArgumentMakerTest {
         BundleCommandDescriptor descriptor = BundleCommandDescriptor.make(new BundleCommandNode(null, "my-command <int int-arg-name> first-literal [str str-arg-name] second-literal", null));
         System.out.println(descriptor);
 
-        List<Argument> args = descriptor.getArguments();
+        List<Argument> args = descriptor.arguments;
 
         Argument firstArg = args.getFirst();
         assertTrue(firstArg.isLiteralArgument());
@@ -74,7 +74,7 @@ public class ArgumentMakerTest {
         BundleCommandDescriptor descriptor = BundleCommandDescriptor.make(new BundleCommandNode(null, "my-command <int int-arg-name> [str str-arg-name hello world] first-literal", null));
         System.out.println(descriptor);
 
-        List<Argument> args = descriptor.getArguments();
+        List<Argument> args = descriptor.arguments;
 
         Argument firstArg = args.getFirst();
         assertTrue(firstArg.isLiteralArgument());

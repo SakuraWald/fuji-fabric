@@ -6,6 +6,7 @@ import io.github.sakurawald.core.auxiliary.minecraft.CommandHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.command.annotation.CommandNode;
 import io.github.sakurawald.core.command.annotation.CommandSource;
+import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.core.command.argument.wrapper.impl.GreedyString;
 import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
 import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
@@ -43,7 +44,7 @@ public class ChatStyleInitializer extends ModuleInitializer {
         .build();
 
     @CommandNode("set")
-    private static int setPlayerFormat(@CommandSource ServerPlayerEntity player, GreedyString format) {
+    private static int setPlayerFormat(@CommandSource @CommandTarget ServerPlayerEntity player, GreedyString format) {
         /* save the format*/
         String name = player.getGameProfile().getName();
         String $format = format.getValue();
@@ -60,7 +61,7 @@ public class ChatStyleInitializer extends ModuleInitializer {
     }
 
     @CommandNode("reset")
-    private static int resetPlayerFormat(@CommandSource ServerPlayerEntity player) {
+    private static int resetPlayerFormat(@CommandSource @CommandTarget ServerPlayerEntity player) {
         String name = player.getGameProfile().getName();
         chat.model().format.player2format.remove(name);
         chat.writeStorage();

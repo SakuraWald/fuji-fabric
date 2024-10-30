@@ -6,6 +6,7 @@ import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.command.annotation.CommandNode;
 import io.github.sakurawald.core.command.annotation.CommandRequirement;
 import io.github.sakurawald.core.command.annotation.CommandSource;
+import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
 import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
 import io.github.sakurawald.core.event.impl.ServerLifecycleEvents;
@@ -33,7 +34,7 @@ public class AfkInitializer extends ModuleInitializer {
     // note: issue command will update lastLastActionTime, so it's impossible to use /afk to disable afk
     @CommandNode("afk")
     @Document("Enter afk state.")
-    private static int $afk(@CommandSource ServerPlayerEntity player) {
+    private static int $afk(@CommandSource @CommandTarget ServerPlayerEntity player) {
         if (!player.isOnGround()
             || player.isOnFire()
             || player.inPowderSnow

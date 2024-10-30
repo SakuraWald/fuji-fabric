@@ -7,6 +7,7 @@ import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.command.annotation.CommandNode;
 import io.github.sakurawald.core.command.annotation.CommandRequirement;
 import io.github.sakurawald.core.command.annotation.CommandSource;
+import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.core.command.argument.wrapper.impl.GreedyString;
 import io.github.sakurawald.core.command.exception.AbortCommandExecutionException;
 import io.github.sakurawald.core.command.executor.CommandExecutor;
@@ -58,7 +59,7 @@ public class WarpInitializer extends ModuleInitializer {
     }
 
     @CommandNode("tp")
-    private static int $tp(@CommandSource ServerPlayerEntity player, WarpName warpName) {
+    private static int $tp(@CommandSource @CommandTarget ServerPlayerEntity player, WarpName warpName) {
         return withWarpNode(player, warpName, warpNode -> {
             doWarp(warpNode, player);
             return CommandHelper.Return.SUCCESS;
