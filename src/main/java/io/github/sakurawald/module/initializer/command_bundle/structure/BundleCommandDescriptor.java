@@ -165,11 +165,11 @@ public class BundleCommandDescriptor extends CommandDescriptor {
     }
 
     @Override
-    protected List<Object> makeCommandFunctionArgs(CommandContext<ServerCommandSource> ctx) {
+    protected List<Object> makeObjectsByArguments(CommandContext<ServerCommandSource> ctx) {
         List<Object> args = new ArrayList<>();
 
         CommandContextAccessor<?> ctxAccessor = (CommandContextAccessor<?>) ctx;
-        for (Argument argument : this.collectArgumentsToMakeCommandFunctionArgs()) {
+        for (Argument argument : this.collectArgumentsToMakeObjects()) {
             String argumentName = argument.getArgumentName();
 
             /* collect the matched lexeme. */
@@ -197,7 +197,7 @@ public class BundleCommandDescriptor extends CommandDescriptor {
 
             /* invoke the command function */
             BundleCommandDescriptor descriptor = this;
-            List<Object> args = makeCommandFunctionArgs(ctx);
+            List<Object> args = makeObjectsByArguments(ctx);
 
             int value;
             try {
