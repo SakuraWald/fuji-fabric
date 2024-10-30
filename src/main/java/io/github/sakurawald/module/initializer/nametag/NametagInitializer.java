@@ -55,6 +55,7 @@ public class NametagInitializer extends ModuleInitializer {
 
                 /* discard nametag if the vehicle is sneaking */
                 if (this.getVehicle().isSneaking()) {
+                    LogUtil.debug("discard nametag entity {}: its vehicle is sneaking", this);
                     this.discardNametag();
                 }
 
