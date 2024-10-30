@@ -15,16 +15,18 @@ import java.util.Optional;
 
 public class RetargetCommandDescriptor extends CommandDescriptor {
 
-    private final int commandTargetArgumentIndex;
+    private final int parameterIndexOfCommandTarget;
 
-    private RetargetCommandDescriptor(Method method, List<Argument> arguments, int commandTargetArgumentIndex) {
+    private RetargetCommandDescriptor(Method method, List<Argument> arguments, int parameterIndexOfCommandTarget) {
         super(method, arguments);
-        this.commandTargetArgumentIndex = commandTargetArgumentIndex;
+        this.parameterIndexOfCommandTarget = parameterIndexOfCommandTarget;
     }
 
-    private static Optional<Integer> findCommandTargetArgumentIndex(CommandDescriptor descriptor) {
-        for (int i = 0; i < descriptor.arguments.size(); i++) {
-            Argument argument = descriptor.arguments.get(i);
+    private static Optional<Integer> computeParameterIndexOfCommandTarget(CommandDescriptor descriptor) {
+        List<Argument> args = descriptor.collectArgumentsToMakeObjects();
+
+        for (int i = 0; i < args.size(); i++) {
+            Argument argument = args.get(i);
             if (argument.isCommandTarget()) {
                 return Optional.of(i);
             }
@@ -35,16 +37,16 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
 
     public static Optional<RetargetCommandDescriptor> make(CommandDescriptor commandDescriptor) {
         /* filter: the method that contains @CommandTarget */
-        Optional<Integer> commandTargetArgumentIndexOpt = findCommandTargetArgumentIndex(commandDescriptor);
-        if (commandTargetArgumentIndexOpt.isEmpty()) {
+        Optional<Integer> indexOpt = computeParameterIndexOfCommandTarget(commandDescriptor);
+        if (indexOpt.isEmpty()) {
             return Optional.empty();
         }
-        int commandTargetArgumentIndex = commandTargetArgumentIndexOpt.get();
+        int index = indexOpt.get();
 
         /* make retarget command descriptor */
         List<Argument> transformedArgs = transformWithOthersArguments(commandDescriptor.arguments);
 
-        RetargetCommandDescriptor retargetCommandDescriptor = new RetargetCommandDescriptor(commandDescriptor.method, transformedArgs, commandTargetArgumentIndex);
+        RetargetCommandDescriptor retargetCommandDescriptor = new RetargetCommandDescriptor(commandDescriptor.method, transformedArgs, index);
         return Optional.of(retargetCommandDescriptor);
     }
 
@@ -94,10 +96,10 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
             LogUtil.debug("execute retarget command: initialing command source = {}", ctx.getSource().getName());
 
             /* invoke the command function */
-            List<Object> args = makeCommandFunctionArgs(ctx);
+            List<Object> objs = makeObjectsByArguments(ctx);
 
             /* apply the command execution for each target. */
-            PlayerCollection targets = (PlayerCollection) args.getFirst();
+            PlayerCollection targets = (PlayerCollection) objs.getFirst();
             LogUtil.debug("get the targets argument (the first argument in args): {}", targets.getValue().stream().map(it -> it.getGameProfile().getName()).toList());
 
             int finalValue = CommandHelper.Return.SUCCESS;
@@ -108,27 +110,27 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
                  2. After that, the command source passed to the command method will be overridden by the @CommandTarget.
                  3. Any exceptions thrown during the execution of the command method, will be reported to the `initialing command source`.
                  */
-                if (this.commandTargetArgumentIndex < args.size()) {
-                    args.set(this.commandTargetArgumentIndex, target);
+                List<Object> args = objs.subList(1, objs.size());
+                if (this.parameterIndexOfCommandTarget < args.size()) {
+                    args.set(this.parameterIndexOfCommandTarget, target);
                 } else {
-                    // if the commandTargetAnnotationIndex < args, then it means the argument annotated with @CommandTarget is filtered.
-                    args.add(this.commandTargetArgumentIndex, target);
+                    // if the index < unboxedArgs.size(), then it means the argument annotated with @CommandTarget is removed.
+                    args.add(this.parameterIndexOfCommandTarget, target);
                 }
 
-                List<Object> unboxedArgs = args.subList(1, args.size());
                 LogUtil.debug("invoke command method {} in class {}: target = {}, args = {}"
                     , this.method.getName()
                     , this.method.getDeclaringClass().getSimpleName()
                     , target.getGameProfile().getName()
-                    , unboxedArgs);
+                    , args);
 
                 try {
                     // if one of the execution if failed, then it's considered the whole return value is failed.
-                    int singleValue = (int) this.method.invoke(null, unboxedArgs.toArray());
+                    int singleValue = (int) this.method.invoke(null, args.toArray());
                     LogUtil.debug("the return value of command method is {}: target = {}, args = {}"
                         , singleValue
                         , target.getGameProfile().getName()
-                        , unboxedArgs);
+                        , args);
 
                     if (singleValue != CommandHelper.Return.SUCCESS) {
                         finalValue = CommandHelper.Return.FAIL;

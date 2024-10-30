@@ -176,10 +176,11 @@ public class CommandAnnotationProcessor {
                 Parameter parameter = method.getParameters()[methodParameterIndex];
                 Class<?> type = unbox(parameter);
                 boolean isOptional = parameter.getType().equals(Optional.class);
-                argumentList.set(argumentIndex, Argument
-                    .makeRequiredArgument(type, parameter.getName(), isOptional, CommandRequirementDescriptor.of(methodRequirement))
-                    .markWithParameter(parameter)
-                    .withDocument(parameter.getAnnotation(Document.class))
+                argumentList.set(argumentIndex,
+                    Argument
+                        .makeRequiredArgument(type, parameter.getName(), isOptional, CommandRequirementDescriptor.of(methodRequirement))
+                        .markWithParameter(parameter)
+                        .withDocument(parameter.getAnnotation(Document.class))
                 );
             }
             /* generate the command source argument for lazy programmers. */

@@ -267,7 +267,7 @@ public class CommandDescriptor {
         CommandAnnotationProcessor.descriptors.remove(this);
     }
 
-    protected List<Argument> collectArgumentsToMakeCommandFunctionArgs() {
+    protected List<Argument> collectArgumentsToMakeObjects() {
         return this.arguments
             .stream()
             /* filter out the literal command node and root command node. */
@@ -275,10 +275,10 @@ public class CommandDescriptor {
             .toList();
     }
 
-    protected List<Object> makeCommandFunctionArgs(CommandContext<ServerCommandSource> ctx) {
+    protected List<Object> makeObjectsByArguments(CommandContext<ServerCommandSource> ctx) {
         List<Object> args = new ArrayList<>();
 
-        for (Argument argument : this.collectArgumentsToMakeCommandFunctionArgs()) {
+        for (Argument argument : this.collectArgumentsToMakeObjects()) {
             /* inject the value into a required argument. */
             try {
                 Object arg = BaseArgumentTypeAdapter
@@ -322,7 +322,7 @@ public class CommandDescriptor {
             }
 
             /* invoke the command function */
-            List<Object> args = makeCommandFunctionArgs(ctx);
+            List<Object> args = makeObjectsByArguments(ctx);
 
             int value;
             try {
