@@ -94,11 +94,11 @@ public class CommandAnnotationProcessor {
 
         /* make command descriptor */
         CommandDescriptor descriptor = makeCommandDescriptor(clazz, method);
-
-        /* register the command descriptor */
         descriptor.register();
 
-        RetargetCommandDescriptor.make(descriptor)
+        /* make retarget command descriptor */
+        RetargetCommandDescriptor
+            .make(descriptor)
             .ifPresent(CommandDescriptor::register);
     }
 

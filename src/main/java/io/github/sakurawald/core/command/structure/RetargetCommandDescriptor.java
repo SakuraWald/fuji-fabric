@@ -70,14 +70,15 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
             /* ensure the `others` args are the `first required argument`, so that the `makeCommandFunctionArgs()` can extract the targets in the first arg */
             if (argument.isRequiredArgument() || argumentIndex == ret.size() - 1) {
 
-                /* all retarget commands require level 4 permission to use */
+                /* all retarget commands require level 4 permission to use.
+                 *  There is a bug about the tab completion for `/warp tp others`.
+                 */
                 CommandRequirementDescriptor requirement = new CommandRequirementDescriptor(4, null);
 
                 ret.add(argumentIndex, Argument.makeLiteralArgument("others", requirement));
                 ret.add(argumentIndex + 1, Argument.makeRequiredArgument(PlayerCollection.class, "others", false, requirement));
                 break;
             }
-
         }
 
         return ret;
@@ -103,20 +104,20 @@ public class RetargetCommandDescriptor extends CommandDescriptor {
 
             int finalValue = CommandHelper.Return.SUCCESS;
             for (ServerPlayerEntity target : targets.getValue()) {
-                List<Object> unboxedArgs = args.subList(1, args.size());
                 /*
                  if the @CommandSource and @CommandTarget are both annotated in the same parameter:
                  1. The @CommandSource will still be used to verify the type of `initialing command source`.
                  2. After that, the command source passed to the command method will be overridden by the @CommandTarget.
                  3. Any exceptions thrown during the execution of the command method, will be reported to the `initialing command source`.
                  */
-                if (this.commandTargetArgumentIndex < unboxedArgs.size()) {
-                    unboxedArgs.set(this.commandTargetArgumentIndex, target);
+                if (this.commandTargetArgumentIndex < args.size()) {
+                    args.set(this.commandTargetArgumentIndex, target);
                 } else {
-                    // if the commandTargetAnnotationIndex < unboxedArgs, then it means the argument annotated with @CommandTarget is filtered.
-                    unboxedArgs.add(this.commandTargetArgumentIndex, target);
+                    // if the commandTargetAnnotationIndex < args, then it means the argument annotated with @CommandTarget is filtered.
+                    args.add(this.commandTargetArgumentIndex, target);
                 }
 
+                List<Object> unboxedArgs = args.subList(1, args.size());
                 LogUtil.debug("invoke command method {} in class {}: target = {}, args = {}"
                     , this.method.getName()
                     , this.method.getDeclaringClass().getSimpleName()
