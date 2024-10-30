@@ -11,6 +11,7 @@ import io.github.sakurawald.core.command.argument.adapter.abst.BaseArgumentTypeA
 import io.github.sakurawald.core.command.argument.structure.Argument;
 import io.github.sakurawald.core.command.structure.CommandDescriptor;
 import io.github.sakurawald.core.command.structure.CommandRequirementDescriptor;
+import io.github.sakurawald.core.command.structure.RetargetCommandDescriptor;
 import io.github.sakurawald.core.event.impl.CommandEvents;
 import io.github.sakurawald.core.manager.Managers;
 import lombok.Getter;
@@ -94,6 +95,9 @@ public class CommandAnnotationProcessor {
 
         /* register the command descriptor */
         descriptor.register();
+
+        RetargetCommandDescriptor.make(descriptor)
+            .ifPresent(CommandDescriptor::register);
     }
 
     private static Class<?> unbox(Parameter parameter) {
