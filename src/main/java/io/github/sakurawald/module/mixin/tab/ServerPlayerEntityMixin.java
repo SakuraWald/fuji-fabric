@@ -1,9 +1,9 @@
-package io.github.sakurawald.module.mixin.tab_list;
+package io.github.sakurawald.module.mixin.tab;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import io.github.sakurawald.core.auxiliary.RandomUtil;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
-import io.github.sakurawald.module.initializer.tab_list.TabListInitializer;
+import io.github.sakurawald.module.initializer.tab.TabListInitializer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(value = ServerPlayerEntity.class)
-public abstract class ShowTabListBodyStyleMixin {
+public abstract class ServerPlayerEntityMixin {
 
     @Unique
     private final ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
