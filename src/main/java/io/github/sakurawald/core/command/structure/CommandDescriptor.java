@@ -277,7 +277,9 @@ public class CommandDescriptor {
 
             /* inject the value into a required argument. */
             try {
-                Object arg = BaseArgumentTypeAdapter.getAdapter(argument.getType()).makeParameterObject(ctx, argument);
+                Object arg = BaseArgumentTypeAdapter
+                    .getAdapter(argument.getType())
+                    .makeParameterObject(ctx, argument);
 
                 args.add(arg);
             } catch (Exception e) {

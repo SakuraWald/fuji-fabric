@@ -25,4 +25,3 @@
             - json operations
             - text operation
     - application: /air, /alert, /respawn, /vote
-- feature: add @CommandTarget annotation
