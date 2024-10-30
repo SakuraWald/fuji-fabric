@@ -108,10 +108,7 @@ pvp
 rtp
 skin
 system_message
-tab_list
-tab_list.faker
-tab_list.sort
-tab_list.sort.sync_game_profile
+tab
 teleport_warmup
 temp_ban
 tester

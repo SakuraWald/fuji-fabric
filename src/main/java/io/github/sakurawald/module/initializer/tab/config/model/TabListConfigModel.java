@@ -1,4 +1,4 @@
-package io.github.sakurawald.module.initializer.tab_list.config.model;
+package io.github.sakurawald.module.initializer.tab.config.model;
 
 import java.util.ArrayList;
 import java.util.List;

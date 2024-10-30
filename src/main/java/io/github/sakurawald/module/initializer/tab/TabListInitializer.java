@@ -1,4 +1,4 @@
-package io.github.sakurawald.module.initializer.tab_list;
+package io.github.sakurawald.module.initializer.tab;
 
 import io.github.sakurawald.core.auxiliary.RandomUtil;
 import io.github.sakurawald.core.auxiliary.minecraft.ServerHelper;
@@ -7,8 +7,8 @@ import io.github.sakurawald.core.config.handler.abst.BaseConfigurationHandler;
 import io.github.sakurawald.core.config.handler.impl.ObjectConfigurationHandler;
 import io.github.sakurawald.core.event.impl.ServerLifecycleEvents;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
-import io.github.sakurawald.module.initializer.tab_list.config.model.TabListConfigModel;
-import io.github.sakurawald.module.initializer.tab_list.job.RenderHeaderAndFooterJob;
+import io.github.sakurawald.module.initializer.tab.config.model.TabListConfigModel;
+import io.github.sakurawald.module.initializer.tab.job.RenderHeaderAndFooterJob;
 import net.minecraft.network.packet.s2c.play.PlayerListHeaderS2CPacket;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 import net.minecraft.server.MinecraftServer;
