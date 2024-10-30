@@ -58,7 +58,7 @@ public class ConfigModel {
         public Predicate predicate = new Predicate();
         public MOTD motd = new MOTD();
         public Nametag nametag = new Nametag();
-        public TabList tab_list = new TabList();
+        public Tab tab = new Tab();
         public Tpa tpa = new Tpa();
         public Back back = new Back();
         public Home home = new Home();
@@ -661,24 +661,8 @@ public class ConfigModel {
             }
         }
 
-        public static class TabList {
+        public static class Tab {
             public boolean enable = false;
-            public Sort sort = new Sort();
-            public Faker faker = new Faker();
-
-            public static class Sort {
-                public boolean enable = false;
-
-                public SyncGameProfile sync_game_profile = new SyncGameProfile();
-
-                public static class SyncGameProfile {
-                    public boolean enable = true;
-                }
-            }
-
-            public static class Faker {
-                public boolean enable = false;
-            }
         }
 
         public static class Kit {
