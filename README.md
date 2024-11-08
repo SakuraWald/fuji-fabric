@@ -11,7 +11,7 @@ A mod that ports EssentialsX / CMI from bukkit to fabric.
 ## Feature
 
 - **light**: modules are designed to be simple.
-- **modular**: modules are standalone and loaded on demand.
+- **modular**: you can disable any module if you don't like.
 - **fast**: code with performance in mind.
 - **easy**: text-based manual included.
 - **free**: it's free, open source, and GPL-licensed.
