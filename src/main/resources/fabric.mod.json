@@ -55,8 +55,7 @@
     "fuji.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.7",
-    "minecraft": ["1.21.2", "1.21.3"],
+    "fabricloader": ">=0.16.9",
     "java": ">=21"
   },
   "suggests": {
@@ -67,7 +66,7 @@
   "custom": {
     "mc-publish": {
       "dependencies": [
-        "placeholder-api@2.5.0+1.21.2(embedded)"
+        "placeholder-api@2.5.1+1.21.3(embedded)"
       ]
     }
   }
