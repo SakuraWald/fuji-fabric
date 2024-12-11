@@ -16,7 +16,7 @@ public class AntiBuildInitializer extends ModuleInitializer {
     public static final BaseConfigurationHandler<AntiBuildConfigModel> config = new ObjectConfigurationHandler<>(BaseConfigurationHandler.CONFIG_JSON, AntiBuildConfigModel.class);
 
     public static <T> void checkAntiBuild(PlayerEntity player, String antiType, Set<String> ids, String id, CallbackInfoReturnable<T> cir, T cancelWithValue, Supplier<Boolean> shouldSendFeedback) {
-        if (ids.contains(id)
+        if ((ids.contains(id) || ids.contains("*"))
             && !PermissionHelper.hasPermission(player.getUuid(), "fuji.anti_build.%s.bypass.%s".formatted(antiType, id))
         ) {
             if (shouldSendFeedback.get()) {
