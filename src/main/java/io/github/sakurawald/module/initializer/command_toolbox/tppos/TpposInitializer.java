@@ -14,10 +14,13 @@ import io.github.sakurawald.core.service.random_teleport.RandomTeleporter;
 import io.github.sakurawald.core.structure.SpatialPose;
 import io.github.sakurawald.core.structure.TeleportSetup;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 
+import java.util.EnumSet;
 import java.util.Optional;
+import java.util.Set;
 
 public class TpposInitializer extends ModuleInitializer {
 
@@ -50,8 +53,10 @@ public class TpposInitializer extends ModuleInitializer {
             double $z = z.orElse(player.getZ());
             float $yaw = yaw.orElse(player.getYaw());
             float $pitch = pitch.orElse(player.getPitch());
+
+            Set<PositionFlag> flags = EnumSet.noneOf(PositionFlag.class);
             SpatialPose spatialPose = new SpatialPose(world, $x, $y, $z, $yaw, $pitch);
-            spatialPose.teleport(player);
+            spatialPose.teleport(player, flags);
             return CommandHelper.Return.SUCCESS;
         }
 
@@ -77,7 +82,8 @@ public class TpposInitializer extends ModuleInitializer {
     @Document("Teleport to the offline position of a player.")
     private static int tppos(@CommandSource ServerPlayerEntity source, OfflinePlayerName player) {
         ServerPlayerEntity dummy = EntityHelper.loadOfflinePlayer(player.getValue());
-        new SpatialPose(dummy.getServerWorld(), dummy.getX(), dummy.getY(), dummy.getZ(), dummy.getYaw(), dummy.getPitch()).teleport(source);
+        Set<PositionFlag> flags = EnumSet.noneOf(PositionFlag.class);
+        new SpatialPose(dummy.getServerWorld(), dummy.getX(), dummy.getY(), dummy.getZ(), dummy.getYaw(), dummy.getPitch()).teleport(source, flags);
         return CommandHelper.Return.SUCCESS;
     }
 

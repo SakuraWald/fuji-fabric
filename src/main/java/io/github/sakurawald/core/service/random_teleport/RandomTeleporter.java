@@ -13,18 +13,17 @@ import io.github.sakurawald.core.structure.TeleportSetup;
 import lombok.experimental.UtilityClass;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Position;
 import net.minecraft.world.chunk.Chunk;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.OptionalInt;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
@@ -60,7 +59,8 @@ public class RandomTeleporter {
             SpatialPose spatialPose = new SpatialPose(world, result.get().getX() + 0.5, result.get().getY(), result.get().getZ() + 0.5, 0, 0);
             ServerHelper.getServer().executeSync(() -> {
                 // run the teleport action in main-thread
-                spatialPose.teleport(player);
+                Set<PositionFlag> flags = EnumSet.noneOf(PositionFlag.class);
+                spatialPose.teleport(player,flags);
             });
 
             // post consumer

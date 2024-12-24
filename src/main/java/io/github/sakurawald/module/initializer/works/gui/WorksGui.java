@@ -11,6 +11,7 @@ import io.github.sakurawald.core.structure.SpatialPose;
 import io.github.sakurawald.module.initializer.works.WorksInitializer;
 import io.github.sakurawald.module.initializer.works.structure.work.abst.Work;
 import io.github.sakurawald.module.initializer.works.structure.work.impl.ProductionWork;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -21,7 +22,9 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 public class WorksGui extends PagedGui<Work> {
 
@@ -73,8 +76,9 @@ public class WorksGui extends PagedGui<Work> {
                     RegistryKey<World> worldKey = RegistryKey.of(RegistryKeys.WORLD, Identifier.of(entity.level));
                     ServerWorld level = ServerHelper.getServer().getWorld(worldKey);
                     if (level != null) {
+                        Set<PositionFlag> flags = EnumSet.noneOf(PositionFlag.class);
                         new SpatialPose(level, entity.x, entity.y, entity.z, entity.yaw, entity.pitch)
-                            .teleport(player);
+                            .teleport(player, flags);
                     } else {
                         TextHelper.sendMessageByKey(player, "world.dimension.not_found", entity.level);
                     }
