@@ -42,6 +42,13 @@
         "role": "zh_TW translator",
         "homepage": "https://github.com/notlin4"
       }
+    },
+    {
+      "name": "FishyFinn360",
+      "contact": {
+        "role": "contributor",
+        "homepage": "https://github.com/FishyFinn"
+      }
     }
   ],
   "environment": "*",
