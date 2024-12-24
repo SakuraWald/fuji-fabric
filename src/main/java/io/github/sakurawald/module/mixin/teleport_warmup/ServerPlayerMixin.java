@@ -1,6 +1,7 @@
 package io.github.sakurawald.module.mixin.teleport_warmup;
 
 import io.github.sakurawald.core.auxiliary.minecraft.EntityHelper;
+import io.github.sakurawald.core.auxiliary.minecraft.PermissionHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.RegistryHelper;
 import io.github.sakurawald.core.auxiliary.minecraft.TextHelper;
 import io.github.sakurawald.core.manager.Managers;
@@ -15,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Mixin(value = ServerPlayerEntity.class, priority = 1000 - 500)
@@ -32,14 +34,18 @@ public abstract class ServerPlayerMixin {
         // If we try to spawn a fake-player in the end or nether, the fake-player will initially spawn in overworld
         // and teleport to the target world. This will cause the teleport warmup to be triggered.
         if (!EntityHelper.isRealPlayer(player)) return;
-
         TeleportTicket ticket = TeleportWarmupInitializer.getTeleportTicket(player);
+
+        Optional<Integer> permission_warmup_time = PermissionHelper.getMeta(player.getUuid(), "fuji.teleport_warmup.warmup", Integer::valueOf);
+        //set warmup seconds to LP permission seconds or default config seconds
+        int warmup_seconds = permission_warmup_time.orElse(TeleportWarmupInitializer.config.model().warmup_second);
+
         if (ticket == null) {
             ticket = TeleportTicket.make(
                 player
                 , SpatialPose.of(player)
                 , new SpatialPose(serverWorld, x, y, z, yaw, pitch)
-                , TeleportWarmupInitializer.config.model().warmup_second * 1000
+                , warmup_seconds * 1000
                 , TeleportWarmupInitializer.config.model().interruptible
             );
             Managers.getBossBarManager().addTicket(ticket);
