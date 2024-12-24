@@ -9,11 +9,15 @@ import io.github.sakurawald.core.command.annotation.CommandSource;
 import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.core.structure.SpatialPose;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.EnumSet;
+import java.util.Set;
 
 
 public class BedInitializer extends ModuleInitializer {
@@ -29,8 +33,8 @@ public class BedInitializer extends ModuleInitializer {
             TextHelper.sendMessageByKey(player, "bed.not_found");
             return CommandHelper.Return.FAIL;
         }
-
-        new SpatialPose(world, respawnPosition.getX(), respawnPosition.getY(), respawnPosition.getZ(), player.getYaw(), player.getPitch()).teleport(player);
+        Set<PositionFlag> flags = EnumSet.noneOf(PositionFlag.class);
+        new SpatialPose(world, respawnPosition.getX(), respawnPosition.getY(), respawnPosition.getZ(), player.getYaw(), player.getPitch()).teleport(player,flags);
         TextHelper.sendMessageByKey(player, "bed.success");
         return CommandHelper.Return.SUCCESS;
     }
