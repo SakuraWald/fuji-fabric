@@ -47,6 +47,7 @@ public abstract class ServerPlayerMixin {
                 , new SpatialPose(serverWorld, x, y, z, yaw, pitch)
                 , warmup_seconds * 1000
                 , TeleportWarmupInitializer.config.model().interruptible
+                , set
             );
             Managers.getBossBarManager().addTicket(ticket);
             cir.cancel();
