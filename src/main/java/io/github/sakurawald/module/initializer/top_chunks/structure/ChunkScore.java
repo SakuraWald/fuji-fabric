@@ -123,6 +123,7 @@ public class ChunkScore implements Comparable<ChunkScore> {
                         y = 128;
                     }
 
+
                     new SpatialPose(dimension, blockPos.getX(), y, blockPos.getZ(), player.getYaw(), player.getPitch())
                         .teleport(player);
                 }, 5, TimeUnit.MINUTES))

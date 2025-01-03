@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 
+
 public class TopInitializer extends ModuleInitializer {
 
     @CommandNode("top")

@@ -32,7 +32,6 @@ public class BackInitializer extends ModuleInitializer {
             TextHelper.sendActionBarByKey(player, "back.no_previous_position");
             return CommandHelper.Return.FAIL;
         }
-
         lastPos.teleport(player);
         return CommandHelper.Return.SUCCESS;
     }

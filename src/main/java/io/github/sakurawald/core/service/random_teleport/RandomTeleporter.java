@@ -20,13 +20,12 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.Iterator;
-import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 @Cite("https://github.com/John-Paul-R/Essential-Commands")
 @UtilityClass

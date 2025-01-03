@@ -16,8 +16,8 @@ import io.github.sakurawald.core.structure.TeleportSetup;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-
 import java.util.Optional;
+
 
 public class TpposInitializer extends ModuleInitializer {
 
@@ -50,6 +50,8 @@ public class TpposInitializer extends ModuleInitializer {
             double $z = z.orElse(player.getZ());
             float $yaw = yaw.orElse(player.getYaw());
             float $pitch = pitch.orElse(player.getPitch());
+
+
             SpatialPose spatialPose = new SpatialPose(world, $x, $y, $z, $yaw, $pitch);
             spatialPose.teleport(player);
             return CommandHelper.Return.SUCCESS;

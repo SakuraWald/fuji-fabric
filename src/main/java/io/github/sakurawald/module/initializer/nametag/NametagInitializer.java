@@ -11,6 +11,7 @@ import io.github.sakurawald.module.initializer.nametag.config.model.NametagConfi
 import io.github.sakurawald.module.initializer.nametag.job.UpdateNametagJob;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.decoration.Brightness;
 import net.minecraft.entity.decoration.DisplayEntity;
@@ -55,8 +56,9 @@ public class NametagInitializer extends ModuleInitializer {
                 }
 
                 /* discard nametag if the vehicle is sneaking */
-                if (this.getVehicle().isSneaking()) {
-                    LogUtil.debug("discard nametag entity {}: its vehicle is sneaking", this);
+                String discardNametagReason = getNametagDiscardReason((LivingEntity) this.getVehicle());
+                if (discardNametagReason != null) {
+                    LogUtil.debug("discard nametag entity {}: {}", this, discardNametagReason);
                     this.discardNametag();
                 }
 
@@ -153,6 +155,17 @@ public class NametagInitializer extends ModuleInitializer {
         }
     }
 
+    private static String getNametagDiscardReason(LivingEntity entity) {
+        if (entity.isDead()) return "The entity is dead.";
+        if (entity.isSneaking()) return "The entity is sneaking.";
+
+        // when the player jumps into the ender portal in the end, its world is minecraft:overworld, its removal reason is `CHANGED_DIMENSION`
+        if (entity.getRemovalReason() != null) return "The entity is removed.";
+        if (entity.isInvisible()) return "The entity is invisible.";
+
+        return null;
+    }
+
     public static void processNametagsForOnlinePlayers() {
         // since the virtual entity is not added into the server, so we should call tick() ourselves.
         player2nametag.values().forEach(DisplayEntity::tick);
@@ -162,10 +175,8 @@ public class NametagInitializer extends ModuleInitializer {
 
         // update
         ServerHelper.getPlayers().forEach(player -> {
-            if (player.isDead()) return;
-            if (player.isSneaking()) return;
-            // when the player jumps into the ender portal in the end, its world is minecraft:overworld, its removal reason is `CHANGED_DIMENSION`
-            if (player.getRemovalReason() != null) return;
+            // should we create the nametag for this player?
+            if (getNametagDiscardReason(player) != null) return;
 
             // make if not exists
             if (!player2nametag.containsKey(player)) {
