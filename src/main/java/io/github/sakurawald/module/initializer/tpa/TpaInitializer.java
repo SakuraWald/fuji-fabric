@@ -13,10 +13,10 @@ import io.github.sakurawald.module.initializer.tpa.config.model.TpaConfigModel;
 import io.github.sakurawald.module.initializer.tpa.structure.TpaRequest;
 import lombok.Getter;
 import net.minecraft.server.network.ServerPlayerEntity;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 public class TpaInitializer extends ModuleInitializer {
 
@@ -70,6 +70,7 @@ public class TpaInitializer extends ModuleInitializer {
             ServerPlayerEntity who = request.getTeleportWho();
             ServerPlayerEntity to = request.getTeleportTo();
             MentionPlayersJob.requestJob(config.model().mention_player, request.isTpahere() ? to : who);
+
             new SpatialPose(to.getWorld(), to.getX(), to.getY(), to.getZ(), to.getYaw(), to.getPitch())
                 .teleport(who);
         } else if (status == ResponseStatus.DENY) {

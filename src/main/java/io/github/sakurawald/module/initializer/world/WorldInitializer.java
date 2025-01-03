@@ -23,6 +23,7 @@ import io.github.sakurawald.module.initializer.world.config.model.WorldConfigMod
 import io.github.sakurawald.module.initializer.world.config.model.WorldDataModel;
 import io.github.sakurawald.module.initializer.world.gui.WorldGui;
 import io.github.sakurawald.module.initializer.world.structure.DimensionNode;
+
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -31,7 +32,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.RandomSeed;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +67,7 @@ public class WorldInitializer extends ModuleInitializer {
     private static int $tp(@CommandSource ServerPlayerEntity player, Dimension dimension) {
         ServerWorld world = dimension.getValue();
         BlockPos spawnPos = world.getSpawnPos();
+
         new SpatialPose(world, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), player.getYaw(), player.getPitch())
             .teleport(player);
         return CommandHelper.Return.SUCCESS;

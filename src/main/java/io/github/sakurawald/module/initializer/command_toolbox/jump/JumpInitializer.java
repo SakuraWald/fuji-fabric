@@ -11,8 +11,8 @@ import io.github.sakurawald.module.initializer.ModuleInitializer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
-
 import java.util.Optional;
+
 
 public class JumpInitializer extends ModuleInitializer {
 

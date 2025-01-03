@@ -15,9 +15,8 @@ import io.github.sakurawald.module.initializer.home.config.model.HomeDataModel;
 import lombok.Getter;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Optional;
 
 public class HomeInitializer extends ModuleInitializer {

@@ -12,10 +12,13 @@ import io.github.sakurawald.core.structure.SpatialPose;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
 import io.github.sakurawald.module.initializer.back.config.model.BackConfigModel;
 import lombok.Getter;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Set;
 
 public class BackInitializer extends ModuleInitializer {
 
@@ -32,8 +35,8 @@ public class BackInitializer extends ModuleInitializer {
             TextHelper.sendActionBarByKey(player, "back.no_previous_position");
             return CommandHelper.Return.FAIL;
         }
-
-        lastPos.teleport(player);
+        Set<PositionFlag> flags = EnumSet.noneOf(PositionFlag.class);
+        lastPos.teleport(player,flags);
         return CommandHelper.Return.SUCCESS;
     }
 

@@ -12,7 +12,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
-
+import java.util.Set;
 import java.util.EnumSet;
 
 @Data
@@ -55,7 +55,7 @@ public class SpatialPose {
         return x * x + y * y + z * z;
     }
 
-    public void teleport(@NotNull ServerPlayerEntity player) {
+    public void teleport(@NotNull ServerPlayerEntity player, Set<PositionFlag> flags) {
         RegistryKey<World> worldKey = RegistryKey.of(RegistryKeys.WORLD, Identifier.of(this.level));
         ServerWorld serverLevel = ServerHelper.getServer().getWorld(worldKey);
         if (serverLevel == null) {
@@ -64,7 +64,10 @@ public class SpatialPose {
         }
 
         /* make position flags */
-        EnumSet<PositionFlag> flags = EnumSet.noneOf(PositionFlag.class);
         player.teleport(serverLevel, this.x, this.y, this.z, flags, this.yaw, this.pitch, true);
+    }
+
+    public void teleport(@NotNull ServerPlayerEntity player) {
+        teleport(player, EnumSet.noneOf(PositionFlag.class));
     }
 }
