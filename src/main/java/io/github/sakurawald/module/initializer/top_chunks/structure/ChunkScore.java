@@ -9,7 +9,6 @@ import io.github.sakurawald.module.initializer.top_chunks.TopChunksInitializer;
 import lombok.Getter;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
-import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -23,7 +22,9 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Heightmap;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -122,9 +123,9 @@ public class ChunkScore implements Comparable<ChunkScore> {
                         y = 128;
                     }
 
-                    Set<PositionFlag> flags = EnumSet.noneOf(PositionFlag.class);
+
                     new SpatialPose(dimension, blockPos.getX(), y, blockPos.getZ(), player.getYaw(), player.getPitch())
-                        .teleport(player,flags);
+                        .teleport(player);
                 }, 5, TimeUnit.MINUTES))
             );
     }

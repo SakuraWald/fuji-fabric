@@ -8,14 +8,11 @@ import io.github.sakurawald.core.command.annotation.CommandSource;
 import io.github.sakurawald.core.command.annotation.CommandTarget;
 import io.github.sakurawald.core.structure.SpatialPose;
 import io.github.sakurawald.module.initializer.ModuleInitializer;
-import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
-
-import java.util.EnumSet;
 import java.util.Optional;
-import java.util.Set;
+
 
 public class JumpInitializer extends ModuleInitializer {
 
@@ -28,9 +25,8 @@ public class JumpInitializer extends ModuleInitializer {
         HitResult raycast = player.raycast($distance, 0, false);
         Vec3d hitPos = raycast.getPos();
 
-        Set<PositionFlag> flags = EnumSet.noneOf(PositionFlag.class);
         new SpatialPose(player.getServerWorld(), hitPos.x, hitPos.y, hitPos.z, player.getYaw(), player.getPitch())
-            .teleport(player,flags);
+            .teleport(player);
         return CommandHelper.Return.SUCCESS;
     }
 }
