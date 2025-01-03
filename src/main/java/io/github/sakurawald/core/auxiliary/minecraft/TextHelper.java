@@ -57,6 +57,9 @@ public class TextHelper {
     private static final Map<String, JsonObject> code2json = new HashMap<>();
     private static final JsonObject UNSUPPORTED_LANGUAGE_MARKER = new JsonObject();
 
+    private static final String SUPPRESS_SENDING_STRING_MARKER = "[suppress-sending]";
+    private static final Text SUPPRESS_SENDING_TEXT_MARKER = Text.literal("[suppress-sending]");
+
     static {
         writeDefaultLanguageFilesIfAbsent();
 
@@ -219,6 +222,11 @@ public class TextHelper {
     private static @NotNull Text getText(@NonNull NodeParser parser, @Nullable Object audience, boolean isKey, String keyOrValue, Object... args) {
         String value = isKey ? getValueByKey(audience, keyOrValue) : keyOrValue;
 
+        // suppress this sending?
+        if (value.equals(SUPPRESS_SENDING_STRING_MARKER)) {
+            return SUPPRESS_SENDING_TEXT_MARKER;
+        }
+
         // resolve args
         value = resolveArgs(value, args);
 
@@ -291,6 +299,13 @@ public class TextHelper {
 
     public static void sendMessageByKey(@NotNull Object audience, String key, Object... args) {
         Text text = getTextByKey(audience, key, args);
+
+        /* suppress this sending ? */
+        if (text == SUPPRESS_SENDING_TEXT_MARKER) {
+            LogUtil.debug("Suppress the sending of message: audience = {}, key = {}, args = {}", audience, key, args);
+            return;
+        }
+
 
         /* extract the source */
         if (audience instanceof CommandContext<?> ctx) {
