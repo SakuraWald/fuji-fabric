@@ -6,6 +6,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class ServerPlayNetworkHandlerMixin {
@@ -23,5 +25,10 @@ public abstract class ServerPlayNetworkHandlerMixin {
     public boolean disablePlayerMovedWrongly(boolean original) {
         return true;
     }
+
+    @ModifyConstant(method = "onVehicleMove", constant = @Constant(doubleValue = 0.0625, ordinal = 1))
+    public double disableVehicleMovedWrongly(double original) {
+        return Double.MAX_VALUE;
+     }
 
 }
