@@ -56,6 +56,8 @@ public class WarpInitializer extends ModuleInitializer {
         CommandExecutor.execute(
             ExtendedCommandSource.asConsole(player.getCommandSource())
             , warpNode.getEvent().on_warped.command_list);
+
+        TextHelper.sendMessageByKey(player,"warp.tp.success",warpNode.name);
     }
 
     @CommandNode("tp")
