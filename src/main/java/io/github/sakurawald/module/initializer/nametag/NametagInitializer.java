@@ -59,6 +59,12 @@ public class NametagInitializer extends ModuleInitializer {
                     this.discardNametag();
                 }
 
+                /* discard nametag if the vehicle is invisible */
+                if (this.getVehicle().isInvisible()) {
+                    LogUtil.debug("discard nametag entity {}: its vehicle is in-visible", this);
+                    this.discardNametag();
+                }
+
             }
         };
 
@@ -149,6 +155,16 @@ public class NametagInitializer extends ModuleInitializer {
         }
     }
 
+    private static boolean shouldCreateNametagForPlayer(ServerPlayerEntity player) {
+        if (player.isDead()) return false;
+        if (player.isSneaking()) return false;
+
+        // when the player jumps into the ender portal in the end, its world is minecraft:overworld, its removal reason is `CHANGED_DIMENSION`
+        if (player.getRemovalReason() != null) return false;
+
+        return true;
+    }
+
     public static void processNametagsForOnlinePlayers() {
         // since the virtual entity is not added into the server, so we should call tick() ourselves.
         player2nametag.values().forEach(DisplayEntity::tick);
@@ -158,10 +174,8 @@ public class NametagInitializer extends ModuleInitializer {
 
         // update
         ServerHelper.getPlayers().forEach(player -> {
-            if (player.isDead()) return;
-            if (player.isSneaking()) return;
-            // when the player jumps into the ender portal in the end, its world is minecraft:overworld, its removal reason is `CHANGED_DIMENSION`
-            if (player.getRemovalReason() != null) return;
+            // should we create the nametag for this player?
+            if (!shouldCreateNametagForPlayer(player)) return;
 
             // make if not exists
             if (!player2nametag.containsKey(player)) {

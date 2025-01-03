@@ -33,6 +33,14 @@ public class TesterInitializer extends ModuleInitializer {
         return 1;
     }
 
+    @CommandNode("visible")
+    private static int testInvisible(@CommandSource ServerPlayerEntity player) {
+
+        player.sendMessage(Text.of(String.valueOf(player.isInvisible())));
+
+        return 1;
+    }
+
     private static void testTextReplacement(ServerPlayerEntity player) {
         /* make */
         MutableText root = Text.empty();
