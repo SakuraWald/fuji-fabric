@@ -49,6 +49,13 @@
         "role": "contributor",
         "homepage": "https://github.com/FishyFinn"
       }
+    },
+    {
+      "name": "phaldan",
+      "contact": {
+        "role": "contributor",
+        "homepage": "https://github.com/phaldan"
+      }
     }
   ],
   "environment": "*",
