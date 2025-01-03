@@ -22,8 +22,8 @@ import java.util.Set;
 @Mixin(value = ServerPlayerEntity.class, priority = 1000 - 500)
 public abstract class ServerPlayerMixin {
 
-    @Inject(method = "teleport", at = @At("HEAD"), cancellable = true)
-    public void interceptTeleportAndAddTicket(ServerWorld serverWorld, double x, double y, double z, Set<PositionFlag> set, float yaw, float pitch, boolean bl, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "teleport(Lnet/minecraft/server/world/ServerWorld;DDDLjava/util/Set;FF)Z", at = @At("HEAD"), cancellable = true)
+    public void interceptTeleportAndAddTicket(ServerWorld serverWorld, double x, double y, double z, Set<PositionFlag> set, float yaw, float pitch, CallbackInfoReturnable<Boolean> cir) {
         // check blacklist
         if (!TeleportWarmupInitializer.config.model().dimension.blacklist.contains(RegistryHelper.ofString(serverWorld))) {
             return;
