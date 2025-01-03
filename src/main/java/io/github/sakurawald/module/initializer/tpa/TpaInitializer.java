@@ -12,10 +12,11 @@ import io.github.sakurawald.module.initializer.ModuleInitializer;
 import io.github.sakurawald.module.initializer.tpa.config.model.TpaConfigModel;
 import io.github.sakurawald.module.initializer.tpa.structure.TpaRequest;
 import lombok.Getter;
-import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.network.ServerPlayerEntity;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-import java.util.*;
 
 public class TpaInitializer extends ModuleInitializer {
 
@@ -70,9 +71,8 @@ public class TpaInitializer extends ModuleInitializer {
             ServerPlayerEntity to = request.getTeleportTo();
             MentionPlayersJob.requestJob(config.model().mention_player, request.isTpahere() ? to : who);
 
-            Set<PositionFlag> flags = EnumSet.noneOf(PositionFlag.class);
             new SpatialPose(to.getWorld(), to.getX(), to.getY(), to.getZ(), to.getYaw(), to.getPitch())
-                .teleport(who, flags);
+                .teleport(who);
         } else if (status == ResponseStatus.DENY) {
             request.getSender().sendMessage(request.asSenderText$Denied(), true);
             request.getReceiver().sendMessage(request.asReceiverText$Denied());

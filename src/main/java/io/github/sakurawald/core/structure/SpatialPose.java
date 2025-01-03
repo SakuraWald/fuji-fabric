@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import java.util.Set;
+import java.util.EnumSet;
 
 @Data
 @With
@@ -64,5 +65,9 @@ public class SpatialPose {
 
         /* make position flags */
         player.teleport(serverLevel, this.x, this.y, this.z, flags, this.yaw, this.pitch, true);
+    }
+
+    public void teleport(@NotNull ServerPlayerEntity player) {
+        teleport(player, EnumSet.noneOf(PositionFlag.class));
     }
 }

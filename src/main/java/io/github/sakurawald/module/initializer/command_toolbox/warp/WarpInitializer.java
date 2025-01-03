@@ -22,14 +22,11 @@ import io.github.sakurawald.module.initializer.command_toolbox.warp.config.model
 import io.github.sakurawald.module.initializer.command_toolbox.warp.gui.WarpGui;
 import io.github.sakurawald.module.initializer.command_toolbox.warp.structure.WarpNode;
 import net.minecraft.item.Item;
-import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 
 @CommandNode("warp")
@@ -54,8 +51,7 @@ public class WarpInitializer extends ModuleInitializer {
     }
 
     public static void doWarp(WarpNode warpNode, ServerPlayerEntity player) {
-        Set<PositionFlag> flags = EnumSet.noneOf(PositionFlag.class);
-        warpNode.getPosition().teleport(player, flags);
+        warpNode.getPosition().teleport(player);
 
         CommandExecutor.execute(
             ExtendedCommandSource.asConsole(player.getCommandSource())

@@ -13,11 +13,11 @@ import io.github.sakurawald.module.initializer.ModuleInitializer;
 import io.github.sakurawald.module.initializer.home.command.argument.wrapper.HomeName;
 import io.github.sakurawald.module.initializer.home.config.model.HomeDataModel;
 import lombok.Getter;
-import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Optional;
 
 public class HomeInitializer extends ModuleInitializer {
 
@@ -38,9 +38,8 @@ public class HomeInitializer extends ModuleInitializer {
         String homeName = home.getValue();
         ensureHomeExists(player, homes, homeName);
 
-        Set<PositionFlag> flags = EnumSet.noneOf(PositionFlag.class);
         SpatialPose spatialPose = homes.get(homeName);
-        spatialPose.teleport(player,flags);
+        spatialPose.teleport(player);
         return CommandHelper.Return.SUCCESS;
     }
 
