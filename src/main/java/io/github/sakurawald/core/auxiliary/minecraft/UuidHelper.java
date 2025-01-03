@@ -3,8 +3,6 @@ package io.github.sakurawald.core.auxiliary.minecraft;
 import io.github.sakurawald.Fuji;
 import io.github.sakurawald.core.structure.SpatialBlock;
 import lombok.experimental.UtilityClass;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
@@ -19,10 +17,10 @@ public class UuidHelper {
 
     private static final String FUJI_UUID = Fuji.MOD_ID + "$uuid";
 
-    public static @Nullable String getAttachedUuid(@Nullable NbtComponent nbtComponent) {
-        if (nbtComponent == null) return null;
+    public static @Nullable String getAttachedUuid(@Nullable NbtCompound nbtCompound) {
+        if (nbtCompound == null) return null;
 
-        NbtCompound root = nbtComponent.copyNbt();
+        NbtCompound root = nbtCompound.copy();
         if (!root.contains(FUJI_UUID)) return null;
         return root.getString(FUJI_UUID);
     }
@@ -43,25 +41,25 @@ public class UuidHelper {
     }
 
     public static @NotNull String getOrSetAttachedUuid(ItemStack itemStack) {
-        NbtComponent nbtComponent = itemStack.get(DataComponentTypes.CUSTOM_DATA);
+        NbtCompound nbtComponent = itemStack.getNbt();
         if (getAttachedUuid(nbtComponent) == null) {
             nbtComponent = setGeneratedUuidIfAbsent(nbtComponent);
-            itemStack.set(DataComponentTypes.CUSTOM_DATA, nbtComponent);
+            itemStack.setNbt(nbtComponent);
         }
 
         //noinspection DataFlowIssue
         return getAttachedUuid(nbtComponent);
     }
 
-    private static @NotNull NbtComponent setGeneratedUuidIfAbsent(@Nullable NbtComponent nbtComponent) {
+    private static @NotNull NbtCompound setGeneratedUuidIfAbsent(@Nullable NbtCompound nbtComponent) {
         /* extract nbt compound */
-        NbtCompound root = nbtComponent == null ? new NbtCompound() : nbtComponent.copyNbt();
+        NbtCompound root = nbtComponent == null ? new NbtCompound() : nbtComponent.copy();
 
         /* put uuid if not exists */
         if (!root.contains(FUJI_UUID)) {
             root.putString(FUJI_UUID, String.valueOf(UUID.randomUUID()));
         }
 
-        return NbtComponent.of(root);
+        return root;
     }
 }

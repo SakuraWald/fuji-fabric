@@ -30,13 +30,11 @@ import io.github.sakurawald.module.initializer.command_attachment.structure.Comm
 import io.github.sakurawald.module.initializer.command_attachment.structure.EntityCommandAttachmentNode;
 import io.github.sakurawald.module.initializer.command_attachment.structure.ItemStackCommandAttachmentNode;
 import lombok.SneakyThrows;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
@@ -117,7 +115,7 @@ public class CommandAttachmentInitializer extends ModuleInitializer {
 
             /* execute as */
             ExecuteAsType executeAsType = e.getExecuteAsType();
-            ServerCommandSource source = player.getCommandSource((ServerWorld) player.getWorld());
+            ServerCommandSource source = player.getCommandSource();
             switch (executeAsType) {
                 case CONSOLE -> CommandExecutor.execute(ExtendedCommandSource.asConsole(source), e.getCommand());
                 case PLAYER ->
@@ -267,7 +265,7 @@ public class CommandAttachmentInitializer extends ModuleInitializer {
     private static int queryItem(@CommandSource ServerPlayerEntity player) {
         ItemStack mainHandStack = player.getMainHandStack();
         checkItemStackInHand(player, mainHandStack);
-        String uuid = UuidHelper.getAttachedUuid(mainHandStack.get(DataComponentTypes.CUSTOM_DATA));
+        String uuid = UuidHelper.getAttachedUuid(mainHandStack.getNbt());
 
         doQueryAttachment(player, uuid);
         return CommandHelper.Return.SUCCESS;

@@ -7,8 +7,6 @@ import eu.pb4.placeholders.api.PlaceholderContext;
 import eu.pb4.placeholders.api.node.LiteralNode;
 import eu.pb4.placeholders.api.node.TextNode;
 import eu.pb4.placeholders.api.parsers.NodeParser;
-import eu.pb4.placeholders.api.parsers.tag.TagRegistry;
-import eu.pb4.placeholders.api.parsers.tag.TextTag;
 import io.github.sakurawald.core.auxiliary.LogUtil;
 import io.github.sakurawald.core.auxiliary.ReflectionUtil;
 import io.github.sakurawald.core.config.Configs;
@@ -62,16 +60,6 @@ public class TextHelper {
 
     static {
         writeDefaultLanguageFilesIfAbsent();
-
-        TagRegistry.registerDefault(
-            TextTag.self(
-                "newline",
-                "formatting",
-                true,
-                (nodes, data, parser) -> new LiteralNode("\n")
-            )
-        );
-
     }
 
     private static void writeDefaultLanguageFilesIfAbsent() {

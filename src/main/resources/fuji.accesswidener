@@ -11,10 +11,10 @@ accessible field net/minecraft/server/MinecraftServer worlds Ljava/util/Map;
 accessible field net/minecraft/server/MinecraftServer session Lnet/minecraft/world/level/storage/LevelStorage$Session;
 
 # chat module
-accessible class net/minecraft/registry/RegistryLoader$Loader
+#accessible class net/minecraft/registry/RegistryLoader$Loader
 
 # command warmup module
-accessible method net/minecraft/server/network/ServerPlayNetworkHandler executeCommand (Ljava/lang/String;)V
+#accessible method net/minecraft/server/network/ServerPlayNetworkHandler executeCommand (Ljava/lang/String;)V
 
 # temp ban module
 accessible method net/minecraft/server/ServerConfigList removeInvalidEntries ()V
@@ -23,10 +23,10 @@ accessible method net/minecraft/server/ServerConfigList removeInvalidEntries ()V
 accessible method net/minecraft/server/network/ServerPlayNetworkHandler handleDecoratedMessage (Lnet/minecraft/network/message/SignedMessage;)V
 
 # view module
-accessible field net/minecraft/server/MinecraftServer saveHandler Lnet/minecraft/world/PlayerSaveHandler;
+#accessible field net/minecraft/server/MinecraftServer saveHandler Lnet/minecraft/world/PlayerSaveHandler;
 
 # works module + top chunks module
-accessible method net/minecraft/server/world/ServerChunkLoadingManager entryIterator ()Ljava/lang/Iterable;
+#accessible method net/minecraft/server/world/ServerChunkLoadingManager entryIterator ()Ljava/lang/Iterable;
 
 # nametag
 accessible field net/minecraft/entity/Entity vehicle Lnet/minecraft/entity/Entity;

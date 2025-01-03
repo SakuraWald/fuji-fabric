@@ -3,7 +3,6 @@ package io.github.sakurawald.core.auxiliary.minecraft;
 import com.mojang.authlib.GameProfile;
 import lombok.experimental.UtilityClass;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.c2s.common.SyncedClientOptions;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.UserCache;
@@ -41,14 +40,14 @@ public class EntityHelper {
             throw new IllegalArgumentException("can't find player %s in usercache.json".formatted(playerName));
         }
 
-        ServerPlayerEntity player = ServerHelper.getPlayerManager().createPlayer(gameProfile.get(), SyncedClientOptions.createDefault());
+        ServerPlayerEntity player = ServerHelper.getPlayerManager().createPlayer(gameProfile.get());
 
             /*
              the default dimension for ServerPlayerEntity instance is minecraft:overworld.
              in order to keep original dimension, here we should set dimension for the loaded player entity.
              */
-        Optional<NbtCompound> playerDataOpt = ServerHelper.getPlayerManager().loadPlayerData(player);
-        applyPlayerDataNbt(player, playerDataOpt.orElse(null));
+        NbtCompound playerDataOpt = ServerHelper.getPlayerManager().loadPlayerData(player);
+        applyPlayerDataNbt(player, playerDataOpt);
         return player;
     }
 
