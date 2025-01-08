@@ -25,17 +25,23 @@ public abstract class ServerPlayerEntityMixin {
 
     @Inject(method = "onDeath", at = @At("HEAD"))
     public void saveCurPos(DamageSource damageSource, CallbackInfo ci) {
-        BackInitializer.saveCurrentPosition(player);
+        if (BackInitializer.config.model().enable_back_on_death) {
+            BackInitializer.saveCurrentPosition(player);
+        }
     }
 
     @Inject(method = "teleport(Lnet/minecraft/server/world/ServerWorld;DDDFF)V", at = @At("HEAD"))
     public void saveCurPos(ServerWorld serverWorld, double d, double e, double f, float g, float h, CallbackInfo ci) {
-        BackInitializer.saveCurrentPosition(player);
+        if (BackInitializer.config.model().enable_back_on_teleport) {
+            BackInitializer.saveCurrentPosition(player);
+        }
     }
 
     @Inject(method = "teleport(Lnet/minecraft/server/world/ServerWorld;DDDLjava/util/Set;FF)Z", at = @At("HEAD"))
     public void saveCurPos(ServerWorld serverWorld, double d, double e, double f, Set<PositionFlag> set, float g, float h, CallbackInfoReturnable<Boolean> cir) {
-        BackInitializer.saveCurrentPosition(player);
+        if (BackInitializer.config.model().enable_back_on_teleport) {
+            BackInitializer.saveCurrentPosition(player);
+        }
     }
 
 }
